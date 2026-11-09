@@ -1,0 +1,850 @@
+<app-showcase-section
+  anchor="bal-field"
+  title="bal-field"
+  subtitle="bal-field-label (weight, size, required), bal-field-control (iconLeft/iconRight, loading), bal-field-message (color), bal-field-hint"
+>
+  <bal-field (balFormControlDidLoad)="onFormControlDidLoad($event)">
+    <bal-field-label>Default field</bal-field-label>
+    <bal-field-control>
+      <bal-input name="default-field" placeholder="ohne weitere Props"></bal-input>
+    </bal-field-control>
+    <bal-field-message>ohne color</bal-field-message>
+  </bal-field>
+
+  <bal-text size="small" space="top">bal-field-label weight</bal-text>
+  <bal-field *ngFor="let weight of fieldLabelWeights">
+    <bal-field-label [weight]="weight">weight="{{ weight }}"</bal-field-label>
+    <bal-field-control>
+      <bal-input [name]="'weight-' + weight" placeholder="Eingabe"></bal-input>
+    </bal-field-control>
+  </bal-field>
+
+  <bal-text size="small" space="top">bal-field-label size</bal-text>
+  <bal-field *ngFor="let size of fieldLabelSizes">
+    <bal-field-label [size]="size">size="{{ size || 'default' }}"</bal-field-label>
+    <bal-field-control>
+      <bal-input [name]="'size-' + size" placeholder="Eingabe"></bal-input>
+    </bal-field-control>
+  </bal-field>
+
+  <bal-text size="small" space="top">bal-field-message color</bal-text>
+  <bal-field *ngFor="let color of fieldMessageColors">
+    <bal-field-label>color="{{ color || 'default' }}"</bal-field-label>
+    <bal-field-control>
+      <bal-input [name]="'msg-' + color" placeholder="Eingabe"></bal-input>
+    </bal-field-control>
+    <bal-field-message [color]="color">Meldung in {{ color || 'default' }}</bal-field-message>
+  </bal-field>
+
+  <bal-text size="small" space="top">Zustände und bal-field-hint</bal-text>
+  <bal-field [required]="true">
+    <bal-field-label [required]="true">required</bal-field-label>
+    <bal-field-hint subject="Hinweis" [small]="true" closeLabel="Schliessen">
+      Zusätzliche Erklärung zum Feld.
+    </bal-field-hint>
+    <bal-field-control iconLeft="search" iconRight="close">
+      <bal-input name="hinted" placeholder="iconLeft + iconRight"></bal-input>
+    </bal-field-control>
+    <bal-field-message color="danger">Pflichtfeld</bal-field-message>
+  </bal-field>
+  <bal-field [invalid]="true">
+    <bal-field-label [invalid]="true">invalid</bal-field-label>
+    <bal-field-control><bal-input name="invalid" [invalid]="true"></bal-input></bal-field-control>
+    <bal-field-message color="danger" [invalid]="true">ungültig</bal-field-message>
+  </bal-field>
+  <bal-field [valid]="true">
+    <bal-field-label [valid]="true">valid</bal-field-label>
+    <bal-field-control><bal-input name="valid"></bal-input></bal-field-control>
+    <bal-field-message color="success" [valid]="true">gültig</bal-field-message>
+  </bal-field>
+  <bal-field [disabled]="true">
+    <bal-field-label [disabled]="true">disabled</bal-field-label>
+    <bal-field-control><bal-input name="disabled" [disabled]="true"></bal-input></bal-field-control>
+  </bal-field>
+  <bal-field [readonly]="true">
+    <bal-field-label [readonly]="true">readonly</bal-field-label>
+    <bal-field-control><bal-input name="readonly" [readonly]="true" value="nur lesen"></bal-input></bal-field-control>
+  </bal-field>
+  <bal-field [loading]="true">
+    <bal-field-label>loading</bal-field-label>
+    <bal-field-control [loading]="true"><bal-input name="loading"></bal-input></bal-field-control>
+  </bal-field>
+  <bal-field [horizontal]="true">
+    <bal-field-label>horizontal</bal-field-label>
+    <bal-field-control><bal-input name="horizontal"></bal-input></bal-field-control>
+    <bal-field-message>Label und Control nebeneinander</bal-field-message>
+  </bal-field>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-form-grid"
+  title="bal-form-grid / bal-form-col"
+  subtitle="size — alle Spaltenbreiten nebeneinander"
+>
+  <bal-form-grid>
+    <bal-form-col>
+      <bal-field>
+        <bal-field-label>Default col, no size</bal-field-label>
+        <bal-field-control><bal-input name="grid-default"></bal-input></bal-field-control>
+      </bal-field>
+    </bal-form-col>
+  </bal-form-grid>
+
+  <bal-form-grid>
+    <bal-form-col *ngFor="let size of formColSizes" [size]="size">
+      <bal-field>
+        <bal-field-label>size="{{ size }}"</bal-field-label>
+        <bal-field-control><bal-input [name]="'grid-' + size"></bal-input></bal-field-control>
+      </bal-field>
+    </bal-form-col>
+  </bal-form-grid>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-input"
+  title="bal-input"
+  subtitle="type, inputmode, mask, textAlign, autocorrect, suffix und die Zustände"
+>
+  <bal-input name="input-default" placeholder="Default input, no props"></bal-input>
+
+  <bal-text size="small" space="top">type</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let type of inputTypes" style="width: 220px">
+      <bal-label size="small">type="{{ type }}"</bal-label>
+      <bal-input [name]="'type-' + type" [type]="type" [placeholder]="type"></bal-input>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">inputmode</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let mode of inputModes" style="width: 220px">
+      <bal-label size="small">inputmode="{{ mode }}"</bal-label>
+      <bal-input [name]="'mode-' + mode" [inputmode]="mode" [placeholder]="mode"></bal-input>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">mask</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let mask of inputMasks" style="width: 260px">
+      <bal-label size="small">mask="{{ mask }}"</bal-label>
+      <bal-input [name]="'mask-' + mask" [mask]="mask" [placeholder]="mask"></bal-input>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">textAlign und autocorrect</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let align of inputTextAligns" style="width: 220px">
+      <bal-label size="small">textAlign="{{ align }}"</bal-label>
+      <bal-input [name]="'align-' + align" [textAlign]="align" value="123"></bal-input>
+    </div>
+    <div *ngFor="let correct of inputAutocorrects" style="width: 220px">
+      <bal-label size="small">autocorrect="{{ correct }}"</bal-label>
+      <bal-input [name]="'correct-' + correct" [autocorrect]="correct"></bal-input>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">Zustände, suffix und gesteuerter Wert</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div style="width: 220px">
+      <bal-label size="small">suffix</bal-label>
+      <bal-input name="suffix" suffix="CHF" value="1200"></bal-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">disabled</bal-label>
+      <bal-input name="input-disabled" [disabled]="true" value="inaktiv"></bal-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">readonly</bal-label>
+      <bal-input name="input-readonly" [readonly]="true" value="nur lesen"></bal-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">invalid</bal-label>
+      <bal-input name="input-invalid" [invalid]="true" value="falsch"></bal-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">clickable + required</bal-label>
+      <bal-input name="input-clickable" [clickable]="true" [required]="true"></bal-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">value aus dem State</bal-label>
+      <bal-input
+        name="input-bound"
+        [(ngModel)]="textValue"
+        [debounce]="0"
+        [maxLength]="40"
+        [minLength]="2"
+        [spellcheck]="false"
+        (balInput)="onInput('bal-input balInput', $event.detail)"
+        (balChange)="onInput('bal-input balChange', $event.detail)"
+        (balFocus)="onInput('bal-input balFocus', '')"
+        (balBlur)="onInput('bal-input balBlur', '')"
+        (balKeyPress)="onInput('bal-input balKeyPress', $event.detail.key)"
+      ></bal-input>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">bal-input-group — Addons links und rechts</bal-text>
+  <bal-input-group>
+    <bal-icon name="search"></bal-icon>
+    <bal-input name="group-input" placeholder="Suche"></bal-input>
+    <bal-icon name="close"></bal-icon>
+  </bal-input-group>
+  <bal-input-group [disabled]="true" class="mt-x-small">
+    <bal-tag [closable]="true">Tag</bal-tag>
+    <bal-input name="group-disabled" placeholder="deaktiviert"></bal-input>
+  </bal-input-group>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-number-input"
+  title="bal-number-input"
+  subtitle="decimal, suffix, onlyPositive, exactNumber und Zustände"
+>
+  <bal-number-input name="number-default" placeholder="Default number input"></bal-number-input>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div style="width: 220px">
+      <bal-label size="small">decimal + suffix</bal-label>
+      <bal-number-input
+        name="number-currency"
+        [decimal]="2"
+        suffix="CHF"
+        [(ngModel)]="numberValue"
+        (balChange)="onInput('bal-number-input balChange', $event.detail)"
+        (balInput)="onInput('bal-number-input balInput', $event.detail)"
+        (balFocus)="onInput('bal-number-input balFocus', '')"
+        (balBlur)="onInput('bal-number-input balBlur', '')"
+        (balKeyPress)="onInput('bal-number-input balKeyPress', $event.detail.key)"
+      ></bal-number-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">onlyPositive</bal-label>
+      <bal-number-input name="number-positive" [onlyPositive]="true" value="5"></bal-number-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">exactNumber</bal-label>
+      <bal-number-input name="number-exact" [exactNumber]="true" value="42"></bal-number-input>
+    </div>
+    <div style="width: 220px">
+      <bal-label size="small">disabled / readonly / invalid</bal-label>
+      <bal-number-input name="number-disabled" [disabled]="true" value="1"></bal-number-input>
+      <bal-number-input name="number-readonly" [readonly]="true" value="2"></bal-number-input>
+      <bal-number-input name="number-invalid" [invalid]="true" value="3"></bal-number-input>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section anchor="bal-textarea" title="bal-textarea" subtitle="wrap, rows, cols, Zustände">
+  <bal-textarea name="textarea-default" placeholder="Default textarea, no props"></bal-textarea>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let wrap of textareaWraps" style="width: 260px">
+      <bal-label size="small">wrap="{{ wrap }}"</bal-label>
+      <bal-textarea [name]="'wrap-' + wrap" [wrap]="wrap" [rows]="3"></bal-textarea>
+    </div>
+    <div style="width: 260px">
+      <bal-label size="small">rows + cols + maxLength</bal-label>
+      <bal-textarea
+        name="textarea-bound"
+        [rows]="4"
+        [cols]="30"
+        [maxLength]="120"
+        [minLength]="2"
+        inputmode="text"
+        [(ngModel)]="textareaValue"
+        (balChange)="onInput('bal-textarea balChange', $event.detail)"
+        (balInput)="onInput('bal-textarea balInput', $event.detail)"
+        (balFocus)="onInput('bal-textarea balFocus', '')"
+        (balBlur)="onInput('bal-textarea balBlur', '')"
+        (balKeyPress)="onInput('bal-textarea balKeyPress', $event.detail.key)"
+      ></bal-textarea>
+    </div>
+    <div style="width: 260px">
+      <bal-label size="small">disabled / readonly / invalid</bal-label>
+      <bal-textarea name="textarea-disabled" [disabled]="true" value="inaktiv"></bal-textarea>
+      <bal-textarea name="textarea-readonly" [readonly]="true" value="nur lesen"></bal-textarea>
+      <bal-textarea name="textarea-invalid" [invalid]="true" value="ungültig"></bal-textarea>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-select"
+  title="bal-select"
+  subtitle="filter, typeahead, multiple, Zustände — bal-select-option braucht label UND Textinhalt"
+>
+  <bal-select name="select-default" placeholder="Default select">
+    <bal-select-option value="bs" label="Basel-Stadt">Basel-Stadt</bal-select-option>
+    <bal-select-option value="bl" label="Basel-Landschaft">Basel-Landschaft</bal-select-option>
+  </bal-select>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let filter of selectFilters" style="width: 260px">
+      <bal-label size="small">filter="{{ filter }}" + typeahead</bal-label>
+      <bal-select [name]="'select-' + filter" [filter]="filter" [typeahead]="true" placeholder="Suchen">
+        <bal-select-option
+          *ngFor="let option of options"
+          [value]="option.value"
+          [label]="option.label"
+        >
+          {{ option.label }}
+        </bal-select-option>
+      </bal-select>
+    </div>
+    <div style="width: 260px">
+      <bal-label size="small">multiple</bal-label>
+      <bal-select name="select-multiple" [multiple]="true" placeholder="Mehrfachauswahl">
+        <bal-select-option
+          *ngFor="let option of options"
+          [value]="option.value"
+          [label]="option.label"
+        >
+          {{ option.label }}
+        </bal-select-option>
+      </bal-select>
+    </div>
+    <div style="width: 260px">
+      <bal-label size="small">gesteuerter Wert + Ereignisse</bal-label>
+      <bal-select
+        name="select-bound"
+        [(ngModel)]="selectValue"
+        [selectionOptional]="true"
+        noDataLabel="Keine Treffer"
+        (balChange)="onInput('bal-select balChange', $event.detail)"
+        (balInput)="onInput('bal-select balInput', $event.detail)"
+        (balInputClick)="onInput('bal-select balInputClick', '')"
+        (balFocus)="onInput('bal-select balFocus', '')"
+        (balBlur)="onInput('bal-select balBlur', '')"
+        (balCancel)="onInput('bal-select balCancel', '')"
+        (balKeyPress)="onInput('bal-select balKeyPress', $event.detail.key)"
+      >
+        <bal-select-option
+          *ngFor="let option of options"
+          [value]="option.value"
+          [label]="option.label"
+        >
+          {{ option.label }}
+        </bal-select-option>
+      </bal-select>
+    </div>
+    <div style="width: 260px">
+      <bal-label size="small">loading / disabled / invalid</bal-label>
+      <bal-select name="select-loading" [loading]="true" placeholder="lädt"></bal-select>
+      <bal-select name="select-disabled" [disabled]="true" placeholder="inaktiv"></bal-select>
+      <bal-select name="select-invalid" [invalid]="true" placeholder="ungültig"></bal-select>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">Natives Select über die CSS-Klassen</bal-text>
+  <div class="field">
+    <label class="label">Natives Select</label>
+    <div class="control">
+      <div class="select">
+        <select>
+          <option>Option A</option>
+          <option>Option B</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-dropdown"
+  title="bal-dropdown"
+  subtitle="size, theme, filter, chips, multiple — mit bal-option und bal-option-list"
+>
+  <bal-dropdown name="dropdown-default" placeholder="Default dropdown">
+    <bal-option value="bs" label="Basel-Stadt">Basel-Stadt</bal-option>
+    <bal-option value="bl" label="Basel-Landschaft">Basel-Landschaft</bal-option>
+  </bal-dropdown>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let size of dropdownSizes" style="width: 240px">
+      <bal-label size="small">size="{{ size || 'default' }}"</bal-label>
+      <bal-dropdown [name]="'dropdown-size-' + size" [size]="size" placeholder="Grösse">
+        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </bal-option>
+      </bal-dropdown>
+    </div>
+    <div *ngFor="let theme of dropdownThemes" style="width: 240px">
+      <bal-label size="small">theme="{{ theme || 'default' }}"</bal-label>
+      <bal-dropdown
+        [name]="'dropdown-theme-' + theme"
+        [theme]="theme"
+        inlineLabel="Thema"
+        [clearable]="true"
+      >
+        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </bal-option>
+      </bal-dropdown>
+    </div>
+    <div *ngFor="let filter of optionListFilters" style="width: 240px">
+      <bal-label size="small">filter="{{ filter }}"</bal-label>
+      <bal-dropdown [name]="'dropdown-filter-' + filter" [filter]="filter" placeholder="Filter">
+        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </bal-option>
+      </bal-dropdown>
+    </div>
+    <div style="width: 240px">
+      <bal-label size="small">multiple + chips</bal-label>
+      <bal-dropdown name="dropdown-chips" [multiple]="true" [chips]="true" placeholder="Mehrfach">
+        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
+          {{ option.label }}
+        </bal-option>
+      </bal-dropdown>
+    </div>
+    <div style="width: 240px">
+      <bal-label size="small">gesteuerter Wert</bal-label>
+      <bal-dropdown
+        name="dropdown-bound"
+        [(ngModel)]="dropdownValue"
+        [contentHeight]="200"
+        icon="caret-down"
+        (balChange)="onInput('bal-dropdown balChange', $event.detail)"
+        (balFocus)="onInput('bal-dropdown balFocus', '')"
+        (balBlur)="onInput('bal-dropdown balBlur', '')"
+      >
+        <bal-option
+          *ngFor="let option of options"
+          [value]="option.value"
+          [label]="option.label"
+          [multiline]="true"
+        >
+          {{ option.label }}
+        </bal-option>
+      </bal-dropdown>
+    </div>
+    <div style="width: 240px">
+      <bal-label size="small">loading / disabled / invalid / inverted</bal-label>
+      <bal-dropdown name="dropdown-loading" [loading]="true" placeholder="lädt"></bal-dropdown>
+      <bal-dropdown name="dropdown-disabled" [disabled]="true" placeholder="inaktiv"></bal-dropdown>
+      <bal-dropdown name="dropdown-invalid" [invalid]="true" placeholder="ungültig"></bal-dropdown>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">bal-option Zustände</bal-text>
+  <bal-dropdown name="dropdown-option-states" placeholder="Zustände">
+    <bal-option value="a" label="selected" [selected]="true">selected</bal-option>
+    <bal-option value="b" label="disabled" [disabled]="true">disabled</bal-option>
+    <bal-option value="c" label="invalid" [invalid]="true">invalid</bal-option>
+    <bal-option value="d" label="focused" [focused]="true">focused</bal-option>
+  </bal-dropdown>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-checkbox"
+  title="bal-checkbox / bal-checkbox-group"
+  subtitle="interface (checkbox, switch, button, tile), color, columns, vertical — plus bal-check und bal-switch"
+>
+  <bal-checkbox name="checkbox-default">Default checkbox, no props</bal-checkbox>
+
+  <bal-text size="small" space="top">interface — jeder Wert rendert einen anderen Baum</bal-text>
+  <div *ngFor="let variant of checkboxInterfaces" class="mb-small">
+    <bal-label size="small">interface="{{ variant }}"</bal-label>
+    <bal-checkbox-group [interface]="variant" [name]="'cb-group-' + variant">
+      <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="1" [checked]="true">
+        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
+          <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
+          <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
+          <bal-check></bal-check>
+        </bal-stack>
+        <span *ngIf="variant !== 'tile'">Option A</span>
+      </bal-checkbox>
+      <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="2">
+        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
+          <bal-icon [svg]="brandIcons.household" size="large" color="auto"></bal-icon>
+          <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
+          <bal-switch></bal-switch>
+        </bal-stack>
+        <span *ngIf="variant !== 'tile'">Option B</span>
+      </bal-checkbox>
+    </bal-checkbox-group>
+  </div>
+
+  <bal-text size="small" space="top">tile color</bal-text>
+  <bal-checkbox-group interface="tile" name="cb-colors" [columns]="4" [columnsTablet]="2">
+    <bal-checkbox
+      *ngFor="let color of checkboxTileColors"
+      interface="tile"
+      name="cb-colors"
+      [value]="color || 'default'"
+      [color]="color"
+      [attr.col-size]="4"
+      [attr.col-size-tablet]="2"
+      [attr.col-size-mobile]="1"
+    >
+      <bal-stack layout="vertical" align="center">
+        <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
+        <bal-check></bal-check>
+      </bal-stack>
+    </bal-checkbox>
+  </bal-checkbox-group>
+
+  <bal-text size="small" space="top">columns</bal-text>
+  <div *ngFor="let columns of groupColumns" class="mb-small">
+    <bal-label size="small">columns="{{ columns }}"</bal-label>
+    <bal-checkbox-group interface="button" [columns]="columns" [name]="'cb-cols-' + columns">
+      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="1">Eins</bal-checkbox>
+      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="2">Zwei</bal-checkbox>
+      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="3">Drei</bal-checkbox>
+      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="4">Vier</bal-checkbox>
+    </bal-checkbox-group>
+  </div>
+
+  <bal-text size="small" space="top">vertical, Zustände und gesteuerter Wert</bal-text>
+  <bal-checkbox-group
+    name="cb-bound"
+    [vertical]="true"
+    [(ngModel)]="checkboxValues"
+    (balChange)="onInput('bal-checkbox-group balChange', $event.detail)"
+    (balFocus)="onInput('bal-checkbox-group balFocus', '')"
+    (balBlur)="onInput('bal-checkbox-group balBlur', '')"
+  >
+    <bal-checkbox
+      name="cb-bound"
+      value="1"
+      (balChange)="onInput('bal-checkbox balChange', $event.detail)"
+      (balFocus)="onInput('bal-checkbox balFocus', '')"
+      (balBlur)="onInput('bal-checkbox balBlur', '')"
+    >
+      gebunden
+    </bal-checkbox>
+    <bal-checkbox name="cb-bound" value="2" [disabled]="true">disabled</bal-checkbox>
+    <bal-checkbox name="cb-bound" value="3" [readonly]="true">readonly</bal-checkbox>
+    <bal-checkbox name="cb-bound" value="4" [invalid]="true">invalid</bal-checkbox>
+    <bal-checkbox name="cb-bound" value="5" [flat]="true" [labelHidden]="true" label="versteckt">
+      labelHidden
+    </bal-checkbox>
+  </bal-checkbox-group>
+
+  <bal-text size="small" space="top">bal-check und bal-switch eigenständig</bal-text>
+  <bal-stack space="small" alignment="center">
+    <bal-check></bal-check>
+    <bal-check [checked]="true"></bal-check>
+    <bal-check [invalid]="true"></bal-check>
+    <bal-check [disabled]="true"></bal-check>
+    <bal-switch></bal-switch>
+    <bal-switch [checked]="true"></bal-switch>
+    <bal-switch [disabled]="true"></bal-switch>
+  </bal-stack>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-radio"
+  title="bal-radio / bal-radio-group"
+  subtitle="interface (radio, button, tile), color, columns, vertical, allowEmptySelection — plus bal-radio-icon"
+>
+  <bal-radio name="radio-default" value="solo">Default radio, no props</bal-radio>
+
+  <bal-text size="small" space="top">interface — jeder Wert rendert einen anderen Baum</bal-text>
+  <div *ngFor="let variant of radioInterfaces" class="mb-small">
+    <bal-label size="small">interface="{{ variant }}"</bal-label>
+    <bal-radio-group [interface]="variant" [name]="'radio-group-' + variant" value="1">
+      <bal-radio [interface]="variant" value="1">
+        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
+          <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
+          <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
+          <bal-radio-icon></bal-radio-icon>
+        </bal-stack>
+        <span *ngIf="variant !== 'tile'">Option A</span>
+      </bal-radio>
+      <bal-radio [interface]="variant" value="2">
+        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
+          <bal-icon [svg]="brandIcons.building" size="large" color="auto"></bal-icon>
+          <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
+          <bal-radio-icon></bal-radio-icon>
+        </bal-stack>
+        <span *ngIf="variant !== 'tile'">Option B</span>
+      </bal-radio>
+    </bal-radio-group>
+  </div>
+
+  <bal-text size="small" space="top">tile color</bal-text>
+  <bal-radio-group interface="tile" name="radio-colors" [columns]="4" [columnsTablet]="2" value="purple">
+    <bal-radio
+      *ngFor="let color of radioTileColors"
+      interface="tile"
+      [value]="color || 'default'"
+      [color]="color"
+      [attr.col-size]="4"
+      [attr.col-size-tablet]="2"
+      [attr.col-size-mobile]="1"
+    >
+      <bal-stack layout="vertical" align="center">
+        <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
+        <bal-radio-icon></bal-radio-icon>
+      </bal-stack>
+    </bal-radio>
+  </bal-radio-group>
+
+  <bal-text size="small" space="top">columns</bal-text>
+  <div *ngFor="let columns of groupColumns" class="mb-small">
+    <bal-label size="small">columns="{{ columns }}"</bal-label>
+    <bal-radio-group interface="button" [columns]="columns" [name]="'radio-cols-' + columns">
+      <bal-radio interface="button" value="1">Eins</bal-radio>
+      <bal-radio interface="button" value="2">Zwei</bal-radio>
+      <bal-radio interface="button" value="3">Drei</bal-radio>
+      <bal-radio interface="button" value="4">Vier</bal-radio>
+    </bal-radio-group>
+  </div>
+
+  <bal-text size="small" space="top">vertical, Zustände und gesteuerter Wert</bal-text>
+  <bal-radio-group
+    name="radio-bound"
+    [vertical]="true"
+    [allowEmptySelection]="true"
+    [(ngModel)]="radioValue"
+    (balChange)="onInput('bal-radio-group balChange', $event.detail)"
+    (balFocus)="onInput('bal-radio-group balFocus', '')"
+    (balBlur)="onInput('bal-radio-group balBlur', '')"
+  >
+    <bal-radio
+      value="1"
+      (balChange)="onInput('bal-radio balChange', $event.detail)"
+      (balFocus)="onInput('bal-radio balFocus', '')"
+      (balBlur)="onInput('bal-radio balBlur', '')"
+    >
+      gebunden
+    </bal-radio>
+    <bal-radio value="2" [disabled]="true">disabled</bal-radio>
+    <bal-radio value="3" [readonly]="true">readonly</bal-radio>
+    <bal-radio value="4" [invalid]="true">invalid</bal-radio>
+    <bal-radio value="5" [flat]="true" [labelHidden]="true" label="versteckt">labelHidden</bal-radio>
+  </bal-radio-group>
+
+  <bal-text size="small" space="top">bal-radio-icon eigenständig</bal-text>
+  <bal-stack space="small" alignment="center">
+    <bal-radio-icon></bal-radio-icon>
+    <bal-radio-icon [checked]="true"></bal-radio-icon>
+    <bal-radio-icon [invalid]="true"></bal-radio-icon>
+    <bal-radio-icon [disabled]="true"></bal-radio-icon>
+  </bal-stack>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-segment"
+  title="bal-segment / bal-segment-item"
+  subtitle="vertical, expanded, scrollable, Zustände"
+>
+  <bal-segment>
+    <bal-segment-item value="a" label="Default"></bal-segment-item>
+    <bal-segment-item value="b" label="ohne Props"></bal-segment-item>
+  </bal-segment>
+
+  <bal-text size="small" space="top">vertical mit Beschreibungstext als Kind</bal-text>
+  <bal-segment [vertical]="true" value="10000">
+    <bal-segment-item value="7000" label="max. 7’000 km">rund 135 km pro Woche</bal-segment-item>
+    <bal-segment-item value="10000" label="max. 10’000 km">rund 190 km pro Woche</bal-segment-item>
+    <bal-segment-item value="15000" label="max. 15’000 km">rund 290 km pro Woche</bal-segment-item>
+  </bal-segment>
+
+  <bal-text size="small" space="top">expanded, scrollable und Zustände</bal-text>
+  <bal-segment
+    [expanded]="true"
+    [scrollable]="true"
+    [(ngModel)]="segmentValue"
+    name="segment-bound"
+    (balChange)="onInput('bal-segment balChange', $event.detail)"
+    (balBlur)="onInput('bal-segment balBlur', '')"
+  >
+    <bal-segment-item value="a" label="A"></bal-segment-item>
+    <bal-segment-item value="b" label="B"></bal-segment-item>
+    <bal-segment-item value="c" label="C" [disabled]="true"></bal-segment-item>
+    <bal-segment-item value="d" label="D" [invalid]="true"></bal-segment-item>
+  </bal-segment>
+  <bal-segment [disabled]="true" value="a" class="mt-x-small">
+    <bal-segment-item value="a" label="disabled"></bal-segment-item>
+    <bal-segment-item value="b" label="Gruppe"></bal-segment-item>
+  </bal-segment>
+  <bal-segment [invalid]="true" value="a" class="mt-x-small">
+    <bal-segment-item value="a" label="invalid"></bal-segment-item>
+    <bal-segment-item value="b" label="Gruppe"></bal-segment-item>
+  </bal-segment>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-date"
+  title="bal-date"
+  subtitle="triggerIcon, freeSolo, closeOnSelect, min/max, Zustände — plus bal-date-calendar"
+>
+  <bal-date name="date-default" placeholder="Default date"></bal-date>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div style="width: 240px">
+      <bal-label size="small">triggerIcon + closeOnSelect</bal-label>
+      <bal-date
+        name="date-bound"
+        [triggerIcon]="true"
+        [closeOnSelect]="true"
+        min="2020-01-01"
+        max="2030-12-31"
+        [(ngModel)]="dateValue"
+        (balChange)="onInput('bal-date balChange', $event.detail)"
+        (balInput)="onInput('bal-date balInput', $event.detail)"
+        (balFocus)="onInput('bal-date balFocus', '')"
+        (balBlur)="onInput('bal-date balBlur', '')"
+        (balInputClick)="onInput('bal-date balInputClick', '')"
+        (balIconClick)="onInput('bal-date balIconClick', '')"
+        (balWillAnimate)="onInput('bal-date balWillAnimate', $event.detail)"
+        (balDidAnimate)="onInput('bal-date balDidAnimate', $event.detail)"
+      ></bal-date>
+    </div>
+    <div style="width: 240px">
+      <bal-label size="small">freeSolo + allowInvalidValue</bal-label>
+      <bal-date
+        name="date-free"
+        [freeSolo]="true"
+        [allowInvalidValue]="true"
+        placeholder="freie Eingabe"
+      ></bal-date>
+    </div>
+    <div style="width: 240px">
+      <bal-label size="small">disabled / readonly / invalid</bal-label>
+      <bal-date name="date-disabled" [disabled]="true" value="2026-01-01"></bal-date>
+      <bal-date name="date-readonly" [readonly]="true" value="2026-01-01"></bal-date>
+      <bal-date name="date-invalid" [invalid]="true" value="2026-01-01"></bal-date>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">bal-date-calendar eigenständig</bal-text>
+  <bal-date-calendar
+    value="2026-03-18"
+    min="2026-01-01"
+    max="2026-12-31"
+    (balChange)="onCalendarChange($event)"
+  ></bal-date-calendar>
+
+  <bal-text size="small" space="top">bal-time-input</bal-text>
+  <bal-time-input
+    name="time-default"
+    [(ngModel)]="timeValue"
+    (balChange)="onTimeChange($event)"
+    (balClick)="onInput('bal-time-input balClick', '')"
+  ></bal-time-input>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-file-upload"
+  title="bal-file-upload"
+  subtitle="multiple, hasFileList, accept, maxFiles, maxFileSize, Zustände"
+>
+  <bal-file-upload name="upload-default"></bal-file-upload>
+
+  <div class="mt-small">
+    <bal-label size="small">accept + multiple + hasFileList + Limits</bal-label>
+    <bal-file-upload
+      name="upload-configured"
+      accept="image/png,image/jpeg,application/pdf"
+      label="Datei wählen oder hierhin ziehen"
+      [multiple]="true"
+      [hasFileList]="true"
+      [maxFiles]="3"
+      [maxFileSize]="2000000"
+      [maxBundleSize]="5000000"
+      (balChange)="onUploadChange($event)"
+      (balFilesAdded)="onInput('bal-file-upload balFilesAdded', '')"
+      (balFilesRemoved)="onInput('bal-file-upload balFilesRemoved', '')"
+      (balRejectedFile)="onInput('bal-file-upload balRejectedFile', '')"
+      (balInputClick)="onInput('bal-file-upload balInputClick', '')"
+      (balFocus)="onInput('bal-file-upload balFocus', '')"
+      (balBlur)="onInput('bal-file-upload balBlur', '')"
+    ></bal-file-upload>
+  </div>
+
+  <div class="mt-small">
+    <bal-label size="small">disabled / readonly / invalid / loading</bal-label>
+    <bal-file-upload name="upload-disabled" [disabled]="true"></bal-file-upload>
+    <bal-file-upload name="upload-readonly" [readonly]="true"></bal-file-upload>
+    <bal-file-upload name="upload-invalid" [invalid]="true"></bal-file-upload>
+    <bal-file-upload name="upload-loading" [loading]="true"></bal-file-upload>
+  </div>
+
+  <bal-text size="small" space="top">Natives File-Input über die CSS-Klassen</bal-text>
+  <div class="file">
+    <label class="file-label">
+      <input class="file-input" type="file" name="native-upload" />
+      <span class="file-cta"><span class="file-label">Datei wählen …</span></span>
+    </label>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-input-slider"
+  title="bal-input-slider / bal-input-stepper"
+  subtitle="min, max, step, hasTicks, Zustände"
+>
+  <bal-input-slider name="slider-default"></bal-input-slider>
+
+  <div class="mt-small" style="max-width: 420px">
+    <bal-label size="small">min/max/step + hasTicks + gesteuerter Wert</bal-label>
+    <bal-input-slider
+      name="slider-bound"
+      [min]="0"
+      [max]="100"
+      [step]="20"
+      [hasTicks]="true"
+      [balTabindex]="0"
+      [(ngModel)]="sliderValue"
+      (balChange)="onInput('bal-input-slider balChange', $event.detail)"
+      (balInput)="onInput('bal-input-slider balInput', $event.detail)"
+      (balFocus)="onInput('bal-input-slider balFocus', '')"
+      (balBlur)="onInput('bal-input-slider balBlur', '')"
+      (balKeyPress)="onInput('bal-input-slider balKeyPress', $event.detail.key)"
+    ></bal-input-slider>
+    <bal-input-slider name="slider-disabled" [disabled]="true" value="30"></bal-input-slider>
+    <bal-input-slider name="slider-invalid" [invalid]="true" value="40"></bal-input-slider>
+    <bal-input-slider name="slider-readonly" [readonly]="true" value="50"></bal-input-slider>
+  </div>
+
+  <bal-text size="small" space="top">bal-input-stepper</bal-text>
+  <bal-input-stepper name="stepper-default"></bal-input-stepper>
+  <div class="mt-x-small">
+    <bal-label size="small">min/max/steps + gesteuerter Wert</bal-label>
+    <bal-input-stepper
+      name="stepper-bound"
+      [min]="0"
+      [max]="10"
+      [steps]="2"
+      [(ngModel)]="stepperValue"
+      (balChange)="onInput('bal-input-stepper balChange', $event.detail)"
+      (balInput)="onInput('bal-input-stepper balInput', $event.detail)"
+      (balIncrease)="onInput('bal-input-stepper balIncrease', $event.detail)"
+      (balDecrease)="onInput('bal-input-stepper balDecrease', $event.detail)"
+      (balFocus)="onInput('bal-input-stepper balFocus', '')"
+      (balBlur)="onInput('bal-input-stepper balBlur', '')"
+    ></bal-input-stepper>
+    <bal-input-stepper name="stepper-disabled" [disabled]="true" [value]="3"></bal-input-stepper>
+    <bal-input-stepper name="stepper-readonly" [readonly]="true" [value]="4"></bal-input-stepper>
+    <bal-input-stepper name="stepper-invalid" [invalid]="true" [value]="5"></bal-input-stepper>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-form"
+  title="bal-form"
+  subtitle="native, novalidate, formClass — der Wrapper um ein ganzes Formular"
+>
+  <bal-form [native]="true" [novalidate]="true" formClass="mt-x-small">
+    <bal-form-grid>
+      <bal-form-col size="half">
+        <bal-field>
+          <bal-field-label>Feld im bal-form</bal-field-label>
+          <bal-field-control><bal-input name="form-field"></bal-input></bal-field-control>
+        </bal-field>
+      </bal-form-col>
+      <bal-form-col size="half">
+        <bal-field>
+          <bal-field-label>Zweites Feld</bal-field-label>
+          <bal-field-control><bal-input name="form-field-2"></bal-input></bal-field-control>
+        </bal-field>
+      </bal-form-col>
+    </bal-form-grid>
+    <bal-button elementType="submit" color="primary" size="small">Absenden</bal-button>
+  </bal-form>
+
+  <bal-text size="small" color="info" space="top">Letztes Ereignis: {{ lastEvent || '—' }}</bal-text>
+</app-showcase-section>

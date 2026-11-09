@@ -1,0 +1,11 @@
+/*
+ * bal-sheet is position: fixed. A transform on an ancestor makes that ancestor
+ * the containing block, which keeps each showcase variant in place instead of
+ * stacking them all at the bottom of the viewport.
+ */
+.showcase-sheet-frame {
+  position: relative;
+  transform: translateZ(0);
+  height: 6rem;
+  overflow: hidden;
+}

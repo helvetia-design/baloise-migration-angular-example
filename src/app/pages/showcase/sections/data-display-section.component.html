@@ -1,0 +1,620 @@
+<app-showcase-section anchor="bal-badge" title="bal-badge" subtitle="color, size, position, icon">
+  <bal-badge>42</bal-badge>
+  <bal-text size="small" color="grey">Default badge, no props</bal-text>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <div *ngFor="let color of badgeColors" class="flex align-items-center gap-x-small">
+      <bal-badge [color]="color">{{ color ? color.charAt(0).toUpperCase() : 'D' }}</bal-badge>
+      <bal-text size="small">{{ color || 'default' }}</bal-text>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <div *ngFor="let size of badgeSizes" class="flex align-items-center gap-x-small">
+      <bal-badge [size]="size" color="purple">S</bal-badge>
+      <bal-text size="small">size="{{ size || 'default' }}"</bal-text>
+    </div>
+    <div class="flex align-items-center gap-x-small">
+      <bal-badge color="success" icon="check" size="large">1</bal-badge>
+      <bal-text size="small">icon="check"</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">position — jeder Wert erwartet einen bestimmten Container</bal-text>
+  <div class="flex flex-wrap gap-normal align-items-start">
+    <div style="width: 220px">
+      <bal-text size="small" color="grey">position="" (freistehend)</bal-text>
+      <bal-badge position="" color="danger">42</bal-badge>
+    </div>
+    <div style="width: 220px">
+      <bal-text size="small" color="grey">position="card"</bal-text>
+      <bal-card color="white" [border]="true">
+        <bal-badge position="card" color="danger">42</bal-badge>
+        <bal-card-title>Karte</bal-card-title>
+        <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
+      </bal-card>
+    </div>
+    <div style="width: 220px">
+      <bal-text size="small" color="grey">position="button"</bal-text>
+      <bal-button>
+        <bal-badge position="button" color="danger">42</bal-badge>
+        Button
+      </bal-button>
+    </div>
+    <div style="width: 220px">
+      <bal-text size="small" color="grey">position="tabs" (als bubble im Tab)</bal-text>
+      <bal-badge position="tabs" color="danger">7</bal-badge>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-tag"
+  title="bal-tag"
+  subtitle="color, size, position, closable, light, transparent, disabled, invalid"
+>
+  <bal-tag>Default tag, no props</bal-tag>
+
+  <bal-text size="small" space="top">color — als Literal</bal-text>
+  <bal-tag-group>
+    <bal-tag color="primary">primary</bal-tag>
+    <bal-tag color="success">success</bal-tag>
+    <bal-tag color="danger">danger</bal-tag>
+  </bal-tag-group>
+
+  <bal-text size="small" space="top">color — aus einem Ausdruck</bal-text>
+  <div class="flex flex-wrap gap-x-small">
+    <bal-tag *ngFor="let color of tagColors" [color]="color">{{ color || 'default' }}</bal-tag>
+  </div>
+
+  <bal-text size="small" space="top">size</bal-text>
+  <div class="flex flex-wrap gap-x-small align-items-center">
+    <bal-tag *ngFor="let size of tagSizes" [size]="size" color="purple">{{ size || 'default' }}</bal-tag>
+  </div>
+
+  <bal-text size="small" space="top">position</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let placement of tagPlacements" style="width: 220px">
+      <bal-card color="white" [border]="true">
+        <bal-tag [position]="placement" color="red" size="large">{{ placement }}</bal-tag>
+        <bal-card-title>Karte</bal-card-title>
+        <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
+      </bal-card>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">Zustände und das balCloseClick-Ereignis</bal-text>
+  <bal-tag-group>
+    <bal-tag color="green" [light]="true">light</bal-tag>
+    <bal-tag color="green" [attr.transparent]="true">transparent</bal-tag>
+    <bal-tag [disabled]="true">disabled</bal-tag>
+    <bal-tag [invalid]="true">invalid</bal-tag>
+    <bal-tag color="yellow" [closable]="true" (balCloseClick)="onTagClose('closable')">closable</bal-tag>
+  </bal-tag-group>
+  <bal-text size="small" color="info">Geschlossen: {{ closedTags.join(', ') || '—' }}</bal-text>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-data"
+  title="bal-data"
+  subtitle="border, horizontal — mit bal-data-item, bal-data-label, bal-data-value"
+>
+  <bal-data>
+    <bal-data-item>
+      <bal-data-label>Default</bal-data-label>
+      <bal-data-value>ohne Props</bal-data-value>
+    </bal-data-item>
+  </bal-data>
+
+  <bal-text size="small" space="top">border + horizontal</bal-text>
+  <bal-data [border]="true" [horizontal]="true">
+    <bal-data-item>
+      <bal-data-label>Produkt</bal-data-label>
+      <bal-data-value>Hausrat</bal-data-value>
+    </bal-data-item>
+    <bal-data-item>
+      <bal-data-label [required]="true">Police</bal-data-label>
+      <bal-data-value>70/3.118.002</bal-data-value>
+    </bal-data-item>
+  </bal-data>
+
+  <bal-text size="small" space="top">bal-data-value: multiline, editable, disabled</bal-text>
+  <bal-data [border]="true">
+    <bal-data-item>
+      <bal-data-label>multiline</bal-data-label>
+      <bal-data-value [multiline]="true">
+        Ein sehr langer Wert, der auf die nächste Zeile umbrechen soll, damit der
+        mehrzeilige Modus sichtbar wird.
+      </bal-data-value>
+    </bal-data-item>
+    <bal-data-item>
+      <bal-data-label>editable</bal-data-label>
+      <bal-data-value
+        [editable]="true"
+        (balClick)="onDataValueClick()"
+        (balFocus)="onDataValueFocus()"
+        (balBlur)="onDataValueBlur()"
+      >
+        klickbar
+      </bal-data-value>
+    </bal-data-item>
+    <bal-data-item [disabled]="true">
+      <bal-data-label>disabled</bal-data-label>
+      <bal-data-value [disabled]="true">inaktiv</bal-data-value>
+    </bal-data-item>
+  </bal-data>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-list"
+  title="bal-list"
+  subtitle="size, background, border, accordionOneLevel — background='dark' braucht eine dunkle Fläche vom Aufrufer"
+>
+  <bal-list>
+    <bal-list-item>
+      <bal-list-item-content>
+        <bal-list-item-title>Default list, no props</bal-list-item-title>
+      </bal-list-item-content>
+    </bal-list-item>
+  </bal-list>
+
+  <bal-text size="small" space="top">size</bal-text>
+  <div *ngFor="let size of listSizes" class="mb-x-small">
+    <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+    <bal-list [size]="size" [border]="true">
+      <bal-list-item>
+        <bal-list-item-content>
+          <bal-list-item-title>Titel</bal-list-item-title>
+          <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
+        </bal-list-item-content>
+      </bal-list-item>
+    </bal-list>
+  </div>
+
+  <bal-text size="small" space="top">
+    background — <code>dark</code> färbt nur den Text, die dunkle Fläche muss die App liefern
+  </bal-text>
+  <div
+    *ngFor="let background of listBackgrounds"
+    class="mb-x-small p-x-small radius-normal"
+    [class.bg-primary]="background === 'dark'"
+    [class.bg-green-2]="background === 'color'"
+  >
+    <bal-text size="small" [color]="background === 'dark' ? 'white' : 'grey'">
+      background="{{ background }}"
+    </bal-text>
+    <bal-list [background]="background" [border]="true">
+      <bal-list-item>
+        <bal-list-item-content>
+          <bal-list-item-title>Titel auf {{ background }}</bal-list-item-title>
+          <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
+        </bal-list-item-content>
+      </bal-list-item>
+    </bal-list>
+  </div>
+
+  <bal-text size="small" space="top">Icons, Links und Zustände</bal-text>
+  <bal-list [border]="true" size="large">
+    <bal-list-item [clickable]="true" href="/showcase" target="_self">
+      <bal-list-item-icon>
+        <bal-icon name="file"></bal-icon>
+      </bal-list-item-icon>
+      <bal-list-item-content>
+        <bal-list-item-title level="h5">clickable mit href</bal-list-item-title>
+        <bal-list-item-subtitle>PDF — 98 KB</bal-list-item-subtitle>
+      </bal-list-item-content>
+      <bal-list-item-icon [right]="true">
+        <bal-icon name="nav-go-right" size="x-small"></bal-icon>
+      </bal-list-item-icon>
+    </bal-list-item>
+    <bal-list-item [selected]="true">
+      <bal-list-item-content>
+        <bal-list-item-title visualLevel="large">selected</bal-list-item-title>
+      </bal-list-item-content>
+    </bal-list-item>
+    <bal-list-item [disabled]="true">
+      <bal-list-item-content>
+        <bal-list-item-title>disabled</bal-list-item-title>
+      </bal-list-item-content>
+    </bal-list-item>
+  </bal-list>
+
+  <bal-text size="small" space="top">
+    Accordion-Variante: icon, contentAlignment und contentSpacing am Body
+  </bal-text>
+  <bal-list [border]="true" [accordionOneLevel]="true">
+    <bal-list-item
+      #showcaseListItem
+      [accordion]="true"
+      (balDidAnimate)="onListItemAnimate($event)"
+      (balWillAnimate)="onListItemAnimate($event)"
+      (balGroupStateChanged)="onListGroupStateChanged()"
+    >
+      <bal-list-item-accordion-head icon="plus">
+        <bal-list-item-content>
+          <bal-list-item-title>icon="plus"</bal-list-item-title>
+        </bal-list-item-content>
+      </bal-list-item-accordion-head>
+      <bal-list-item-accordion-body contentSpace="normal" contentAlignment="start">
+        <bal-text size="small">contentSpace="normal", contentAlignment="start"</bal-text>
+      </bal-list-item-accordion-body>
+    </bal-list-item>
+    <bal-list-item [accordion]="true">
+      <bal-list-item-accordion-head icon="nav-go-down">
+        <bal-list-item-content>
+          <bal-list-item-title>icon="nav-go-down"</bal-list-item-title>
+        </bal-list-item-content>
+      </bal-list-item-accordion-head>
+      <bal-list-item-accordion-body contentSpace="none" contentAlignment="space-between">
+        <bal-text size="small">contentSpace="none"</bal-text>
+        <bal-text size="small">contentAlignment="space-between"</bal-text>
+      </bal-list-item-accordion-body>
+    </bal-list-item>
+    <bal-list-item [accordion]="true">
+      <bal-list-item-accordion-head>
+        <bal-list-item-content>
+          <bal-list-item-title>contentAlignment="center"</bal-list-item-title>
+        </bal-list-item-content>
+      </bal-list-item-accordion-head>
+      <bal-list-item-accordion-body contentAlignment="center">
+        <bal-text size="small">zentriert</bal-text>
+      </bal-list-item-accordion-body>
+    </bal-list-item>
+    <bal-list-item [accordion]="true">
+      <bal-list-item-accordion-head>
+        <bal-list-item-content>
+          <bal-list-item-title>contentAlignment="end"</bal-list-item-title>
+        </bal-list-item-content>
+      </bal-list-item-accordion-head>
+      <bal-list-item-accordion-body contentAlignment="end">
+        <bal-text size="small">rechtsbündig</bal-text>
+      </bal-list-item-accordion-body>
+    </bal-list-item>
+  </bal-list>
+
+  <bal-button size="small" color="info" [outlined]="true" class="mt-x-small" (balClick)="toggleListItem()">
+    Erstes Accordion umschalten
+  </bal-button>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-table"
+  title="bal-table"
+  subtitle="expanded — die Optik kommt von den Utility-Klassen auf der nativen Tabelle"
+>
+  <bal-table>
+    <table class="table w-full">
+      <thead>
+        <tr><th>Default</th><th>ohne Props</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Zeile</td><td>Wert</td></tr>
+      </tbody>
+    </table>
+  </bal-table>
+
+  <bal-text size="small" space="top">expanded + is-striped + is-hoverable</bal-text>
+  <bal-table [expanded]="true">
+    <table class="table w-full is-striped is-hoverable">
+      <thead>
+        <tr><th>Produkt</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hausrat</td>
+          <td><bal-tag color="green" size="small">Aktiv</bal-tag></td>
+          <td class="has-buttons">
+            <bal-button color="info" size="small" icon="edit" [square]="true" [outlined]="true"></bal-button>
+          </td>
+        </tr>
+        <tr>
+          <td>Gebäude</td>
+          <td><bal-tag color="yellow" size="small">Sistiert</bal-tag></td>
+          <td class="has-buttons">
+            <bal-button color="info" size="small" icon="trash" [square]="true" [outlined]="true"></bal-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </bal-table>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-carousel"
+  title="bal-carousel"
+  subtitle="interface, controls, itemsPerView, aspectRatio, space, htmlRole — plus bal-carousel-item color/htmlRole"
+>
+  <bal-carousel>
+    <bal-carousel-item>
+      <div class="bg-green-2 p-normal w-full">Default carousel, no props</div>
+    </bal-carousel-item>
+    <bal-carousel-item>
+      <div class="bg-green-3 p-normal w-full">Slide 2</div>
+    </bal-carousel-item>
+  </bal-carousel>
+
+  <bal-text size="small" space="top">interface</bal-text>
+  <div *ngFor="let variant of carouselInterfaces" class="mb-small">
+    <bal-text size="small" color="grey">interface="{{ variant || 'default' }}"</bal-text>
+    <bal-carousel [interface]="variant" controls="small" itemsPerView="auto">
+      <bal-carousel-item label="Eins" color="green">
+        <div class="bg-green-2 p-small">Eins</div>
+      </bal-carousel-item>
+      <bal-carousel-item label="Zwei" color="purple">
+        <div class="bg-purple-2 p-small">Zwei</div>
+      </bal-carousel-item>
+      <bal-carousel-item label="Drei" color="yellow">
+        <div class="bg-yellow-2 p-small">Drei</div>
+      </bal-carousel-item>
+    </bal-carousel>
+  </div>
+
+  <bal-text size="small" space="top">controls</bal-text>
+  <div *ngFor="let control of carouselControls" class="mb-small">
+    <bal-text size="small" color="grey">controls="{{ control }}"</bal-text>
+    <bal-carousel [controls]="control" [itemsPerView]="2">
+      <bal-carousel-item label="A"><div class="bg-green-2 p-small">A</div></bal-carousel-item>
+      <bal-carousel-item label="B"><div class="bg-green-3 p-small">B</div></bal-carousel-item>
+      <bal-carousel-item label="C"><div class="bg-green-4 p-small">C</div></bal-carousel-item>
+      <bal-carousel-item label="D"><div class="bg-green-5 p-small">D</div></bal-carousel-item>
+    </bal-carousel>
+  </div>
+
+  <bal-text size="small" space="top">itemsPerView</bal-text>
+  <div *ngFor="let perView of carouselItemsPerView" class="mb-small">
+    <bal-text size="small" color="grey">itemsPerView="{{ perView }}"</bal-text>
+    <bal-carousel [itemsPerView]="perView" controls="small">
+      <bal-carousel-item><div class="bg-green-2 p-small">1</div></bal-carousel-item>
+      <bal-carousel-item><div class="bg-green-3 p-small">2</div></bal-carousel-item>
+      <bal-carousel-item><div class="bg-green-4 p-small">3</div></bal-carousel-item>
+      <bal-carousel-item><div class="bg-green-5 p-small">4</div></bal-carousel-item>
+      <bal-carousel-item><div class="bg-green-6 p-small text-white">5</div></bal-carousel-item>
+    </bal-carousel>
+  </div>
+
+  <bal-text size="small" space="top">aspectRatio (mit interface="image")</bal-text>
+  <div *ngFor="let ratio of carouselAspectRatios" class="mb-small" style="max-width: 420px">
+    <bal-text size="small" color="grey">aspectRatio="{{ ratio }}"</bal-text>
+    <bal-carousel interface="image" [aspectRatio]="ratio" controls="dots">
+      <bal-carousel-item><div class="bg-purple-2 w-full h-full"></div></bal-carousel-item>
+      <bal-carousel-item><div class="bg-green-2 w-full h-full"></div></bal-carousel-item>
+    </bal-carousel>
+  </div>
+
+  <bal-text size="small" space="top">space, htmlRole und bal-carousel-item color</bal-text>
+  <div *ngFor="let space of carouselSpaces" class="mb-small">
+    <bal-text size="small" color="grey">space="{{ space }}"</bal-text>
+    <bal-carousel [space]="space" [itemsPerView]="3" controls="small" htmlRole="list">
+      <bal-carousel-item
+        *ngFor="let color of carouselItemColors"
+        [color]="color"
+        [label]="color"
+        htmlRole="listitem"
+      >
+        <div class="p-small border border-grey">{{ color }}</div>
+      </bal-carousel-item>
+    </bal-carousel>
+  </div>
+
+  <bal-text size="small" space="top">
+    htmlRole am Carousel und gesteuerter value (Ausdruck statt Literal)
+  </bal-text>
+  <bal-carousel
+    #showcaseCarousel
+    *ngFor="let role of carouselHtmlRoles"
+    [htmlRole]="role"
+    [value]="carouselValue"
+    controls="tabs"
+    [steps]="1"
+    [scrollY]="true"
+    [controlsOverflow]="true"
+    [inverted]="false"
+    [border]="true"
+    [fullHeight]="false"
+    (balChange)="onCarouselChange($event)"
+  >
+    <bal-carousel-item
+      #showcaseCarouselItem
+      label="Erstes"
+      href="#"
+      elementType="button"
+      (balFocus)="onCarouselItemFocus()"
+      (balBlur)="onCarouselItemBlur()"
+    >
+      <div class="bg-green-2 p-small">htmlRole="{{ role || 'default' }}" — Slide 1</div>
+    </bal-carousel-item>
+    <bal-carousel-item label="Zweites">
+      <div class="bg-green-3 p-small">Slide 2</div>
+    </bal-carousel-item>
+  </bal-carousel>
+
+  <bal-stack space="small" class="mt-x-small">
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="previousSlide()">previous()</bal-button>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="nextSlide()">next()</bal-button>
+    <bal-button size="small" color="text" (balClick)="logContainerId()">getContainerId()</bal-button>
+    <bal-button size="small" color="text" (balClick)="focusCarouselItem()">item.setFocus()</bal-button>
+  </bal-stack>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-hint"
+  title="bal-hint"
+  subtitle="small, closeLabel — mit bal-hint-title und bal-hint-text"
+>
+  <bal-stack alignment="center" space="small">
+    <bal-text size="small">Default hint, no props</bal-text>
+    <bal-hint>
+      <bal-hint-title>Titel</bal-hint-title>
+      <bal-hint-text>Erklärender Text zum Feld.</bal-hint-text>
+    </bal-hint>
+  </bal-stack>
+
+  <bal-stack alignment="center" space="small" class="mt-small">
+    <bal-text size="small">small + closeLabel</bal-text>
+    <bal-hint #showcaseHint [small]="true" closeLabel="Schliessen">
+      <bal-hint-title>Kleiner Hinweis</bal-hint-title>
+      <bal-hint-text>Dieser Hinweis nutzt die kompakte Variante.</bal-hint-text>
+    </bal-hint>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="presentHint()">present()</bal-button>
+    <bal-button size="small" color="text" (balClick)="dismissHint()">dismiss()</bal-button>
+  </bal-stack>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-tooltip"
+  title="bal-tooltip"
+  subtitle="placement, offset, contentWidth — reference zeigt auf die id des Auslösers"
+>
+  <div class="flex flex-wrap gap-normal">
+    <div *ngFor="let placement of tooltipPlacements" class="p-normal">
+      <bal-button [id]="'tooltip-trigger-' + placement" size="small" color="info" [outlined]="true">
+        placement="{{ placement }}"
+      </bal-button>
+      <bal-tooltip
+        [reference]="'tooltip-trigger-' + placement"
+        [placement]="placement"
+        [offset]="8"
+        [contentWidth]="200"
+        (balWillAnimate)="onTooltipAnimate($event)"
+      >
+        Tooltip {{ placement }}
+      </bal-tooltip>
+    </div>
+  </div>
+
+  <div class="p-normal">
+    <bal-button id="tooltip-trigger-demo" size="small">Default tooltip (demo)</bal-button>
+    <bal-tooltip #showcaseTooltip reference="tooltip-trigger-demo">Standard-Tooltip</bal-tooltip>
+  </div>
+
+  <bal-stack space="small">
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="updateTooltip()">
+      present() + update()
+    </bal-button>
+    <bal-button size="small" color="text" (balClick)="dismissTooltip()">dismiss()</bal-button>
+  </bal-stack>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-popup"
+  title="bal-popup"
+  subtitle="variant, placement, arrow, backdrop, closable — der Auslöser koppelt über das DOM-Attribut bal-popup"
+>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let variant of popupVariants">
+      <bal-button [attr.bal-popup]="'popup-' + variant" size="small" color="info" [outlined]="true">
+        variant="{{ variant }}"
+      </bal-button>
+      <bal-popup
+        [id]="'popup-' + variant"
+        [variant]="variant"
+        [label]="'Popup ' + variant"
+        [closable]="true"
+        [backdrop]="true"
+        [backdropDismiss]="true"
+      >
+        <bal-text size="small">Inhalt der Variante {{ variant }}</bal-text>
+      </bal-popup>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">placement</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let placement of popupPlacements">
+      <bal-button [attr.bal-popup]="'popup-placement-' + placement" size="small">
+        {{ placement }}
+      </bal-button>
+      <bal-popup
+        [id]="'popup-placement-' + placement"
+        [placement]="placement"
+        [arrow]="true"
+        [offset]="8"
+        [contentWidth]="180"
+        label="Platzierung"
+      >
+        <bal-text size="small">{{ placement }}</bal-text>
+      </bal-popup>
+    </div>
+  </div>
+
+  <div class="mt-small">
+    <bal-button bal-popup="popup-default" size="small" color="primary">Default popup</bal-button>
+    <bal-popup #showcasePopup id="popup-default" (balWillAnimate)="onPopupAnimate($event)">
+      <bal-text size="small">Popup ohne weitere Props</bal-text>
+    </bal-popup>
+    <bal-button size="small" color="text" (balClick)="togglePopup()">toggle()</bal-button>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-popover"
+  title="bal-popover"
+  subtitle="position, arrow, backdrop, hover, tooltip, hint — bal-popover-content kennt color und radius"
+>
+  <bal-popover #showcasePopover [arrow]="true" (balChange)="onPopoverChange($event)">
+    <bal-button bal-popover-trigger="true" size="small" color="info" [outlined]="true">
+      Default popover
+    </bal-button>
+    <bal-popover-content>
+      <bal-text size="small">Inhalt ohne weitere Props</bal-text>
+    </bal-popover-content>
+  </bal-popover>
+
+  <bal-stack space="small" class="mt-x-small">
+    <bal-button size="small" color="text" (balClick)="togglePopover()">toggle()</bal-button>
+    <bal-button size="small" color="text" (balClick)="presentPopover()">present()</bal-button>
+    <bal-button size="small" color="text" (balClick)="dismissPopover()">dismiss()</bal-button>
+  </bal-stack>
+
+  <bal-text size="small" space="top">position</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-popover *ngFor="let placement of popoverPlacements" [position]="placement" [arrow]="true">
+      <bal-button bal-popover-trigger="true" size="small">{{ placement }}</bal-button>
+      <bal-popover-content>
+        <bal-text size="small">position="{{ placement }}"</bal-text>
+      </bal-popover-content>
+    </bal-popover>
+  </div>
+
+  <bal-text size="small" space="top">bal-popover-content color</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-popover *ngFor="let color of popoverContentColors" [arrow]="true">
+      <bal-button bal-popover-trigger="true" size="small">color="{{ color }}"</bal-button>
+      <bal-popover-content [color]="color" [contentWidth]="220">
+        <bal-text size="small">Inhalt in {{ color }}</bal-text>
+      </bal-popover-content>
+    </bal-popover>
+  </div>
+
+  <bal-text size="small" space="top">bal-popover-content radius</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-popover *ngFor="let radius of popoverContentRadii">
+      <bal-button bal-popover-trigger="true" size="small">{{ radius }}</bal-button>
+      <bal-popover-content [radius]="radius" [noShadow]="false" [spaceless]="false" [contentMinWidth]="160">
+        <bal-text size="small">radius="{{ radius }}"</bal-text>
+      </bal-popover-content>
+    </bal-popover>
+  </div>
+
+  <bal-text size="small" space="top">hover, tooltip, hint, backdrop, mobileTop</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-popover [hover]="true" [tooltip]="true" [arrow]="true">
+      <bal-button bal-popover-trigger="true" size="small">hover + tooltip</bal-button>
+      <bal-popover-content>
+        <bal-text size="small">Erscheint beim Darüberfahren</bal-text>
+      </bal-popover-content>
+    </bal-popover>
+    <bal-popover [hint]="true" [arrow]="true">
+      <bal-button bal-popover-trigger="true" size="small">hint</bal-button>
+      <bal-popover-content><bal-text size="small">Hint-Variante</bal-text></bal-popover-content>
+    </bal-popover>
+    <bal-popover [backdrop]="true" [mobileTop]="true" [offsetX]="4" [offsetY]="4" [padding]="8">
+      <bal-button bal-popover-trigger="true" size="small">backdrop + mobileTop</bal-button>
+      <bal-popover-content [mobileTop]="true" [scrollable]="200" [expanded]="false">
+        <bal-text size="small">Mit Hintergrund</bal-text>
+      </bal-popover-content>
+    </bal-popover>
+  </div>
+
+  <bal-text size="small" color="info" space="top">Letztes Ereignis: {{ lastEvent || '—' }}</bal-text>
+</app-showcase-section>

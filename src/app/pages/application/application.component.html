@@ -1,0 +1,620 @@
+<div class="container is-compact my-large">
+  <bal-heading level="h1" visualLevel="h2" space="bottom">Antrag Hausratversicherung</bal-heading>
+
+  <!--
+    Shape 2: a steps group used purely as a selection strip. The items carry no
+    content of their own — the panel below is rendered from `activeStep`.
+    The items themselves are generated from an *ngFor over WIZARD_STEPS.
+  -->
+  <bal-steps
+    #wizardSteps
+    color="primary"
+    [clickable]="true"
+    [value]="activeStep"
+    (balChange)="onStepsChange($event)"
+  >
+    <bal-step-item
+      #firstStepItem
+      *ngFor="let step of steps; trackBy: trackStep; let i = index"
+      [value]="step.value"
+      [label]="step.label"
+      [done]="i < stepIndex"
+      (balNavigate)="onStepNavigate($event)"
+    ></bal-step-item>
+  </bal-steps>
+
+  <bal-progress-bar background="grey" color="primary" [value]="progress" class="mt-small"></bal-progress-bar>
+
+  <bal-form #wizardForm [novalidate]="true" formClass="mt-large" [formGroup]="form">
+    <bal-card color="white" [border]="true" space="medium">
+      <bal-card-title>{{ steps[stepIndex].label }}</bal-card-title>
+      <bal-card-content>
+        <!-- ======================= Step 1: person ======================= -->
+        <bal-form-grid *ngIf="activeStep === 'person'">
+          <bal-form-col size="full">
+            <bal-field>
+              <bal-field-label>Anrede</bal-field-label>
+              <bal-field-control>
+                <!-- interface="button": first of two places this value appears. -->
+                <bal-radio-group interface="button" formControlName="salutation" name="salutation">
+                  <bal-radio
+                    #salutationRadio
+                    value="ms"
+                    (balChange)="onSalutationRadioChange($event)"
+                  >
+                    Frau
+                  </bal-radio>
+                  <bal-radio value="mr">Herr</bal-radio>
+                  <bal-radio value="none">Keine Angabe</bal-radio>
+                </bal-radio-group>
+              </bal-field-control>
+              <bal-field-message color="">Die Anrede erscheint auf allen Dokumenten.</bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field [required]="true">
+              <bal-field-label [required]="true" weight="bold">Vorname</bal-field-label>
+              <bal-field-control>
+                <bal-input
+                  formControlName="firstName"
+                  name="firstName"
+                  placeholder="Vorname"
+                  autocomplete="given-name"
+                  [required]="true"
+                ></bal-input>
+              </bal-field-control>
+              <bal-field-message color="danger">
+                <span *ngIf="hasError('firstName', 'required')">Pflichtfeld</span>
+                <span *ngIf="hasError('firstName', 'minlength')">Mindestens zwei Zeichen</span>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field [required]="true">
+              <bal-field-label [required]="true">Nachname</bal-field-label>
+              <bal-field-control>
+                <bal-input
+                  formControlName="lastName"
+                  name="lastName"
+                  placeholder="Nachname"
+                  autocomplete="family-name"
+                  [required]="true"
+                ></bal-input>
+              </bal-field-control>
+              <bal-field-message color="danger">
+                <span *ngIf="hasError('lastName', 'required')">Pflichtfeld</span>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field [required]="true">
+              <bal-field-label [required]="true">E-Mail</bal-field-label>
+              <bal-field-hint subject="E-Mail-Adresse">
+                An diese Adresse senden wir die Offerte und später die Police.
+              </bal-field-hint>
+              <bal-field-control>
+                <bal-input
+                  #emailInput
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  autocorrect="off"
+                  formControlName="email"
+                  name="email"
+                  placeholder="name@example.ch"
+                  [required]="true"
+                  (balInput)="onEmailInput($event)"
+                ></bal-input>
+              </bal-field-control>
+              <bal-field-message color="danger">
+                <span *ngIf="hasError('email', 'required')">Pflichtfeld</span>
+                <span *ngIf="hasError('email', 'email')">Keine gültige E-Mail-Adresse</span>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Telefon</bal-field-label>
+              <bal-field-control iconRight="call">
+                <bal-input
+                  type="tel"
+                  inputmode="tel"
+                  autocomplete="tel"
+                  textAlign="left"
+                  formControlName="phone"
+                  name="phone"
+                  placeholder="079 123 45 67"
+                ></bal-input>
+              </bal-field-control>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Geburtsdatum</bal-field-label>
+              <bal-field-control>
+                <bal-date
+                  #birthDate
+                  formControlName="birthDate"
+                  name="birthDate"
+                  placeholder="TT.MM.JJJJ"
+                  [triggerIcon]="true"
+                  [closeOnSelect]="true"
+                  (balChange)="onBirthDateChange($event)"
+                ></bal-date>
+              </bal-field-control>
+              <bal-field-message color="">Format TT.MM.JJJJ</bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-stack layout="vertical" space="x-small">
+              <bal-label size="small" weight="regular">Hilfsmittel</bal-label>
+              <bal-button-group direction="column">
+                <bal-button size="small" color="info" [outlined]="true" (balClick)="focusEmail()">
+                  E-Mail fokussieren
+                </bal-button>
+                <bal-button size="small" color="info" [outlined]="true" (balClick)="focusSalutation()">
+                  Anrede fokussieren
+                </bal-button>
+                <bal-button size="small" color="info" [outlined]="true" (balClick)="toggleBirthDate()">
+                  Kalender umschalten
+                </bal-button>
+              </bal-button-group>
+            </bal-stack>
+          </bal-form-col>
+        </bal-form-grid>
+
+        <!-- ======================= Step 2: object ======================= -->
+        <bal-form-grid *ngIf="activeStep === 'object'">
+          <bal-form-col size="half">
+            <bal-field [required]="true">
+              <bal-field-label [required]="true">Strasse und Nummer</bal-field-label>
+              <bal-field-control>
+                <bal-input
+                  formControlName="street"
+                  name="street"
+                  placeholder="Strasse"
+                  autocomplete="street-address"
+                  [required]="true"
+                ></bal-input>
+              </bal-field-control>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-form-grid>
+              <bal-form-col size="one-third">
+                <bal-field [required]="true">
+                  <bal-field-label>PLZ</bal-field-label>
+                  <bal-field-control>
+                    <bal-input
+                      formControlName="postalCode"
+                      name="postalCode"
+                      inputmode="numeric"
+                      placeholder="4051"
+                      autocomplete="postal-code"
+                      [maxLength]="4"
+                      [required]="true"
+                    ></bal-input>
+                  </bal-field-control>
+                </bal-field>
+              </bal-form-col>
+              <bal-form-col size="two-thirds">
+                <bal-field [required]="true">
+                  <bal-field-label>Ort</bal-field-label>
+                  <bal-field-control>
+                    <bal-input
+                      formControlName="city"
+                      name="city"
+                      placeholder="Basel"
+                      autocomplete="address-level2"
+                      [required]="true"
+                    ></bal-input>
+                  </bal-field-control>
+                </bal-field>
+              </bal-form-col>
+            </bal-form-grid>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field [required]="true">
+              <bal-field-label [required]="true">Kanton</bal-field-label>
+              <bal-field-control>
+                <bal-select
+                  #cantonSelect
+                  formControlName="canton"
+                  name="canton"
+                  placeholder="Kanton wählen"
+                  filter="includes"
+                  (balChange)="onCantonChange($event)"
+                >
+                  <!--
+                    bal-select-option renders its visible text from its children,
+                    not from the label attribute — both are required.
+                  -->
+                  <bal-select-option
+                    *ngFor="let canton of cantons; trackBy: trackCanton"
+                    [value]="canton.value"
+                    [label]="canton.label"
+                  >
+                    {{ canton.label }}
+                  </bal-select-option>
+                </bal-select>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="openCantonSelect()">Liste öffnen</bal-button>
+                <bal-button size="small" color="link" (balClick)="clearCantonSelect()">Leeren</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Wohnfläche</bal-field-label>
+              <bal-field-control>
+                <bal-number-input
+                  #livingSpace
+                  formControlName="livingSpace"
+                  name="livingSpace"
+                  suffix="m²"
+                  [decimal]="0"
+                  [onlyPositive]="true"
+                  placeholder="90"
+                  (balChange)="onLivingSpaceChange($event)"
+                ></bal-number-input>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="focusLivingSpace()">Fokussieren</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Zimmer</bal-field-label>
+              <bal-field-control>
+                <bal-input-stepper
+                  #roomStepper
+                  formControlName="rooms"
+                  name="rooms"
+                  [min]="1"
+                  [max]="12"
+                  [steps]="0.5"
+                  (balIncrease)="onRoomsIncrease($event)"
+                  (balDecrease)="onRoomsDecrease($event)"
+                ></bal-input-stepper>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="blurRoomStepper()">Fokus entfernen</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>
+                Versicherungssumme
+                <bal-hint #sumHint [small]="true">
+                  <bal-hint-title>Versicherungssumme</bal-hint-title>
+                  <bal-hint-text>
+                    Richtwert: rund CHF 30’000 pro Zimmer bei durchschnittlichem
+                    Einrichtungsstandard.
+                  </bal-hint-text>
+                </bal-hint>
+              </bal-field-label>
+              <bal-field-control>
+                <bal-input-slider
+                  #sumSlider
+                  formControlName="insuredSum"
+                  name="insuredSum"
+                  [min]="40000"
+                  [max]="300000"
+                  [step]="20000"
+                  [hasTicks]="true"
+                  (balChange)="onSumChange($event)"
+                ></bal-input-slider>
+              </bal-field-control>
+              <bal-field-message color="">
+                CHF {{ form.value.insuredSum | number: '1.0-0' }}
+                <bal-button size="small" color="link" (balClick)="focusSumSlider()">Fokussieren</bal-button>
+                <bal-button size="small" color="link" (balClick)="presentSumHint()">Hinweis zeigen</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="full">
+            <bal-field>
+              <bal-field-label>Objekttyp</bal-field-label>
+              <bal-field-control>
+                <!--
+                  interface="tile" with *ngFor generated bal-radio children. Each tile
+                  needs the documented bal-stack / bal-content / bal-radio-icon body.
+                -->
+                <bal-radio-group
+                  #buildingTypeGroup
+                  interface="tile"
+                  [columns]="3"
+                  [columnsTablet]="2"
+                  [columnsMobile]="1"
+                  formControlName="buildingType"
+                  name="buildingType"
+                  (balChange)="onBuildingTypeChange($event)"
+                >
+                  <!--
+                    interface/colSize repeated per item: bal-radio-group only pushes
+                    these onto children that exist when it loads, and *ngFor children
+                    arrive afterwards. See docs/FINDINGS.md.
+                  -->
+                  <bal-radio
+                    *ngFor="let type of buildingTypes; trackBy: trackBuildingType"
+                    [value]="type.value"
+                    interface="tile"
+                    [attr.col-size]="3"
+                    [attr.col-size-tablet]="2"
+                    [attr.col-size-mobile]="1"
+                  >
+                    <bal-stack layout="vertical" align="center">
+                      <bal-icon [svg]="type.svg" size="large" color="auto"></bal-icon>
+                      <bal-content align="center">
+                        <bal-label size="large">{{ type.label }}</bal-label>
+                        <bal-text size="small">{{ type.description }}</bal-text>
+                      </bal-content>
+                      <bal-radio-icon></bal-radio-icon>
+                    </bal-stack>
+                  </bal-radio>
+                </bal-radio-group>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="resetBuildingType()">Zurücksetzen</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+        </bal-form-grid>
+
+        <!-- ======================= Step 3: coverage ======================= -->
+        <bal-form-grid *ngIf="activeStep === 'coverage'">
+          <bal-form-col size="full">
+            <bal-field>
+              <bal-field-label>Deckungen</bal-field-label>
+              <bal-field-control>
+                <!-- interface="button" checkbox group with *ngFor generated children. -->
+                <bal-checkbox-group
+                  #coverageGroup
+                  interface="button"
+                  formControlName="coverages"
+                  name="coverages"
+                  (balChange)="onCoveragesChange($event)"
+                >
+                  <bal-checkbox
+                    *ngFor="let option of coverageOptions; trackBy: trackCoverage"
+                    [value]="option.value"
+                    interface="button"
+                  >
+                    {{ option.label }} — CHF {{ option.premium }}
+                  </bal-checkbox>
+                </bal-checkbox-group>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="selectAllCoverages()">Alle wählen</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Selbstbehalt</bal-field-label>
+              <bal-field-control>
+                <bal-segment
+                  #deductibleSegment
+                  [expanded]="true"
+                  formControlName="deductible"
+                  (balChange)="onDeductibleChange($event)"
+                >
+                  <bal-segment-item
+                    #firstDeductibleItem
+                    *ngFor="let deductible of deductibles"
+                    [value]="deductible.value"
+                    [label]="deductible.label"
+                  >
+                    {{ deductible.hint }}
+                  </bal-segment-item>
+                </bal-segment>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="focusFirstDeductible()">
+                  Erste Option fokussieren
+                </bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="half">
+            <bal-field>
+              <bal-field-label>Zahlweise</bal-field-label>
+              <bal-field-control>
+                <bal-segment [vertical]="true" formControlName="paymentInterval">
+                  <bal-segment-item value="yearly" label="Jährlich"></bal-segment-item>
+                  <bal-segment-item value="half" label="Halbjährlich"></bal-segment-item>
+                  <bal-segment-item value="quarterly" label="Vierteljährlich"></bal-segment-item>
+                </bal-segment>
+              </bal-field-control>
+            </bal-field>
+          </bal-form-col>
+
+          <bal-form-col size="full">
+            <bal-field>
+              <bal-field-control>
+                <bal-checkbox-group>
+                  <bal-checkbox
+                    #newsletterCheckbox
+                    interface="switch"
+                    formControlName="newsletter"
+                    name="newsletter"
+                    (balChange)="onNewsletterChange($event)"
+                  >
+                    Ich möchte Produktneuigkeiten per E-Mail erhalten
+                  </bal-checkbox>
+                </bal-checkbox-group>
+              </bal-field-control>
+              <bal-field-message color="">
+                <bal-button size="small" color="link" (balClick)="focusNewsletter()">Fokussieren</bal-button>
+              </bal-field-message>
+            </bal-field>
+          </bal-form-col>
+        </bal-form-grid>
+
+        <!-- ======================= Step 4: summary ======================= -->
+        <div *ngIf="activeStep === 'summary'">
+          <bal-notification color="info" class="mb-normal">
+            <span>
+              Bitte prüfen Sie Ihre Angaben. Der Antrag wird erst nach dem Absenden verbindlich.
+            </span>
+          </bal-notification>
+
+          <bal-data [border]="true" [horizontal]="false">
+            <bal-data-item>
+              <bal-data-label>Antragsteller</bal-data-label>
+              <bal-data-value>{{ form.value.firstName }} {{ form.value.lastName }}</bal-data-value>
+            </bal-data-item>
+            <bal-data-item>
+              <bal-data-label>Adresse</bal-data-label>
+              <bal-data-value [multiline]="true">
+                {{ form.value.street }}, {{ form.value.postalCode }} {{ form.value.city }}
+                ({{ selectedCanton?.label }})
+              </bal-data-value>
+            </bal-data-item>
+            <bal-data-item>
+              <bal-data-label>Objekttyp</bal-data-label>
+              <bal-data-value>{{ selectedBuildingType?.label }}</bal-data-value>
+            </bal-data-item>
+            <bal-data-item>
+              <bal-data-label>Versicherungssumme</bal-data-label>
+              <bal-data-value>CHF {{ form.value.insuredSum | number: '1.0-0' }}</bal-data-value>
+            </bal-data-item>
+            <bal-data-item>
+              <bal-data-label>Jahresprämie</bal-data-label>
+              <bal-data-value>CHF {{ estimatedPremium | number: '1.0-0' }}</bal-data-value>
+            </bal-data-item>
+          </bal-data>
+
+          <bal-divider space="normal"></bal-divider>
+
+          <bal-accordion
+            #summaryAccordion
+            [card]="false"
+            (balChange)="onAccordionChange($event)"
+          >
+            <bal-accordion-summary>
+              <bal-stack alignment="center" space="small">
+                <bal-icon name="info-circle" size="large"></bal-icon>
+                <bal-content>
+                  <bal-label>Gewählte Deckungen anzeigen</bal-label>
+                  <bal-text size="small">
+                    {{ selectedCoverages.length }} von {{ coverageOptions.length }} Deckungen aktiv
+                  </bal-text>
+                </bal-content>
+                <bal-accordion-trigger
+                  variant="icon"
+                  openLabel="Anzeigen"
+                  closeLabel="Schliessen"
+                ></bal-accordion-trigger>
+              </bal-stack>
+            </bal-accordion-summary>
+            <bal-accordion-details>
+              <bal-text *ngFor="let coverage of selectedCoverages; trackBy: trackCoverage" size="small">
+                {{ coverage.label }} — CHF {{ coverage.premium }}
+              </bal-text>
+            </bal-accordion-details>
+          </bal-accordion>
+
+          <bal-notification *ngIf="submitted" color="success" class="mt-normal">
+            <span>Antrag übermittelt. Sie erhalten die Offerte innerhalb von zwei Arbeitstagen.</span>
+          </bal-notification>
+        </div>
+      </bal-card-content>
+
+      <!--
+        Both buttons are unconditional: a conditional child next to a static one
+        inside a design-system container gets relocated (docs/FINDINGS.md).
+      -->
+      <bal-card-actions position="right">
+        <bal-button color="text" [disabled]="stepIndex === 0" (balClick)="previous()">Zurück</bal-button>
+        <bal-button
+          color="primary"
+          [iconRight]="activeStep === 'summary' ? '' : 'nav-go-right'"
+          [elementType]="activeStep === 'summary' ? 'submit' : 'button'"
+          (balClick)="activeStep === 'summary' ? submit() : next()"
+        >
+          {{ activeStep === 'summary' ? 'Antrag absenden' : 'Weiter' }}
+        </bal-button>
+      </bal-card-actions>
+    </bal-card>
+  </bal-form>
+
+  <bal-stack space="small" class="mt-small">
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="selectSummaryStep()">
+      Direkt zur Übersicht
+    </bal-button>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="markFirstStepActive()">
+      Ersten Schritt aktivieren
+    </bal-button>
+    <bal-button size="small" color="text" (balClick)="toggleSummaryAccordion()">
+      Zusammenfassung umschalten
+    </bal-button>
+  </bal-stack>
+
+  <bal-text *ngIf="lastEvent" size="small" color="info" space="top">{{ lastEvent }}</bal-text>
+
+  <bal-divider space="large"></bal-divider>
+
+  <bal-heading level="h2" visualLevel="h4" space="bottom">Wie geht es weiter?</bal-heading>
+
+  <!--
+    Shape 1: the same steps family, but here each bal-step-item carries its own
+    panel content as children. The library toggles the panels itself.
+  -->
+  <bal-steps color="green" [clickable]="true" value="offer">
+    <bal-step-item value="offer" label="Offerte" [done]="true">
+      <bal-text>
+        Wir prüfen Ihre Angaben und erstellen eine unverbindliche Offerte.
+      </bal-text>
+    </bal-step-item>
+    <bal-step-item value="check" label="Prüfung">
+      <bal-text>
+        Unsere Underwriter prüfen das Risiko und melden sich bei Rückfragen.
+      </bal-text>
+    </bal-step-item>
+    <bal-step-item value="policy" label="Police">
+      <bal-text>Sie erhalten die Police elektronisch und per Post.</bal-text>
+    </bal-step-item>
+    <bal-step-item value="archive" label="Archiv" [disabled]="true">
+      <bal-text>Nach Ablauf wird der Vertrag archiviert.</bal-text>
+    </bal-step-item>
+  </bal-steps>
+
+  <bal-divider space="large"></bal-divider>
+
+  <bal-heading level="h2" visualLevel="h4" space="bottom">Häufige Fragen</bal-heading>
+
+  <bal-list [border]="true" size="small" [accordionOneLevel]="true">
+    <bal-list-item *ngFor="let entry of faq; trackBy: trackFaq" [accordion]="true">
+      <bal-list-item-accordion-head icon="plus">
+        <bal-list-item-content>
+          <bal-list-item-title>{{ entry.question }}</bal-list-item-title>
+        </bal-list-item-content>
+      </bal-list-item-accordion-head>
+      <bal-list-item-accordion-body contentSpace="normal">
+        <bal-text size="small">{{ entry.answer }}</bal-text>
+      </bal-list-item-accordion-body>
+    </bal-list-item>
+  </bal-list>
+
+  <bal-stack space="small" class="mt-normal">
+    <bal-button color="text" routerLink="/">Zurück zur Übersicht</bal-button>
+  </bal-stack>
+</div>

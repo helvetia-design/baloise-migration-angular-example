@@ -1,0 +1,206 @@
+<app-showcase-section
+  anchor="bal-button"
+  title="bal-button"
+  subtitle="color, size, elementType, target, plus the boolean modifiers"
+>
+  <bal-button>Default button, no props</bal-button>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <bal-button
+      *ngFor="let color of buttonColors"
+      [color]="color"
+      (balClick)="onButtonClick($event)"
+      (balFocus)="onButtonFocus()"
+      (balBlur)="onButtonBlur()"
+      (balDidRender)="onButtonDidRender()"
+    >
+      {{ color }}
+    </bal-button>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-button size="small">size="small"</bal-button>
+    <bal-button size="">size="" (default)</bal-button>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-button *ngFor="let elementType of buttonElementTypes" [elementType]="elementType" color="info">
+      elementType="{{ elementType }}"
+    </bal-button>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-button href="https://design.baloise.dev" target="_blank" rel="noopener" color="link">
+      target="_blank"
+    </bal-button>
+    <bal-button href="/showcase" target="_self" color="link">target="_self"</bal-button>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-button [disabled]="true">disabled</bal-button>
+    <bal-button [loading]="true">loading</bal-button>
+    <bal-button [outlined]="true" color="info">outlined</bal-button>
+    <bal-button [flat]="true">flat</bal-button>
+    <bal-button [rounded]="true">rounded</bal-button>
+    <bal-button [square]="true" icon="plus" a11yLabel="Hinzufügen"></bal-button>
+    <bal-button [expanded]="true">expanded</bal-button>
+    <bal-button [shadow]="true">shadow</bal-button>
+    <bal-button [isActive]="true">isActive</bal-button>
+    <bal-button [noWrap]="true">noWrap</bal-button>
+    <bal-button icon="edit" iconRight="nav-go-right" [iconTurn]="true">icon + iconRight</bal-button>
+  </div>
+
+  <div class="bg-primary p-x-small mt-small">
+    <bal-button [inverted]="true" color="light">inverted</bal-button>
+  </div>
+
+  <bal-text size="small" color="info" space="top">Letztes Ereignis: {{ lastButtonEvent || '—' }}</bal-text>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-button-group"
+  title="bal-button-group"
+  subtitle="position, direction, reverse"
+>
+  <bal-button-group>
+    <bal-button color="info">Default group</bal-button>
+    <bal-button>Zweiter</bal-button>
+  </bal-button-group>
+
+  <div *ngFor="let position of buttonGroupPositions" class="mt-x-small border border-grey p-x-small">
+    <bal-text size="small" color="grey">position="{{ position || 'default' }}"</bal-text>
+    <bal-button-group [position]="position">
+      <bal-button color="info">A</bal-button>
+      <bal-button>B</bal-button>
+    </bal-button-group>
+  </div>
+
+  <div *ngFor="let direction of buttonGroupDirections" class="mt-x-small border border-grey p-x-small">
+    <bal-text size="small" color="grey">direction="{{ direction }}"</bal-text>
+    <bal-button-group [direction]="direction">
+      <bal-button color="info">A</bal-button>
+      <bal-button>B</bal-button>
+    </bal-button-group>
+  </div>
+
+  <div class="mt-x-small border border-grey p-x-small">
+    <bal-text size="small" color="grey">reverse</bal-text>
+    <bal-button-group [reverse]="true">
+      <bal-button color="info">Erster im Markup</bal-button>
+      <bal-button>Zweiter im Markup</bal-button>
+    </bal-button-group>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section anchor="bal-close" title="bal-close" subtitle="size, inverted">
+  <bal-stack alignment="center" space="small">
+    <bal-close (click)="onClose()"></bal-close>
+    <bal-text size="small" color="grey">no props</bal-text>
+  </bal-stack>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <div *ngFor="let size of closeSizes" class="border border-grey p-x-small">
+      <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+      <bal-close [size]="size" (click)="onClose()"></bal-close>
+    </div>
+    <div class="bg-primary p-x-small">
+      <bal-close [inverted]="true" (click)="onClose()"></bal-close>
+    </div>
+  </div>
+
+  <bal-text size="small" color="info" space="top">{{ closeCount }}× geschlossen</bal-text>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-icon"
+  title="bal-icon"
+  subtitle="color, size, tile, tileColor, svg, turn, inline — baked in and registered names"
+>
+  <bal-icon></bal-icon>
+  <bal-text size="small" color="grey">Default icon, no props (renders nothing visible)</bal-text>
+
+  <bal-text size="small" space="top">Namen aus dem eingebauten Standard-Set</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div
+      *ngFor="let name of defaultIconNames"
+      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+      style="min-width: 170px"
+    >
+      <bal-icon [name]="name"></bal-icon>
+      <bal-text size="small">{{ name }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">
+    Namen, die erst durch <code>provideBaloiseDesignSystem({{ '{' }} defaults: {{ '{' }} icons {{ '}' }} {{ '}' }})</code>
+    auflösbar sind
+  </bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div
+      *ngFor="let name of registeredIconNames"
+      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+      style="min-width: 190px"
+    >
+      <bal-icon [name]="name"></bal-icon>
+      <bal-text size="small">{{ name }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">color</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <div
+      *ngFor="let color of iconColors"
+      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+      style="min-width: 190px"
+    >
+      <bal-icon name="info-circle" [color]="color"></bal-icon>
+      <bal-text size="small">{{ color || 'default' }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">size</bal-text>
+  <div class="flex flex-wrap gap-small align-items-center">
+    <div
+      *ngFor="let size of iconSizes"
+      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+      style="min-width: 170px"
+    >
+      <bal-icon name="star-full" [size]="size"></bal-icon>
+      <bal-text size="small">{{ size || 'default' }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">tile + tileColor</bal-text>
+  <div class="flex flex-wrap gap-small align-items-center">
+    <div
+      *ngFor="let tileColor of iconTileColors"
+      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+      style="min-width: 170px"
+    >
+      <bal-icon name="home" [tile]="true" [tileColor]="tileColor"></bal-icon>
+      <bal-text size="small">{{ tileColor || 'default' }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">
+    Brand-Icons über <code>svg</code> mit <code>color="auto"</code>
+  </bal-text>
+  <div class="flex flex-wrap gap-small align-items-center">
+    <bal-icon [svg]="brandIcons.car" color="auto" size="xx-large"></bal-icon>
+    <bal-icon [svg]="brandIcons.building" color="auto" size="x-large"></bal-icon>
+    <bal-icon [svg]="brandIcons.household" color="auto" size="large"></bal-icon>
+    <bal-icon [svg]="brandIcons.carCrashWithAnimal" color="auto" size="xx-large"></bal-icon>
+  </div>
+
+  <bal-text size="small" space="top">Zustände</bal-text>
+  <div class="flex flex-wrap gap-small align-items-center">
+    <bal-icon name="edit" [turn]="true"></bal-icon>
+    <bal-icon name="edit" [inline]="true"></bal-icon>
+    <bal-icon name="edit" [disabled]="true"></bal-icon>
+    <bal-icon name="edit" [invalid]="true"></bal-icon>
+    <bal-icon name="edit" [attr.hovered]="true" colorHovered="success"></bal-icon>
+    <bal-icon name="edit" [attr.pressed]="true" colorPressed="danger"></bal-icon>
+    <bal-icon name="edit" [shadow]="true"></bal-icon>
+    <span class="bg-primary p-x-small"><bal-icon name="edit" [inverted]="true"></bal-icon></span>
+  </div>
+</app-showcase-section>

@@ -1,0 +1,254 @@
+<app-showcase-section
+  anchor="bal-notification"
+  title="bal-notification"
+  subtitle="color, light, noIcon"
+>
+  <bal-notification><span>Default notification, no props</span></bal-notification>
+
+  <div class="mt-small">
+    <bal-notification *ngFor="let color of notificationColors" [color]="color" class="mb-x-small">
+      <span>color="{{ color || 'default' }}"</span>
+    </bal-notification>
+  </div>
+
+  <bal-notification color="info" [light]="true" class="mb-x-small">
+    <span>light</span>
+  </bal-notification>
+  <bal-notification color="danger" [noIcon]="true">
+    <span>noIcon</span>
+  </bal-notification>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-toast"
+  title="bal-toast"
+  subtitle="color, closable, duration — deklarativ und über BalToastService"
+>
+  <bal-toast message="Default toast, no props"></bal-toast>
+
+  <bal-text size="small" space="top">color, deklarativ</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-toast *ngFor="let color of toastColors" [color]="color" [message]="'Toast ' + color"></bal-toast>
+  </div>
+
+  <bal-text size="small" space="top">closable + Ereignis + Methoden</bal-text>
+  <bal-toast
+    #inlineToast
+    color="info"
+    message="Mit Schliessen-Knopf"
+    [closable]="true"
+    [duration]="0"
+    (balClose)="onToastClose($event)"
+  ></bal-toast>
+  <bal-stack space="small" class="mt-x-small">
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="closeInlineToast()">close()</bal-button>
+    <bal-button size="small" color="text" (balClick)="closeInlineToastIn()">closeIn(2000)</bal-button>
+  </bal-stack>
+
+  <bal-text size="small" space="top">BalToastService.create()</bal-text>
+  <bal-button-group>
+    <bal-button *ngFor="let color of toastColors" size="small" [color]="color" (balClick)="showToast(color)">
+      {{ color }}
+    </bal-button>
+  </bal-button-group>
+  <bal-button-group>
+    <bal-button size="small" color="text" (balClick)="dismissToasts()">dismissAll()</bal-button>
+  </bal-button-group>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-snackbar"
+  title="bal-snackbar"
+  subtitle="color, icon, subject, action — deklarativ und über BalSnackbarService"
+>
+  <bal-snackbar message="Default snackbar, no props"></bal-snackbar>
+
+  <bal-text size="small" space="top">color, deklarativ</bal-text>
+  <div class="flex flex-wrap gap-small">
+    <bal-snackbar
+      *ngFor="let color of snackbarColors"
+      [color]="color"
+      [subject]="color"
+      [message]="'Snackbar ' + color"
+      icon="info-circle"
+    ></bal-snackbar>
+  </div>
+
+  <bal-text size="small" space="top">action + Ereignisse + Methoden</bal-text>
+  <bal-snackbar
+    #inlineSnackbar
+    color="success"
+    subject="Mit Aktion"
+    message="Aktion und Schliessen auswerten"
+    icon="check"
+    action="Rückgängig"
+    [duration]="0"
+    (balClose)="onSnackbarClose($event)"
+    (balAction)="onSnackbarAction($event)"
+  ></bal-snackbar>
+  <bal-stack space="small" class="mt-x-small">
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="closeInlineSnackbar()">close()</bal-button>
+    <bal-button size="small" color="text" (balClick)="closeInlineSnackbarIn()">closeIn(2000)</bal-button>
+  </bal-stack>
+
+  <bal-text size="small" space="top">BalSnackbarService.create()</bal-text>
+  <bal-button-group>
+    <bal-button
+      *ngFor="let color of snackbarColors"
+      size="small"
+      [color]="color"
+      (balClick)="showSnackbar(color)"
+    >
+      {{ color }}
+    </bal-button>
+  </bal-button-group>
+  <bal-button-group>
+    <bal-button size="small" color="text" (balClick)="dismissSnackbars()">dismissAll()</bal-button>
+  </bal-button-group>
+
+  <bal-text size="small" space="top">bal-notices — der Container, in dem die Meldungen landen</bal-text>
+  <bal-notices interface="toast" container="compact" [attr.animated]="true"></bal-notices>
+  <bal-notices interface="snackbar" container="fluid" [attr.animated]="true"></bal-notices>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-modal"
+  title="bal-modal"
+  subtitle="space, isClosable, hasBackdrop, backdropDismiss, modalWidth — deklarativ und über BalModalService"
+>
+  <bal-text size="small">BalModalService mit jedem space-Wert</bal-text>
+  <bal-button-group>
+    <bal-button
+      *ngFor="let space of modalSpaces"
+      size="small"
+      color="info"
+      [outlined]="true"
+      (balClick)="showModal(space)"
+    >
+      space="{{ space || 'default' }}"
+    </bal-button>
+  </bal-button-group>
+
+  <bal-text size="small" space="top">Deklaratives bal-modal mit seinen Methoden und Ereignissen</bal-text>
+  <bal-stack space="small">
+    <bal-button size="small" color="primary" (balClick)="openInlineModal()">open()</bal-button>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="presentInlineModal()">present()</bal-button>
+    <bal-button size="small" color="text" (balClick)="closeInlineModal()">close()</bal-button>
+    <bal-button size="small" color="text" (balClick)="dismissInlineModal()">dismiss()</bal-button>
+  </bal-stack>
+
+  <bal-modal
+    #showcaseModal
+    space="medium"
+    [isClosable]="true"
+    [hasBackdrop]="true"
+    [backdropDismiss]="true"
+    [focusTrap]="true"
+    [modalWidth]="520"
+    dataTestId="showcase-modal"
+    (balModalWillPresent)="onModalWillPresent()"
+    (balModalDidPresent)="onModalDidPresent()"
+    (balModalWillDismiss)="onModalWillDismiss()"
+    (balModalDidDismiss)="onModalDidDismiss()"
+  >
+    <bal-modal-header>Deklaratives Modal</bal-modal-header>
+    <bal-modal-body>
+      <bal-text size="small">
+        Dieses Modal steht im Template und wird über seine Instanzmethoden gesteuert.
+      </bal-text>
+      <bal-button-group position="right">
+        <bal-button color="text" size="small" (balClick)="closeInlineModal()">Schliessen</bal-button>
+      </bal-button-group>
+    </bal-modal-body>
+  </bal-modal>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-spinner"
+  title="bal-spinner"
+  subtitle="color, variation, small, inverted, deactivated"
+>
+  <bal-spinner></bal-spinner>
+  <bal-text size="small" color="grey">Default spinner, no props</bal-text>
+
+  <bal-text size="small" space="top">variation</bal-text>
+  <div class="flex flex-wrap gap-normal align-items-center">
+    <div *ngFor="let variation of spinnerVariations" class="flex align-items-center gap-x-small">
+      <bal-spinner [variation]="variation"></bal-spinner>
+      <bal-text size="small">{{ variation }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">color</bal-text>
+  <div class="flex flex-wrap gap-normal align-items-center">
+    <div
+      *ngFor="let color of spinnerColors"
+      class="flex align-items-center gap-x-small p-x-small"
+      [class.bg-primary]="color === 'white'"
+    >
+      <bal-spinner [color]="color"></bal-spinner>
+      <bal-text size="small" [color]="color === 'white' ? 'white' : 'grey'">{{ color }}</bal-text>
+    </div>
+  </div>
+
+  <bal-text size="small" space="top">small, inverted, deactivated</bal-text>
+  <div class="flex flex-wrap gap-normal align-items-center">
+    <bal-spinner [small]="true"></bal-spinner>
+    <span class="bg-primary p-x-small"><bal-spinner [inverted]="true"></bal-spinner></span>
+    <bal-spinner [deactivated]="true"></bal-spinner>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-progress-bar"
+  title="bal-progress-bar"
+  subtitle="background, color, value"
+>
+  <bal-progress-bar></bal-progress-bar>
+  <bal-text size="small" color="grey">Default progress bar, no props</bal-text>
+
+  <bal-text size="small" space="top">background</bal-text>
+  <div *ngFor="let background of progressBackgrounds" class="mb-x-small">
+    <bal-text size="small" color="grey">background="{{ background }}"</bal-text>
+    <bal-progress-bar [background]="background" [value]="60"></bal-progress-bar>
+  </div>
+
+  <bal-text size="small" space="top">color</bal-text>
+  <div *ngFor="let color of progressColors" class="mb-x-small">
+    <bal-text size="small" color="grey">color="{{ color }}"</bal-text>
+    <bal-progress-bar background="grey" [color]="color" [value]="70"></bal-progress-bar>
+  </div>
+
+  <bal-text size="small" space="top">value aus dem Zustand: {{ progressValue }}%</bal-text>
+  <bal-progress-bar background="grey" color="primary" [value]="progressValue"></bal-progress-bar>
+  <bal-button-group>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="setProgress(25)">25%</bal-button>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="setProgress(50)">50%</bal-button>
+    <bal-button size="small" color="info" [outlined]="true" (balClick)="setProgress(100)">100%</bal-button>
+  </bal-button-group>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-sheet"
+  title="bal-sheet"
+  subtitle="containerSize — der klebende Abschlussbalken"
+>
+  <bal-text size="small" color="grey">
+    bal-sheet ist <code>position: fixed</code> und heftet sich an den unteren Rand des
+    Viewports. Damit die Varianten hier nebeneinander sichtbar bleiben, steckt jede in
+    einem Wrapper mit <code>transform</code>, der einen eigenen Containing Block bildet.
+  </bal-text>
+  <div *ngFor="let container of sheetContainers" class="mb-small">
+    <bal-text size="small" color="grey">containerSize="{{ container || 'default' }}"</bal-text>
+    <div class="showcase-sheet-frame">
+      <bal-sheet [containerSize]="container">
+        <bal-stack alignment="center" space="auto">
+          <bal-text size="small">containerSize="{{ container || 'default' }}"</bal-text>
+          <bal-button size="small" color="primary">Weiter</bal-button>
+        </bal-stack>
+      </bal-sheet>
+    </div>
+  </div>
+
+  <bal-text size="small" color="info" space="top">Letztes Ereignis: {{ lastEvent || '—' }}</bal-text>
+</app-showcase-section>

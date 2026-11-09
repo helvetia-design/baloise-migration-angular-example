@@ -1,0 +1,336 @@
+<div class="container my-large">
+  <bal-stack layout="horizontal" alignment="center" space="auto" class="mb-medium">
+    <bal-content>
+      <bal-heading level="h1" visualLevel="h2" space="none">Guten Tag, Andrea</bal-heading>
+      <bal-text color="grey" space="none">Ihre Verträge auf einen Blick</bal-text>
+    </bal-content>
+    <bal-button-group position="right">
+      <bal-button color="info" [outlined]="true" icon="help-customer-support" (balClick)="notifyAdvisor()">
+        Beratung anfragen
+      </bal-button>
+      <!--
+        Popup trigger: the coupling is a literal DOM attribute read via
+        closest('[bal-popup]'), not the typed balPopup @Input().
+      -->
+      <bal-button bal-popup="contact-popup" color="primary" icon="call">Kontakt</bal-button>
+    </bal-button-group>
+  </bal-stack>
+
+  <bal-notification *ngIf="!noticeDismissed" color="warning" class="mb-normal">
+    <bal-stack space="auto" alignment="center">
+      <span>
+        <strong>Prämienanpassung 2026. </strong>
+        Für die Gebäudeversicherung liegt eine neue Offerte bereit.
+      </span>
+      <bal-close size="small" (click)="dismissNotice()"></bal-close>
+    </bal-stack>
+  </bal-notification>
+
+  <bal-heading level="h2" visualLevel="h4" space="bottom">Meine Verträge</bal-heading>
+
+  <div class="grid is-multiline">
+    <div
+      class="col is-one-third-desktop is-half-tablet is-full-mobile"
+      *ngFor="let contract of contracts; trackBy: trackContract"
+    >
+      <!-- bal-card color driven by data; a literal color="white" sits further down. -->
+      <bal-card [color]="contract.cardColor" space="medium">
+        <bal-card-content>
+          <bal-stack layout="vertical" space="small">
+            <bal-stack alignment="center" space="small">
+              <bal-icon [svg]="contract.svg" color="auto" size="x-large"></bal-icon>
+              <bal-content>
+                <bal-card-subtitle [bold]="true" color="blue">Ihr Produkt</bal-card-subtitle>
+                <bal-card-title>{{ contract.product }}</bal-card-title>
+                <bal-card-subtitle>Police {{ contract.policyNumber }}</bal-card-subtitle>
+              </bal-content>
+            </bal-stack>
+
+            <bal-tag-group>
+              <bal-tag [color]="statusColor(contract)" size="small">{{ contract.status }}</bal-tag>
+              <bal-tag color="grey" size="small" [light]="true">
+                CHF {{ contract.premium | number: '1.0-0' }}
+              </bal-tag>
+            </bal-tag-group>
+
+            <bal-content>
+              <bal-text size="small" color="grey" space="none">Deckungsgrad</bal-text>
+              <bal-progress-bar
+                background="grey"
+                [color]="contract.coverage === 100 ? 'green' : 'yellow'"
+                [value]="contract.coverage"
+              ></bal-progress-bar>
+            </bal-content>
+          </bal-stack>
+        </bal-card-content>
+        <bal-card-button icon="document" href="/application">Vertragsdetails</bal-card-button>
+      </bal-card>
+    </div>
+  </div>
+
+  <bal-divider color="grey-light" space="large"></bal-divider>
+
+  <div class="grid is-multiline">
+    <div class="col is-half-desktop is-full-tablet">
+      <!-- Literal card colour, next to the data driven ones above. -->
+      <bal-card color="white" [border]="true">
+        <bal-card-title>
+          Stammdaten
+          <bal-button-group position="right">
+            <bal-button size="small" color="info" [outlined]="true" icon="edit" [square]="true"></bal-button>
+          </bal-button-group>
+        </bal-card-title>
+        <bal-card-content>
+          <!--
+            Every child of this bal-data comes from the *ngFor. A statically
+            declared sibling next to the loop would be relocated to the front of
+            the list as soon as bal-data re-renders — see docs/FINDINGS.md.
+          -->
+          <bal-data [border]="true">
+            <bal-data-item *ngFor="let fact of facts; trackBy: trackFact">
+              <bal-data-label>{{ fact.label }}</bal-data-label>
+              <bal-data-value
+                [multiline]="fact.multiline"
+                [editable]="fact.editable"
+                (balClick)="onFactClick(fact.label)"
+              >
+                {{ fact.value }}
+              </bal-data-value>
+            </bal-data-item>
+          </bal-data>
+
+          <!-- A second, fully static bal-data for the computed premium row. -->
+          <bal-data [horizontal]="false">
+            <bal-data-item>
+              <bal-data-label>
+                Jahresprämie
+                <bal-hint #coverageHint [small]="true">
+                  <bal-hint-title>Wie setzt sich die Prämie zusammen?</bal-hint-title>
+                  <bal-hint-text>
+                    Die Jahresprämie ist die Summe aller aktiven Verträge inklusive
+                    Stempelabgabe. Rabatte werden auf der Police separat ausgewiesen.
+                  </bal-hint-text>
+                </bal-hint>
+              </bal-data-label>
+              <bal-data-value>CHF {{ totalPremium | number: '1.0-0' }}</bal-data-value>
+            </bal-data-item>
+          </bal-data>
+
+          <div>
+            <bal-text *ngIf="editedFact" size="small" color="info" space="top">
+              Zuletzt angetippt: {{ editedFact }}
+            </bal-text>
+          </div>
+        </bal-card-content>
+        <bal-card-actions>
+          <bal-button color="link" icon="info-circle" (balClick)="toggleCoverageHint()">
+            Prämien-Hinweis umschalten
+          </bal-button>
+        </bal-card-actions>
+      </bal-card>
+    </div>
+
+    <div class="col is-half-desktop is-full-tablet">
+      <bal-card color="white" [border]="true">
+        <bal-card-title>Dokumente</bal-card-title>
+        <bal-card-content>
+          <bal-list [border]="true" size="large">
+            <bal-list-item
+              *ngFor="let entry of documents; trackBy: trackDocument"
+              [clickable]="!entry.disabled"
+              [disabled]="entry.disabled"
+              href="#"
+              (balNavigate)="onDocumentNavigate($event, entry)"
+            >
+              <bal-list-item-icon>
+                <bal-icon [name]="entry.icon"></bal-icon>
+              </bal-list-item-icon>
+              <bal-list-item-content>
+                <bal-list-item-title>{{ entry.title }}</bal-list-item-title>
+                <bal-list-item-subtitle>{{ entry.meta }}</bal-list-item-subtitle>
+              </bal-list-item-content>
+              <bal-list-item-icon [right]="true">
+                <bal-icon name="download" size="small"></bal-icon>
+              </bal-list-item-icon>
+            </bal-list-item>
+          </bal-list>
+
+          <!-- Accordion list item, in its own fully static list. -->
+          <bal-list [border]="true" size="small" [accordionOneLevel]="true" class="mt-small">
+            <bal-list-item #archiveItem [accordion]="true">
+              <bal-list-item-accordion-head
+                icon="nav-go-down"
+                (balAccordionChange)="onArchiveAccordionChange($event)"
+              >
+                <bal-list-item-content>
+                  <bal-list-item-title>Archiv</bal-list-item-title>
+                </bal-list-item-content>
+              </bal-list-item-accordion-head>
+              <bal-list-item-accordion-body contentSpace="normal" contentAlignment="start">
+                <bal-text size="small">
+                  Ältere Dokumente werden zehn Jahre aufbewahrt und können über die Agentur
+                  angefordert werden.
+                </bal-text>
+              </bal-list-item-accordion-body>
+            </bal-list-item>
+          </bal-list>
+
+          <div>
+            <bal-text *ngIf="openedDocument" size="small" color="info" space="top">
+              Geöffnet: {{ openedDocument }}
+            </bal-text>
+          </div>
+        </bal-card-content>
+        <bal-card-actions position="right">
+          <bal-button size="small" color="info" [outlined]="true" (balClick)="revealArchive()">
+            Archiv öffnen
+          </bal-button>
+          <bal-button size="small" color="text" (balClick)="hideArchive()">Archiv schliessen</bal-button>
+        </bal-card-actions>
+      </bal-card>
+    </div>
+  </div>
+
+  <bal-divider borderStyle="dashed" color="grey" space="large"></bal-divider>
+
+  <bal-stack alignment="start" space="small" class="mb-normal" [fitContent]="true">
+    <bal-heading level="h2" visualLevel="h4" space="none">Für Sie ausgewählt</bal-heading>
+    <bal-badge color="purple">{{ teasers.length }}</bal-badge>
+    <bal-button
+      id="coverage-tooltip-trigger"
+      size="small"
+      color="info"
+      [outlined]="true"
+      icon="info-circle"
+      [square]="true"
+      a11yLabel="Hinweis zu Empfehlungen"
+      (balClick)="showCoverageTooltip()"
+    ></bal-button>
+    <bal-tooltip
+      #coverageTooltip
+      reference="coverage-tooltip-trigger"
+      placement="bottom"
+      [offset]="8"
+      (balDidAnimate)="onTooltipAnimate($event)"
+    >
+      Empfehlungen basieren auf Ihren bestehenden Verträgen.
+    </bal-tooltip>
+    <div>
+      <bal-button *ngIf="tooltipShown" size="small" color="text" (balClick)="hideCoverageTooltip()">
+        Hinweis ausblenden
+      </bal-button>
+    </div>
+  </bal-stack>
+
+  <!--
+    Loop generated carousel items: the children come from an *ngFor over
+    PRODUCT_TEASERS rather than from a hand written list of siblings.
+  -->
+  <bal-carousel
+    #teaserCarousel
+    interface="card"
+    controls="tabs"
+    itemsPerView="auto"
+    space="normal"
+    [steps]="1"
+    [controlsSticky]="true"
+    [value]="carouselIndex"
+    (balChange)="onCarouselChange($event)"
+  >
+    <bal-carousel-item
+      #firstTeaserItem
+      *ngFor="let teaser of teasers; trackBy: trackTeaser"
+      [label]="teaser.label"
+      [color]="teaser.color"
+      href="#"
+      htmlRole="tab"
+      (balNavigate)="onTeaserNavigate($event, teaser.label)"
+    >
+      <bal-card style="width: 100%" [fullheight]="true" color="white" [border]="true">
+        <bal-card-title>{{ teaser.label }}</bal-card-title>
+        <bal-card-content>
+          <bal-text size="small">{{ teaser.description }}</bal-text>
+        </bal-card-content>
+      </bal-card>
+    </bal-carousel-item>
+  </bal-carousel>
+
+  <bal-stack space="small" class="mt-small">
+    <bal-button size="small" color="info" [outlined]="true" icon="nav-go-left" (balClick)="previousTeaser()">
+      Zurück
+    </bal-button>
+    <bal-button size="small" color="info" [outlined]="true" icon="nav-go-right" (balClick)="nextTeaser()">
+      Weiter
+    </bal-button>
+    <bal-button size="small" color="text" (balClick)="focusFirstTeaser()">Ersten Teaser fokussieren</bal-button>
+    <bal-text size="small" color="grey">Aktuell: {{ highlightedTeaser }}</bal-text>
+  </bal-stack>
+
+  <bal-divider space="large"></bal-divider>
+
+  <div class="grid is-multiline">
+    <div class="col is-half-desktop is-full-tablet">
+      <bal-card color="white" [border]="true" [fullheight]="true">
+        <bal-card-title>Letzte Aktivitäten</bal-card-title>
+        <bal-card-content>
+          <bal-list [border]="true" size="small">
+            <bal-list-item *ngFor="let activity of activities; trackBy: trackActivity">
+              <bal-list-item-icon>
+                <bal-badge [color]="activity.badgeColor" size="large">{{ activity.badge }}</bal-badge>
+              </bal-list-item-icon>
+              <bal-list-item-content>
+                <bal-list-item-title>{{ activity.title }}</bal-list-item-title>
+                <bal-list-item-subtitle>{{ activity.subtitle }}</bal-list-item-subtitle>
+              </bal-list-item-content>
+              <bal-list-item-icon [right]="true">
+                <bal-icon name="nav-go-right" size="x-small"></bal-icon>
+              </bal-list-item-icon>
+            </bal-list-item>
+          </bal-list>
+        </bal-card-content>
+      </bal-card>
+    </div>
+
+    <div class="col is-half-desktop is-full-tablet">
+      <bal-card color="purple-light" [fullheight]="true">
+        <bal-card-content>
+          <bal-stack layout="vertical" alignment="center" space="large">
+            <bal-icon [svg]="claimIcon" color="auto" size="xx-large"></bal-icon>
+            <bal-content align="center">
+              <bal-heading level="h3" visualLevel="x-large">Schaden passiert?</bal-heading>
+              <bal-text>
+                Melden Sie Ihren Schaden online — Sie erhalten innerhalb von 24 Stunden eine
+                Rückmeldung.
+              </bal-text>
+            </bal-content>
+            <bal-button color="primary" routerLink="/claim">Schaden melden</bal-button>
+          </bal-stack>
+        </bal-card-content>
+      </bal-card>
+    </div>
+  </div>
+
+  <bal-text *ngIf="lastActivity" size="small" color="info" space="top">{{ lastActivity }}</bal-text>
+</div>
+
+<bal-popup
+  #contactPopup
+  id="contact-popup"
+  variant="drawer"
+  label="Kontakt"
+  placement="bottom-end"
+  [backdrop]="true"
+  [backdropDismiss]="true"
+  [closable]="true"
+  [offset]="8"
+  (balChange)="onContactPopupChange($event)"
+>
+  <bal-stack layout="vertical" space="small">
+    <bal-text>Agentur Basel-Stadt</bal-text>
+    <bal-text size="small" color="grey">Aeschengraben 21, 4051 Basel</bal-text>
+    <bal-button-group direction="column">
+      <bal-button color="primary" icon="call" [expanded]="true">+41 61 000 00 00</bal-button>
+      <bal-button color="text" (balClick)="closeContactPopup()">Schliessen</bal-button>
+    </bal-button-group>
+  </bal-stack>
+</bal-popup>

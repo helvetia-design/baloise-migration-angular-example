@@ -1,0 +1,103 @@
+<bal-app #shell class="has-sticky-footer" [animated]="true" (balAppReady)="onAppReady($event)">
+  <header>
+    <bal-navbar #navbar interface="app" container="fluid">
+      <bal-navbar-brand
+        logoBrand="baloise"
+        [logoClickable]="true"
+        logoLabel="Zur Übersicht"
+        (balNavigate)="onBrandNavigate($event)"
+      >
+        Versicherungsportal
+      </bal-navbar-brand>
+      <bal-navbar-menu>
+        <bal-navbar-menu-start>
+          <!--
+            Navigation strip: the tab items hold no content of their own. The page
+            under <main> is rendered by the router based on application state.
+          -->
+          <bal-tabs
+            interface="navbar"
+            context="navbar"
+            [value]="activeRoute"
+            (balChange)="onNavigationChange($event)"
+          >
+            <bal-tab-item
+              *ngFor="let item of navigation; trackBy: trackNavigationItem"
+              [value]="item.route"
+              [label]="item.label"
+              [icon]="item.icon"
+              [bubble]="!!item.bubble"
+              (balNavigate)="onNavigationItemNavigate($event)"
+            ></bal-tab-item>
+          </bal-tabs>
+        </bal-navbar-menu-start>
+        <bal-navbar-menu-end>
+          <bal-button-group>
+            <bal-popover #languagePopover [arrow]="true" position="bottom-end">
+              <bal-button
+                bal-popover-trigger="true"
+                color="light"
+                [inverted]="true"
+                icon="web"
+                a11yLabel="Sprache wählen"
+                (balClick)="toggleLanguageMenu()"
+              >
+                {{ activeLanguage | uppercase }}
+              </bal-button>
+              <bal-popover-content color="white" radius="normal">
+                <bal-list [border]="true" size="small">
+                  <bal-list-item
+                    *ngFor="let language of languages; trackBy: trackLanguage"
+                    [clickable]="true"
+                    [selected]="language.code === activeLanguage"
+                    (click)="selectLanguage(language.code)"
+                  >
+                    <bal-list-item-content>
+                      <bal-list-item-title>{{ language.label }}</bal-list-item-title>
+                    </bal-list-item-content>
+                  </bal-list-item>
+                </bal-list>
+              </bal-popover-content>
+            </bal-popover>
+            <bal-button
+              color="light"
+              [inverted]="true"
+              [square]="true"
+              icon="menu-bars"
+              a11yLabel="Menü umschalten"
+              (balClick)="toggleNavbarMenu()"
+            ></bal-button>
+            <bal-button
+              color="light"
+              [inverted]="true"
+              icon="nav-go-down"
+              [iconTurn]="true"
+              a11yLabel="Zum Inhalt springen"
+              (balClick)="skipToContent()"
+            >
+              <span class="hidden-mobile">Zum Inhalt</span>
+            </bal-button>
+          </bal-button-group>
+        </bal-navbar-menu-end>
+      </bal-navbar-menu>
+    </bal-navbar>
+  </header>
+
+  <main>
+    <div #skipTarget tabindex="-1" class="app-skip-target"></div>
+    <router-outlet></router-outlet>
+  </main>
+
+  <bal-footer [showSocialMedia]="true" logoBrand="baloise">
+    <div class="container py-normal">
+      <bal-logo color="white" size="small"></bal-logo>
+      <bal-text size="small" space="top">
+        Referenzanwendung für das Baloise Design System — alle Daten sind fiktiv.
+        <span *ngIf="appIsReady" class="text-green" aria-live="polite"> Anwendung bereit.</span>
+      </bal-text>
+      <bal-text size="small">
+        <a class="link" routerLink="/showcase">Komponenten-Showcase öffnen</a>
+      </bal-text>
+    </div>
+  </bal-footer>
+</bal-app>

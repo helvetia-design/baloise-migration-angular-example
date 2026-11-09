@@ -1,0 +1,295 @@
+## Required components present in the app
+
+x bal-accordion — src/app/pages/application/application.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-app — src/app/app.component.html
+x bal-badge — src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-button — src/app/app.component.html, src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/action-section.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/feedback-section.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html, src/app/pages/showcase/sections/showcase-modal.component.ts, src/app/shared/claim-confirm-modal.component.ts
+x bal-card — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-carousel — src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+x bal-checkbox — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-close — src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/action-section.component.html
+x bal-content — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/layout-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-data — src/app/pages/application/application.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+x bal-date — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-divider — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/layout-section.component.html, src/app/pages/showcase/showcase.component.html
+x bal-dropdown — src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-file-upload — src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-footer — src/app/app.component.html
+x bal-form-grid — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-heading — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/layout-section.component.html, src/app/pages/showcase/sections/showcase-section.component.ts, src/app/pages/showcase/sections/typography-section.component.html, src/app/pages/showcase/showcase.component.html
+x bal-hint — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+x bal-icon — src/app/data/icons.ts, src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/action-section.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-input — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-input-slider — src/app/pages/application/application.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-input-stepper — src/app/pages/application/application.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-label — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html, src/app/pages/showcase/sections/typography-section.component.html
+x bal-list — src/app/app.component.html, src/app/pages/application/application.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-logo — src/app/app.component.html, src/app/pages/showcase/sections/layout-section.component.html
+x bal-modal — src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/feedback-section.component.html
+x bal-navbar — src/app/app.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-notification — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/feedback-section.component.html, src/app/pages/showcase/showcase.component.html, src/app/shared/claim-confirm-modal.component.ts
+x bal-number-input — src/app/pages/application/application.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-pagination — src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-popover — src/app/app.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-popup — src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+x bal-progress-bar — src/app/pages/application/application.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/feedback-section.component.html
+x bal-radio — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-segment — src/app/pages/application/application.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-select — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-shape — src/app/pages/showcase/sections/layout-section.component.html
+x bal-sheet — src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/feedback-section.component.html
+x bal-snackbar — src/app/pages/showcase/sections/feedback-section.component.html
+x bal-spinner — src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/feedback-section.component.html
+x bal-stack — src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/action-section.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/feedback-section.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/layout-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html, src/app/pages/showcase/showcase.component.html, src/app/shared/claim-confirm-modal.component.ts
+x bal-steps — src/app/pages/application/application.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-table — src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+x bal-tabs — src/app/app.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/navigation-section.component.html
+x bal-tag — src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-text — src/app/app.component.html, src/app/pages/application/application.component.html, src/app/pages/claim/claim.component.html, src/app/pages/dashboard/dashboard.component.html, src/app/pages/profile/profile.component.html, src/app/pages/showcase/sections/action-section.component.html, src/app/pages/showcase/sections/data-display-section.component.html, src/app/pages/showcase/sections/feedback-section.component.html, src/app/pages/showcase/sections/form-section.component.html, src/app/pages/showcase/sections/layout-section.component.html, src/app/pages/showcase/sections/navigation-section.component.html, src/app/pages/showcase/sections/showcase-modal.component.ts, src/app/pages/showcase/sections/showcase-section.component.ts, src/app/pages/showcase/sections/typography-section.component.html, src/app/pages/showcase/showcase.component.html, src/app/shared/claim-confirm-modal.component.ts
+x bal-textarea — src/app/pages/claim/claim.component.html, src/app/pages/showcase/sections/form-section.component.html
+x bal-toast — src/app/pages/showcase/sections/feedback-section.component.html
+x bal-tooltip — src/app/pages/dashboard/dashboard.component.html, src/app/pages/showcase/sections/data-display-section.component.html
+
+## Every tag used in the app (incl. child elements)
+
+bal-accordion
+bal-accordion-details
+bal-accordion-summary
+bal-accordion-trigger
+bal-app
+bal-badge
+bal-button
+bal-button-group
+bal-card
+bal-card-actions
+bal-card-button
+bal-card-content
+bal-card-subtitle
+bal-card-title
+bal-carousel
+bal-carousel-item
+bal-check
+bal-checkbox
+bal-checkbox-group
+bal-close
+bal-content
+bal-data
+bal-data-item
+bal-data-label
+bal-data-value
+bal-date
+bal-date-calendar
+bal-divider
+bal-dropdown
+bal-field
+bal-field-control
+bal-field-hint
+bal-field-label
+bal-field-message
+bal-file-upload
+bal-footer
+bal-form
+bal-form-col
+bal-form-grid
+bal-heading
+bal-hint
+bal-hint-text
+bal-hint-title
+bal-icon
+bal-input
+bal-input-group
+bal-input-slider
+bal-input-stepper
+bal-label
+bal-list
+bal-list-item
+bal-list-item-accordion-body
+bal-list-item-accordion-head
+bal-list-item-content
+bal-list-item-icon
+bal-list-item-subtitle
+bal-list-item-title
+bal-logo
+bal-modal
+bal-modal-body
+bal-modal-header
+bal-navbar
+bal-navbar-brand
+bal-navbar-menu
+bal-navbar-menu-end
+bal-navbar-menu-start
+bal-notices
+bal-notification
+bal-number-input
+bal-option
+bal-pagination
+bal-popover
+bal-popover-content
+bal-popup
+bal-progress-bar
+bal-radio
+bal-radio-group
+bal-radio-icon
+bal-segment
+bal-segment-item
+bal-select
+bal-select-option
+bal-shape
+bal-sheet
+bal-snackbar
+bal-spinner
+bal-stack
+bal-step-item
+bal-steps
+bal-switch
+bal-tab-item
+bal-table
+bal-tabs
+bal-tag
+bal-tag-group
+bal-text
+bal-textarea
+bal-time-input
+bal-toast
+bal-tooltip
+
+## Event coverage — every component that declares at least one bal* output
+
+x bal-accordion  declared: balChange, balWillAnimate, balDidAnimate  |  bound: balChange, balWillAnimate, balDidAnimate
+x bal-app  declared: balAppReady  |  bound: balAppReady
+x bal-button  declared: balClick, balNavigate, balFocus, balBlur, balDidRender  |  bound: balClick, balNavigate, balFocus, balBlur, balDidRender
+x bal-carousel  declared: balChange  |  bound: balChange
+x bal-carousel-item  declared: balNavigate, balFocus, balBlur  |  bound: balNavigate, balFocus, balBlur
+x bal-checkbox  declared: balFocus, balBlur, balChange  |  bound: balFocus, balBlur, balChange
+x bal-checkbox-group  declared: balChange, balFocus, balBlur  |  bound: balChange, balFocus, balBlur
+x bal-data-value  declared: balClick, balFocus, balBlur  |  bound: balClick, balFocus, balBlur
+x bal-date  declared: balInput, balChange, balWillAnimate, balDidAnimate, balBlur, balFocus, balInputClick, balIconClick  |  bound: balInput, balChange, balWillAnimate, balDidAnimate, balBlur, balFocus, balInputClick, balIconClick
+x bal-date-calendar  declared: balChange  |  bound: balChange
+x bal-dropdown  declared: balChange, balFocus, balBlur  |  bound: balChange, balFocus, balBlur
+x bal-field  declared: balFormControlDidLoad  |  bound: balFormControlDidLoad
+x bal-file-upload  declared: balChange, balFilesAdded, balFilesRemoved, balRejectedFile, balInputClick, balBlur, balFocus  |  bound: balChange, balFilesAdded, balFilesRemoved, balRejectedFile, balInputClick, balBlur, balFocus
+x bal-input  declared: balInput, balBlur, balKeyPress, balFocus, balChange  |  bound: balInput, balBlur, balKeyPress, balFocus, balChange
+x bal-input-slider  declared: balInput, balBlur, balKeyPress, balFocus, balChange  |  bound: balInput, balBlur, balKeyPress, balFocus, balChange
+x bal-input-stepper  declared: balChange, balInput, balIncrease, balDecrease, balFocus, balBlur  |  bound: balChange, balInput, balIncrease, balDecrease, balFocus, balBlur
+x bal-list-item  declared: balNavigate, balGroupStateChanged, balWillAnimate, balDidAnimate  |  bound: balNavigate, balGroupStateChanged, balWillAnimate, balDidAnimate
+x bal-list-item-accordion-head  declared: balAccordionChange  |  bound: balAccordionChange
+x bal-modal  declared: balModalDidPresent, balModalWillPresent, balModalWillDismiss, balModalDidDismiss  |  bound: balModalDidPresent, balModalWillPresent, balModalWillDismiss, balModalDidDismiss
+x bal-navbar-brand  declared: balNavigate, balWillAnimate, balDidAnimate  |  bound: balNavigate, balWillAnimate, balDidAnimate
+x bal-number-input  declared: balInput, balChange, balBlur, balFocus, balKeyPress  |  bound: balInput, balChange, balBlur, balFocus, balKeyPress
+x bal-option  declared: balOptionChange  |  bound: balOptionChange
+x bal-pagination  declared: balChange  |  bound: balChange
+x bal-popover  declared: balChange, balWillAnimate, balDidAnimate  |  bound: balChange, balWillAnimate, balDidAnimate
+x bal-popup  declared: balChange, balWillAnimate, balDidAnimate  |  bound: balChange, balWillAnimate, balDidAnimate
+x bal-radio  declared: balFocus, balBlur, balChange  |  bound: balFocus, balBlur, balChange
+x bal-radio-group  declared: balChange, balFocus, balBlur  |  bound: balChange, balFocus, balBlur
+x bal-segment  declared: balFocus, balBlur, balChange  |  bound: balFocus, balBlur, balChange
+x bal-select  declared: balChange, balInputClick, balInput, balBlur, balFocus, balCancel, balKeyPress  |  bound: balChange, balInputClick, balInput, balBlur, balFocus, balCancel, balKeyPress
+x bal-snackbar  declared: balClose, balAction  |  bound: balClose, balAction
+x bal-step-item  declared: balNavigate  |  bound: balNavigate
+x bal-steps  declared: balChange  |  bound: balChange
+x bal-tab-item  declared: balNavigate, balKeyDown  |  bound: balNavigate, balKeyDown
+x bal-tabs  declared: balChange, balWillAnimate, balDidAnimate  |  bound: balChange, balWillAnimate, balDidAnimate
+x bal-tag  declared: balCloseClick  |  bound: balCloseClick
+x bal-textarea  declared: balChange, balInput, balBlur, balKeyPress, balFocus  |  bound: balChange, balInput, balBlur, balKeyPress, balFocus
+x bal-time-input  declared: balInput, balChange, balBlur, balFocus, balKeyPress, balClick  |  bound: balInput, balChange, balBlur, balFocus, balKeyPress, balClick
+x bal-toast  declared: balClose  |  bound: balClose
+x bal-tooltip  declared: balWillAnimate, balDidAnimate  |  bound: balWillAnimate, balDidAnimate
+
+## Method coverage — every component that declares at least one instance method
+
+x bal-accordion  declared: dismiss, humanToggle, present, toggle  |  called: dismiss, humanToggle, present, toggle
+x bal-app  declared: setFocus  |  called: setFocus
+x bal-carousel  declared: getContainerId, next, previous  |  called: getContainerId, next, previous
+x bal-carousel-item  declared: setFocus  |  called: setFocus
+x bal-checkbox  declared: getInputElement, getOption, setBlur, setFocus, updateState  |  called: getInputElement, setFocus
+x bal-checkbox-group  declared: getOptionByValue, setValue  |  called: getOptionByValue, setValue
+x bal-date  declared: close, getInputElement, open, select, setBlur, setFocus, toggle  |  called: close, getInputElement, open, select, setFocus, toggle
+x bal-dropdown  declared: clear, close, getValue, open, select, setFocus  |  called: clear, close, open, select, setFocus
+x bal-file-upload  declared: clear, getInputElement, setBlur, setFocus  |  called: clear, getInputElement, setFocus
+x bal-form  declared: scrollToFirstInvalidField  |  called: scrollToFirstInvalidField
+x bal-hint  declared: dismiss, present, toggle  |  called: dismiss, present, toggle
+x bal-input  declared: getInputElement, setBlur, setFocus  |  called: getInputElement, setFocus
+x bal-input-slider  declared: getInputElement, setFocus  |  called: getInputElement, setFocus
+x bal-input-stepper  declared: getInputElement  |  called: getInputElement
+x bal-list-item  declared: dismiss, present, toggle  |  called: dismiss, present, toggle
+x bal-modal  declared: close, dismiss, onDidDismiss, onWillDismiss, open, present  |  called: close, dismiss, onDidDismiss, onWillDismiss, open, present
+x bal-navbar  declared: toggleMenu  |  called: toggleMenu
+x bal-navbar-brand  declared: toggle  |  called: toggle
+x bal-navbar-menu  declared: toggle  |  called: toggle
+x bal-number-input  declared: getInputElement, setBlur, setFocus  |  called: getInputElement, setFocus
+x bal-option  declared: select  |  called: select
+x bal-pagination  declared: next, previous  |  called: next, previous
+x bal-popover  declared: dismiss, present, toggle  |  called: dismiss, present, toggle
+x bal-popup  declared: _dismiss, _emitChange, _present, dismiss, present, setMinWidth, toggle  |  called: dismiss, present, toggle
+x bal-radio  declared: getInputElement, getOption, setBlur, setButtonTabindex, setFocus, updateState  |  called: getInputElement, setFocus
+x bal-radio-group  declared: getOptionByValue, setValue  |  called: getOptionByValue, setValue
+x bal-segment-item  declared: setFocus  |  called: setFocus
+x bal-select  declared: cancel, clear, close, getValue, open, select, setFocus  |  called: clear, close, open, select, setFocus
+x bal-snackbar  declared: close, closeIn  |  called: close, closeIn
+x bal-step-item  declared: getOptions, setActive  |  called: getOptions, setActive
+x bal-steps  declared: getOptionByValue, select  |  called: getOptionByValue, select
+x bal-tab-item  declared: getOptions, setActive, setTabId  |  called: getOptions, setActive, setTabId
+x bal-tabs  declared: closeAccordion, getOptionByValue, renderLine, select  |  called: closeAccordion, getOptionByValue, renderLine, select
+x bal-textarea  declared: getInputElement, setBlur, setFocus  |  called: getInputElement, setFocus
+x bal-time-input  declared: getInputElement, setBlur, setFocus  |  called: getInputElement, setFocus
+x bal-toast  declared: close, closeIn  |  called: close, closeIn
+x bal-tooltip  declared: dismiss, present, update  |  called: dismiss, present, update
+
+## Loop generated children — bal-* elements carrying *ngFor
+
+bal-tab-item  src/app/app.component.html
+bal-list-item  src/app/app.component.html
+bal-step-item  src/app/pages/application/application.component.html
+bal-select-option  src/app/pages/application/application.component.html
+bal-radio  src/app/pages/application/application.component.html
+bal-checkbox  src/app/pages/application/application.component.html
+bal-segment-item  src/app/pages/application/application.component.html
+bal-text  src/app/pages/application/application.component.html
+bal-list-item  src/app/pages/application/application.component.html
+bal-radio  src/app/pages/claim/claim.component.html
+bal-select-option  src/app/pages/claim/claim.component.html
+bal-tag  src/app/pages/claim/claim.component.html
+bal-checkbox  src/app/pages/claim/claim.component.html
+bal-data-item  src/app/pages/dashboard/dashboard.component.html
+bal-list-item  src/app/pages/dashboard/dashboard.component.html
+bal-carousel-item  src/app/pages/dashboard/dashboard.component.html
+bal-list-item  src/app/pages/dashboard/dashboard.component.html
+bal-tab-item  src/app/pages/profile/profile.component.html
+bal-option  src/app/pages/profile/profile.component.html
+bal-checkbox  src/app/pages/profile/profile.component.html
+bal-radio  src/app/pages/profile/profile.component.html
+bal-button  src/app/pages/showcase/sections/action-section.component.html
+bal-button  src/app/pages/showcase/sections/action-section.component.html
+bal-tag  src/app/pages/showcase/sections/data-display-section.component.html
+bal-tag  src/app/pages/showcase/sections/data-display-section.component.html
+bal-carousel-item  src/app/pages/showcase/sections/data-display-section.component.html
+bal-carousel  src/app/pages/showcase/sections/data-display-section.component.html
+bal-popover  src/app/pages/showcase/sections/data-display-section.component.html
+bal-popover  src/app/pages/showcase/sections/data-display-section.component.html
+bal-popover  src/app/pages/showcase/sections/data-display-section.component.html
+bal-notification  src/app/pages/showcase/sections/feedback-section.component.html
+bal-toast  src/app/pages/showcase/sections/feedback-section.component.html
+bal-button  src/app/pages/showcase/sections/feedback-section.component.html
+bal-snackbar  src/app/pages/showcase/sections/feedback-section.component.html
+bal-button  src/app/pages/showcase/sections/feedback-section.component.html
+bal-button  src/app/pages/showcase/sections/feedback-section.component.html
+bal-field  src/app/pages/showcase/sections/form-section.component.html
+bal-field  src/app/pages/showcase/sections/form-section.component.html
+bal-field  src/app/pages/showcase/sections/form-section.component.html
+bal-form-col  src/app/pages/showcase/sections/form-section.component.html
+bal-select-option  src/app/pages/showcase/sections/form-section.component.html
+bal-select-option  src/app/pages/showcase/sections/form-section.component.html
+bal-select-option  src/app/pages/showcase/sections/form-section.component.html
+bal-option  src/app/pages/showcase/sections/form-section.component.html
+bal-option  src/app/pages/showcase/sections/form-section.component.html
+bal-option  src/app/pages/showcase/sections/form-section.component.html
+bal-option  src/app/pages/showcase/sections/form-section.component.html
+bal-option  src/app/pages/showcase/sections/form-section.component.html
+bal-checkbox  src/app/pages/showcase/sections/form-section.component.html
+bal-radio  src/app/pages/showcase/sections/form-section.component.html
+bal-accordion  src/app/pages/showcase/sections/navigation-section.component.html
+bal-heading  src/app/pages/showcase/sections/typography-section.component.html
+bal-text  src/app/pages/showcase/sections/typography-section.component.html
+bal-text  src/app/pages/showcase/sections/typography-section.component.html
+bal-label  src/app/pages/showcase/sections/typography-section.component.html
+bal-label  src/app/pages/showcase/sections/typography-section.component.html

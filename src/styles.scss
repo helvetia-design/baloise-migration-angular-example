@@ -1,0 +1,16 @@
+// Baloise Design System global stylesheet.
+// Component styles are loaded lazily by the web components themselves; the
+// fundamentals below have to live in the application's global stylesheet.
+
+// Resets CSS for all browsers
+@use '@baloise/ds-styles/css/normalize.css';
+@use '@baloise/ds-styles/css/structure.css';
+
+// Custom font faces
+@use '@baloise/ds-styles/css/font.css';
+
+// Core CSS, always required
+@use '@baloise/ds-styles/css/core.css';
+
+// CSS utility classes
+@use '@baloise/ds-styles/css/utilities/all.css';

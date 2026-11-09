@@ -1,0 +1,206 @@
+<app-showcase-section
+  anchor="bal-stack"
+  title="bal-stack"
+  subtitle="layout, space, align/alignment, direction, px/py"
+>
+  <bal-stack class="mb-small">
+    <bal-text size="small">Default stack, no props</bal-text>
+    <bal-text size="small">Second child</bal-text>
+  </bal-stack>
+
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let layout of stackLayouts" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">layout="{{ layout || 'default' }}"</bal-text>
+      <bal-stack [layout]="layout" space="x-small">
+        <bal-text size="small">A</bal-text>
+        <bal-text size="small">B</bal-text>
+        <bal-text size="small">C</bal-text>
+      </bal-stack>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let space of stackSpaces" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">space="{{ space || 'default' }}"</bal-text>
+      <bal-stack [space]="space">
+        <bal-text size="small">A</bal-text>
+        <bal-text size="small">B</bal-text>
+      </bal-stack>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let padding of stackPaddings" class="border border-grey radius-normal">
+      <bal-text size="small" color="grey">px/py="{{ padding }}"</bal-text>
+      <bal-stack [px]="padding" [py]="padding" class="bg-grey-2">
+        <bal-text size="small">A</bal-text>
+      </bal-stack>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let alignment of stackAlignments" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">alignment="{{ alignment || 'default' }}"</bal-text>
+      <bal-stack [attr.alignment]="alignment" style="height: 60px">
+        <bal-text size="small">A</bal-text>
+        <bal-heading level="h5" space="none">B</bal-heading>
+      </bal-stack>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let direction of stackDirections" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">direction="{{ direction || 'default' }}"</bal-text>
+      <bal-stack [attr.direction]="direction" space="x-small" [useWrap]="true" [fitContent]="true">
+        <bal-text size="small">A</bal-text>
+        <bal-text size="small">B</bal-text>
+      </bal-stack>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-content"
+  title="bal-content"
+  subtitle="layout, direction, space, align, alignment"
+>
+  <bal-content class="mb-small">
+    <bal-text size="small">Default content, no props</bal-text>
+  </bal-content>
+
+  <div class="flex flex-wrap gap-small">
+    <div *ngFor="let layout of contentLayouts" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">layout="{{ layout || 'default' }}"</bal-text>
+      <bal-content [layout]="layout">
+        <bal-text size="small">Zeile 1</bal-text>
+        <bal-text size="small">Zeile 2</bal-text>
+      </bal-content>
+    </div>
+    <div *ngFor="let direction of contentDirections" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">direction="{{ direction || 'default' }}"</bal-text>
+      <bal-content [attr.direction]="direction">
+        <bal-text size="small">Zeile 1</bal-text>
+        <bal-text size="small">Zeile 2</bal-text>
+      </bal-content>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let space of contentSpaces" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">space="{{ space || 'default' }}"</bal-text>
+      <bal-content [space]="space">
+        <bal-text size="small">Zeile 1</bal-text>
+        <bal-text size="small">Zeile 2</bal-text>
+      </bal-content>
+    </div>
+    <div *ngFor="let align of contentAlignments" class="p-x-small border border-grey radius-normal" style="width: 160px">
+      <bal-text size="small" color="grey">align="{{ align || 'default' }}"</bal-text>
+      <bal-content [attr.align]="align">
+        <bal-text size="small">Zeile 1</bal-text>
+      </bal-content>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-divider"
+  title="bal-divider"
+  subtitle="layout, borderStyle, color, space"
+>
+  <bal-divider></bal-divider>
+  <bal-text size="small" color="grey">Default divider, no props</bal-text>
+
+  <div *ngFor="let borderStyle of dividerBorderStyles" class="mt-x-small">
+    <bal-text size="small" color="grey">borderStyle="{{ borderStyle || 'default' }}"</bal-text>
+    <bal-divider [borderStyle]="borderStyle" space="none"></bal-divider>
+  </div>
+
+  <div *ngFor="let color of dividerColors" class="mt-x-small">
+    <bal-text size="small" color="grey">color="{{ color }}"</bal-text>
+    <bal-divider [color]="color" space="none"></bal-divider>
+  </div>
+
+  <div *ngFor="let space of dividerSpaces" class="mt-x-small bg-grey-2">
+    <bal-text size="small" color="grey">space="{{ space || 'default' }}"</bal-text>
+    <bal-divider [space]="space" color="primary"></bal-divider>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let layout of dividerLayouts" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">layout="{{ layout || 'default' }}"</bal-text>
+      <bal-stack alignment="center" space="x-small">
+        <bal-text size="small">Links</bal-text>
+        <bal-divider [layout]="layout" color="primary" space="none"></bal-divider>
+        <bal-text size="small">Rechts</bal-text>
+      </bal-stack>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section anchor="bal-shape" title="bal-shape" subtitle="variation, color, rotation">
+  <div class="flex flex-wrap gap-small align-items-center">
+    <div class="p-x-small border border-grey radius-normal" style="width: 120px">
+      <bal-text size="small" color="grey">no props</bal-text>
+      <bal-shape></bal-shape>
+    </div>
+    <div
+      *ngFor="let variation of shapeVariations"
+      class="p-x-small border border-grey radius-normal"
+      style="width: 120px"
+    >
+      <bal-text size="small" color="grey">variation="{{ variation }}"</bal-text>
+      <bal-shape [variation]="variation" color="purple"></bal-shape>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small align-items-center mt-small">
+    <div
+      *ngFor="let color of shapeColors"
+      class="p-x-small border border-grey radius-normal"
+      style="width: 120px"
+    >
+      <bal-text size="small" color="grey">color="{{ color }}"</bal-text>
+      <bal-shape [color]="color"></bal-shape>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small align-items-center mt-small">
+    <div
+      *ngFor="let rotation of shapeRotations"
+      class="p-x-small border border-grey radius-normal"
+      style="width: 120px"
+    >
+      <bal-text size="small" color="grey">rotation="{{ rotation }}"</bal-text>
+      <bal-shape [rotation]="rotation" color="green" variation="2"></bal-shape>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section anchor="bal-logo" title="bal-logo" subtitle="color, size, brand, animated">
+  <div class="flex flex-wrap gap-small align-items-center">
+    <div class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">no props</bal-text>
+      <bal-logo></bal-logo>
+    </div>
+    <div
+      *ngFor="let color of logoColors"
+      class="p-x-small border border-grey radius-normal"
+      [class.bg-primary]="color === 'white'"
+    >
+      <bal-text size="small" [color]="color === 'white' ? 'white' : 'grey'">color="{{ color }}"</bal-text>
+      <bal-logo [color]="color"></bal-logo>
+    </div>
+    <div *ngFor="let size of logoSizes" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+      <bal-logo [size]="size"></bal-logo>
+    </div>
+    <div *ngFor="let brand of logoBrands" class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">brand="{{ brand || 'default' }}"</bal-text>
+      <bal-logo [brand]="brand"></bal-logo>
+    </div>
+    <div class="p-x-small border border-grey radius-normal">
+      <bal-text size="small" color="grey">animated</bal-text>
+      <bal-logo [animated]="true"></bal-logo>
+    </div>
+  </div>
+</app-showcase-section>

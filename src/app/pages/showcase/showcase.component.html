@@ -1,0 +1,32 @@
+<div class="container my-large">
+  <bal-heading level="h1" visualLevel="h2" space="bottom">Komponenten-Showcase</bal-heading>
+  <bal-text color="grey">
+    Jede Komponente einmal ohne Props und danach jeder Enum-Wert nebeneinander. Die
+    Kompositions-, Ereignis- und Methodenbeispiele leben auf den Portalseiten
+    <a class="link" routerLink="/">Übersicht</a>, <a class="link" routerLink="/application">Antrag</a>,
+    <a class="link" routerLink="/claim">Schaden melden</a> und
+    <a class="link" routerLink="/profile">Profil</a>.
+  </bal-text>
+
+  <bal-notification color="info" class="my-normal">
+    <span>
+      Alle Werte sind statisch. Die Seite rendert bei jedem Aufruf identisch — keine Zufallswerte,
+      keine Zeitabhängigkeit.
+    </span>
+  </bal-notification>
+
+  <bal-divider space="normal"></bal-divider>
+
+  <app-layout-section></app-layout-section>
+  <app-typography-section></app-typography-section>
+  <app-action-section></app-action-section>
+  <app-data-display-section></app-data-display-section>
+  <app-form-section></app-form-section>
+  <app-feedback-section></app-feedback-section>
+  <app-navigation-section></app-navigation-section>
+
+  <bal-divider space="large"></bal-divider>
+  <bal-stack space="small">
+    <bal-text size="small" color="grey">Ende des Showcase</bal-text>
+  </bal-stack>
+</div>

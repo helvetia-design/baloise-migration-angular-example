@@ -1,0 +1,91 @@
+<app-showcase-section
+  anchor="bal-heading"
+  title="bal-heading"
+  subtitle="level, visualLevel, color, space, subtitle, inverted"
+>
+  <bal-heading>Default heading, no props</bal-heading>
+
+  <div *ngFor="let level of headingLevels" class="mt-x-small">
+    <bal-heading [level]="level" space="none">level="{{ level }}"</bal-heading>
+  </div>
+
+  <div *ngFor="let visual of headingVisualLevels" class="mt-x-small">
+    <bal-heading level="h3" [visualLevel]="visual" space="none">visualLevel="{{ visual }}"</bal-heading>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <bal-heading *ngFor="let color of headingColors" level="h5" [color]="color" space="none">
+      color="{{ color || 'default' }}"
+    </bal-heading>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let space of headingSpaces" class="bg-grey-2 border border-grey">
+      <bal-heading level="h5" [space]="space">space="{{ space }}"</bal-heading>
+    </div>
+  </div>
+
+  <div class="mt-small">
+    <bal-heading level="h4" [subtitle]="true" space="none">subtitle</bal-heading>
+    <bal-heading level="h4" [noWrap]="true" space="none">noWrap</bal-heading>
+    <div class="bg-primary p-x-small mt-x-small">
+      <bal-heading level="h4" [inverted]="true" [shadow]="true" space="none">inverted + shadow</bal-heading>
+    </div>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-text"
+  title="bal-text"
+  subtitle="size, space, color, bold, inline, heading, inverted"
+>
+  <bal-text>Default text, no props</bal-text>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <bal-text *ngFor="let size of textSizes" [size]="size">size="{{ size || 'default' }}"</bal-text>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <div *ngFor="let space of textSpaces" class="bg-grey-2 border border-grey">
+      <bal-text [space]="space">space="{{ space }}"</bal-text>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    <bal-text *ngFor="let color of textColors" [color]="color">color="{{ color || 'default' }}"</bal-text>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-text [bold]="true">bold</bal-text>
+    <bal-text [inline]="true">inline</bal-text>
+    <bal-text [heading]="true">heading</bal-text>
+    <bal-text [noWrap]="true">noWrap</bal-text>
+  </div>
+  <div class="bg-primary p-x-small mt-x-small">
+    <bal-text [inverted]="true" [shadow]="true">inverted + shadow</bal-text>
+  </div>
+</app-showcase-section>
+
+<app-showcase-section
+  anchor="bal-label"
+  title="bal-label"
+  subtitle="weight, size, required, multiline, noWrap"
+>
+  <bal-label>Default label, no props</bal-label>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-label *ngFor="let weight of labelWeights" [weight]="weight">weight="{{ weight }}"</bal-label>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-label *ngFor="let size of labelSizes" [size]="size">size="{{ size || 'default' }}"</bal-label>
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small align-items-center">
+    <bal-label [required]="true">required</bal-label>
+    <bal-label [disabled]="true">disabled</bal-label>
+    <bal-label [invalid]="true">invalid</bal-label>
+    <bal-label [valid]="true">valid</bal-label>
+    <bal-label [readonly]="true">readonly</bal-label>
+  </div>
+</app-showcase-section>
