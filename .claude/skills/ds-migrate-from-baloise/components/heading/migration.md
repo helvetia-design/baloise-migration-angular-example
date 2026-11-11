@@ -1,0 +1,106 @@
+# heading
+
+Migrate every `bal-heading` usage to `ds-heading`. Init has already added the `@helvetia-design/*` packages. This task rewrites usages only.
+
+The legacy folder holds only `bal-heading`. It has no child tags. The component keeps its name. The old tag is `bal-heading`, the new tag is `ds-heading`.
+
+## 1. Scan
+
+`<project-root>` is the consumer project root that contains the app lockfile. When the skill is invoked from that root, use the current directory.
+
+```bash
+node <this-skill-directory>/scripts/scan-bal-heading.mjs <project-root>
+```
+
+The script prints one JSON object. `total` is the number of findings. `files` groups them by path. Each finding has `line` and `snippet`.
+
+The scan finds the tag and the `BalHeading` binding. It does not find type references such as `BalProps.BalHeadingLevel`, `BalProps.BalHeadingVisualLevel`, or `BalProps.BalHeadingColor`. Those resolve from the ambient `BalProps` namespace rather than an import, and `@helvetia-design/core` does not export the matching `HeadingLevel`, `HeadingVisualLevel`, or `HeadingColor` types yet, so there is nothing to rewrite them to. Leave them and check them by hand.
+
+Show that list to the user grouped by file (path, line, snippet) and end with the total count.
+
+Done when the user has seen every finding and the total. If `total` is 0, say there are no `bal-heading` usages to migrate and stop.
+
+## 2. Confirm
+
+Ask for one yes/no: rewrite every listed usage?
+
+On no, stop with the files unchanged.
+
+On yes, continue. Editing starts only after that answer.
+
+Done when the user has answered.
+
+## 3. Rewrite
+
+Edit each finding yourself, using the mapping below. Read the whole element when attributes continue past the snippet's first line. This step is finished when every finding matches the mapping.
+
+### Props
+
+| old (`bal-heading`)                                                                            | new (`ds-heading`)      | handling                                                                                                                                                                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `level="display"`, `"display-2"`, `"h1"`–`"h5"`, `"span"`, `"p"`                               | same                    | Copy as-is. These are the only values `ds-heading` still accepts for `level`.                                                                                                                                                                                                                 |
+| `level` holding a size token                                                                   | `level` + `visualLevel` | Legacy `level` also accepted size tokens, and decoupled the tag from the size. Split it per the table below so both the rendered tag and the font size stay the same. Report each split.                                                                                                      |
+| `visualLevel="display"`, `"display-2"`, `"h1"`–`"h5"`                                          | same                    | Copy as-is.                                                                                                                                                                                                                                                                                   |
+| `visualLevel` holding a size token                                                             | renamed size token      | Rename the value per the size-token table below. The tag is unaffected.                                                                                                                                                                                                                       |
+| `autoLevel`                                                                                    | `autoLevel`             | Same handling as `visualLevel`: semantic values copy as-is, size tokens are renamed.                                                                                                                                                                                                          |
+| `noWrap`                                                                                       | `noWrap`                | Copy as-is, in every form (`no-wrap`, `[noWrap]="x"`, `noWrap={x}`).                                                                                                                                                                                                                          |
+| `subtitle`                                                                                     | `subtitle`              | Copy as-is.                                                                                                                                                                                                                                                                                   |
+| `shadow`                                                                                       | `shadow`                | Copy as-is.                                                                                                                                                                                                                                                                                   |
+| `inverted`                                                                                     | `inverted`              | Copy as-is.                                                                                                                                                                                                                                                                                   |
+| `space="none"`, `"bottom"`, `"top"`, `"all"`                                                   | same                    | Copy as-is. Both components use the same four values. See the Report about the legacy default margin when `space` is unset.                                                                                                                                                                   |
+| `color` omitted, `color=""`, `color="primary"`, `color="info"` or `color="blue"`               | omit `color`            | `ds-heading` has no `color` prop. These legacy values all resolved to the default colour, so the visible colour does not change. Drop `color`, also in the `'…'`, `{"…"}`, and `{'…'}` forms.                                                                                                 |
+| `color="white"`                                                                                | `inverted`              | HTML and Angular: write `inverted="true"`. React: write `inverted`. When `inverted` is already true, drop `color` and keep it. When `inverted` is false, replace that false value with the true form and drop `color`. Do **not** write `color="inverted"`: `ds-heading` has no `color` prop. |
+| `color="success"` / `color="warning"` / `color="danger"`                                       | _(no equivalent value)_ | Drop `color`. The heading renders in the default colour. Do not pick a substitute. Report each one by file, line, and old value. Also drop the `'…'`, `{"…"}`, and `{'…'}` forms.                                                                                                             |
+| `[level]="x"`, `[attr.level]="x"`, `level={x}`, and the same for `visualLevel` and `autoLevel` | leave the binding       | Dynamic value. Do not guess the mapping. Leave the binding unchanged and list the file and line in the report, saying which values the caller must now pass.                                                                                                                                  |
+| `[color]="x"`, `[attr.color]="x"`, `color={x}`                                                 | remove the binding      | `ds-heading` has no `color` prop and the value cannot be mapped statically. Remove the binding and list the file and line in the report, so the caller can switch to `inverted` where the value was `white`.                                                                                  |
+
+Size tokens in `level` split across two props, because legacy `HEADING_TAGS` and `HEADING_SIZES` disagreed. `level="x-large"` rendered an `h2` at the size `h3` normally gets, so `level="h2"` alone would enlarge the text.
+
+| legacy `level` | new `level` | new `visualLevel` |
+| -------------- | ----------- | ----------------- |
+| `xxxxx-large`  | `h1`        | `5xl`             |
+| `xxxx-large`   | `h1`        | `4xl`             |
+| `xxx-large`    | `h1`        | `3xl`             |
+| `xx-large`     | `h1`        | `2xl`             |
+| `x-large`      | `h2`        | `xl`              |
+| `large`        | `h3`        | `lg`              |
+| `medium`       | `h4`        | `md`              |
+| `normal`       | `h5`        | `base`            |
+
+In `visualLevel` and `autoLevel` the same tokens are only renamed, never split: `xxxxx-large` to `5xl`, `xxxx-large` to `4xl`, `xxx-large` to `3xl`, `xx-large` to `2xl`, `x-large` to `xl`, `large` to `lg`, `medium` to `md`, and `normal` to `base`.
+
+Children of `bal-heading` are default-slot content in both components. Leave them unchanged.
+
+### Tags and imports
+
+- **HTML**: `<bal-heading>` becomes `<ds-heading>`, including the closing tag.
+- **Angular**: `<bal-heading>` becomes `<ds-heading>` in `.html` templates and in inline `template:` strings, including the closing tag. When a file imports `BalHeading` from `@baloise/ds-angular`, move only `BalHeading` to `import { DsHeading } from '@helvetia-design/angular'` and leave the other symbols on the `@baloise` import. Replace `BalHeading` with `DsHeading` in `imports:` lists too.
+- **React**: `<BalHeading>` becomes `<DsHeading>` and `</BalHeading>` becomes `</DsHeading>`. Import `DsHeading` from `@helvetia-design/react`. When the existing `@baloise/ds-react` import also binds other symbols, move only `BalHeading` and leave the others on the `@baloise` import.
+
+### Events
+
+Neither component emits events and neither has public methods. There is nothing to rewrite and no handler to add.
+
+## 4. Report
+
+Write the report as `shared/report.md` describes, with the per-file summary under Files changed. Every item below gets its own line in the coverage checklist, found or none found.
+
+Needs your attention when found:
+
+1. Every dynamic `level`, `visualLevel` or `autoLevel` binding left for the caller, with the values the caller must now pass.
+2. Every dynamic `color` binding removed, so the caller can switch to `inverted` where the value was `white`.
+3. Every dropped `color="success"`, `color="warning"`, or `color="danger"`, with its file, line, and old value. It now renders in the default colour.
+4. Every type reference such as `BalProps.BalHeadingLevel` that the scan cannot see. These resolve from the ambient `BalProps` namespace and stop compiling once `@baloise/ds-core` is removed from the project.
+5. Every selector that targets the legacy element and that the scan cannot see. `ds-heading` uses shadow DOM and exposes only `part="heading"` on the inner element. The legacy component rendered in the light DOM and set the classes `bal-heading`, `bal-heading__text`, `bal-heading--level-*`, `bal-heading--space-*`, `bal-heading__text--color-*`, `bal-heading__text--size-*`, `bal-heading__text--subtitle`, `bal-heading__text--shadow`, and `bal-heading__text--no-wrap`, plus the test id `data-testid="bal-heading"`. Styles and tests that query any of them break. Do not rewrite those selectors yourself. Report them.
+6. Every heading that relied on the implicit default margin. The legacy stylesheet gave every heading that was not the last child an automatic bottom margin (`--bal-space-x-small`, or `--bal-space-normal` at `level="display"`) without any `space` attribute. `ds-heading` applies margin only from `space`. Do not add attributes to compensate.
+
+Coverage only, written to the file:
+
+7. Every `level` that was split into `level` and `visualLevel`.
+8. Every renamed size token.
+9. Every `color="white"` rewritten to `inverted`.
+10. Every `primary`, `info` and `blue` dropped as default.
+
+Leave every change unstaged for the consumer to review, including `ds-migration-report.md`. Stop. Do not run `git add` or `git commit`.
+
+Done when every numbered item has its line in `ds-migration-report.md`, the chat shows only the attention items and the pointer line, and the working tree is still unstaged.
