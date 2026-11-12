@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { NgIf } from '@angular/common'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
+
 import {
   BalButton,
   BalButtonGroup,
@@ -17,7 +17,8 @@ import {
  */
 @Component({
   selector: 'app-claim-confirm-modal',
-  imports: [NgIf, BalButton, BalButtonGroup, ...BalModalBundle, BalNotification, BalStack, BalText],
+  imports: [BalButton, BalButtonGroup, ...BalModalBundle, BalNotification, BalStack, BalText],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <bal-modal-header>Schadenmeldung bestätigen</bal-modal-header>
     <bal-modal-body>
@@ -27,13 +28,15 @@ import {
           >.
         </bal-text>
         <!--
-          The conditional lives inside a plain wrapper so that bal-stack only ever
-          sees static children — see docs/FINDINGS.md.
+        The conditional lives inside a plain wrapper so that bal-stack only ever
+        sees static children — see docs/FINDINGS.md.
         -->
         <div>
-          <bal-notification *ngIf="fileCount === 0" color="warning" [light]="true">
-            <span>Es sind noch keine Belege hochgeladen.</span>
-          </bal-notification>
+          @if (fileCount === 0) {
+            <bal-notification color="warning" [light]="true">
+              <span>Es sind noch keine Belege hochgeladen.</span>
+            </bal-notification>
+          }
         </div>
         <bal-text size="small" color="grey">
           Mit dem Bestätigen übermitteln Sie die Meldung an die Schadenabteilung.
@@ -44,7 +47,7 @@ import {
         </bal-button-group>
       </bal-stack>
     </bal-modal-body>
-  `,
+    `,
 })
 export class ClaimConfirmModalComponent {
   @Input() contract = ''

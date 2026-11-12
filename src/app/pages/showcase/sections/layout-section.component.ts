@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
+
 import {
   BalContent,
   BalDivider,
@@ -36,7 +36,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-layout-section',
   imports: [
-    NgFor,
     ShowcaseSectionComponent,
     BalContent,
     BalDivider,
@@ -44,8 +43,9 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     BalLogo,
     BalShape,
     BalStack,
-    BalText,
-  ],
+    BalText
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './layout-section.component.html',
 })
 export class LayoutSectionComponent {

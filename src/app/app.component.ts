@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { NgFor, NgIf, UpperCasePipe } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+import { UpperCasePipe } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router'
 import { filter } from 'rxjs/operators'
 import {
@@ -32,8 +32,6 @@ import { MAIN_NAVIGATION, NavigationItem, PORTAL_LANGUAGES, PortalLanguage } fro
   imports: [
     RouterOutlet,
     RouterLink,
-    NgFor,
-    NgIf,
     UpperCasePipe,
     BalApp,
     BalButton,
@@ -53,9 +51,10 @@ import { MAIN_NAVIGATION, NavigationItem, PORTAL_LANGUAGES, PortalLanguage } fro
     BalPopoverContent,
     BalTabItem,
     BalTabs,
-    BalText,
-  ],
+    BalText
+],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {

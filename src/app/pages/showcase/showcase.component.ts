@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { BalDivider, BalHeading, BalNotification, BalStack, BalText } from '@baloise/ds-angular'
 
@@ -27,6 +27,7 @@ import { TypographySectionComponent } from './sections/typography-section.compon
     NavigationSectionComponent,
     TypographySectionComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './showcase.component.html',
 })
 export class ShowcaseComponent {}

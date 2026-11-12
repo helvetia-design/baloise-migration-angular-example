@@ -2,31 +2,33 @@
   anchor="bal-navbar"
   title="bal-navbar"
   subtitle="interface, container, light — mit bal-navbar-brand und bal-navbar-menu(-start/-end)"
->
+  >
   <bal-navbar>
     <bal-navbar-brand>Default navbar, no props</bal-navbar-brand>
   </bal-navbar>
 
   <bal-text size="small" space="top">interface</bal-text>
-  <div *ngFor="let variant of navbarInterfaces" class="mb-small">
-    <bal-text size="small" color="grey">interface="{{ variant }}"</bal-text>
-    <bal-navbar [interface]="variant" container="fluid">
-      <bal-navbar-brand [attr.interface]="variant" logoBrand="baloise" href="#">
-        {{ variant }}
-      </bal-navbar-brand>
-      <bal-navbar-menu [attr.interface]="variant">
-        <bal-navbar-menu-start [attr.interface]="variant">
-          <bal-tabs interface="navbar" context="navbar" value="a">
-            <bal-tab-item value="a" label="Eins"></bal-tab-item>
-            <bal-tab-item value="b" label="Zwei"></bal-tab-item>
-          </bal-tabs>
-        </bal-navbar-menu-start>
-        <bal-navbar-menu-end [attr.interface]="variant">
-          <bal-button color="light" [inverted]="variant === 'app'" icon="call" [square]="true"></bal-button>
-        </bal-navbar-menu-end>
-      </bal-navbar-menu>
-    </bal-navbar>
-  </div>
+  @for (variant of navbarInterfaces; track variant) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">interface="{{ variant }}"</bal-text>
+      <bal-navbar [interface]="variant" container="fluid">
+        <bal-navbar-brand [attr.interface]="variant" logoBrand="baloise" href="#">
+          {{ variant }}
+        </bal-navbar-brand>
+        <bal-navbar-menu [attr.interface]="variant">
+          <bal-navbar-menu-start [attr.interface]="variant">
+            <bal-tabs interface="navbar" context="navbar" value="a">
+              <bal-tab-item value="a" label="Eins"></bal-tab-item>
+              <bal-tab-item value="b" label="Zwei"></bal-tab-item>
+            </bal-tabs>
+          </bal-navbar-menu-start>
+          <bal-navbar-menu-end [attr.interface]="variant">
+            <bal-button color="light" [inverted]="variant === 'app'" icon="call" [square]="true"></bal-button>
+          </bal-navbar-menu-end>
+        </bal-navbar-menu>
+      </bal-navbar>
+    </div>
+  }
 
   <bal-text size="small" space="top">light, container und die Methoden</bal-text>
   <bal-navbar #showcaseNavbar interface="simple" [light]="true" container="compact">
@@ -39,7 +41,7 @@
       [animated]="true"
       (balNavigate)="onBrandNavigate($event)"
       (balDidAnimate)="onBrandAnimate($event)"
-    >
+      >
       light + compact
     </bal-navbar-brand>
     <bal-navbar-menu #showcaseNavbarMenu>
@@ -77,29 +79,33 @@
   anchor="bal-tabs"
   title="bal-tabs / bal-tab-item"
   subtitle="context, iconPosition, vertical, float, verticalColSize, accordion, border, expanded, fullwidth"
->
+  >
   <bal-tabs value="a">
     <bal-tab-item value="a" label="Default">Default tabs, no props</bal-tab-item>
     <bal-tab-item value="b" label="Zweiter">Zweiter Panel</bal-tab-item>
   </bal-tabs>
 
   <bal-text size="small" space="top">context</bal-text>
-  <div *ngFor="let context of tabsContexts" class="mb-small">
-    <bal-text size="small" color="grey">context="{{ context }}"</bal-text>
-    <bal-tabs [context]="context" value="a">
-      <bal-tab-item value="a" label="Eins"></bal-tab-item>
-      <bal-tab-item value="b" label="Zwei"></bal-tab-item>
-    </bal-tabs>
-  </div>
+  @for (context of tabsContexts; track context) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">context="{{ context }}"</bal-text>
+      <bal-tabs [context]="context" value="a">
+        <bal-tab-item value="a" label="Eins"></bal-tab-item>
+        <bal-tab-item value="b" label="Zwei"></bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
 
   <bal-text size="small" space="top">iconPosition</bal-text>
-  <div *ngFor="let position of tabsIconPositions" class="mb-small">
-    <bal-text size="small" color="grey">iconPosition="{{ position }}"</bal-text>
-    <bal-tabs [iconPosition]="position" [expanded]="true" value="a">
-      <bal-tab-item value="a" label="Konto" icon="account"></bal-tab-item>
-      <bal-tab-item value="b" label="Kalender" icon="date"></bal-tab-item>
-    </bal-tabs>
-  </div>
+  @for (position of tabsIconPositions; track position) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">iconPosition="{{ position }}"</bal-text>
+      <bal-tabs [iconPosition]="position" [expanded]="true" value="a">
+        <bal-tab-item value="a" label="Konto" icon="account"></bal-tab-item>
+        <bal-tab-item value="b" label="Kalender" icon="date"></bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
 
   <bal-text size="small" space="top">vertical (boolean und Breakpoint-Werte) + verticalColSize</bal-text>
   <div class="mb-small">
@@ -109,29 +115,35 @@
       <bal-tab-item value="b" label="Zwei">Panel 2</bal-tab-item>
     </bal-tabs>
   </div>
-  <div *ngFor="let vertical of tabsVerticals" class="mb-small">
-    <bal-text size="small" color="grey">vertical="{{ vertical }}"</bal-text>
-    <bal-tabs [vertical]="vertical" value="a">
-      <bal-tab-item value="a" label="Eins">Panel 1</bal-tab-item>
-      <bal-tab-item value="b" label="Zwei">Panel 2</bal-tab-item>
-    </bal-tabs>
-  </div>
-  <div *ngFor="let colSize of tabsColSizes" class="mb-small">
-    <bal-text size="small" color="grey">verticalColSize="{{ colSize }}"</bal-text>
-    <bal-tabs [vertical]="true" [verticalColSize]="colSize" value="a">
-      <bal-tab-item value="a" label="Eins">Panel 1</bal-tab-item>
-      <bal-tab-item value="b" label="Zwei">Panel 2</bal-tab-item>
-    </bal-tabs>
-  </div>
+  @for (vertical of tabsVerticals; track vertical) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">vertical="{{ vertical }}"</bal-text>
+      <bal-tabs [vertical]="vertical" value="a">
+        <bal-tab-item value="a" label="Eins">Panel 1</bal-tab-item>
+        <bal-tab-item value="b" label="Zwei">Panel 2</bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
+  @for (colSize of tabsColSizes; track colSize) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">verticalColSize="{{ colSize }}"</bal-text>
+      <bal-tabs [vertical]="true" [verticalColSize]="colSize" value="a">
+        <bal-tab-item value="a" label="Eins">Panel 1</bal-tab-item>
+        <bal-tab-item value="b" label="Zwei">Panel 2</bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
 
   <bal-text size="small" space="top">float</bal-text>
-  <div *ngFor="let float of tabsFloats" class="mb-small">
-    <bal-text size="small" color="grey">float="{{ float }}"</bal-text>
-    <bal-tabs [float]="float" [border]="true" value="a">
-      <bal-tab-item value="a" label="Eins"></bal-tab-item>
-      <bal-tab-item value="b" label="Zwei"></bal-tab-item>
-    </bal-tabs>
-  </div>
+  @for (float of tabsFloats; track float) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">float="{{ float }}"</bal-text>
+      <bal-tabs [float]="float" [border]="true" value="a">
+        <bal-tab-item value="a" label="Eins"></bal-tab-item>
+        <bal-tab-item value="b" label="Zwei"></bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
 
   <bal-text size="small" space="top">
     accordion, fullwidth, spaceless, dimInactiveElements und die bal-tab-item-Zustände
@@ -152,7 +164,7 @@
     [inverted]="false"
     [debounce]="0"
     (balWillAnimate)="onTabsWillAnimate($event)"
-  >
+    >
     <bal-tab-item #showcaseTabItem value="a" label="Aktiv" subLabel="mit subLabel" icon="check">
       Panel A
     </bal-tab-item>
@@ -180,21 +192,23 @@
   anchor="bal-steps"
   title="bal-steps / bal-step-item"
   subtitle="color, clickable — bal-step-item kennt done, failed, disabled, invisible, href"
->
+  >
   <bal-steps value="a">
     <bal-step-item value="a" label="Default">Default steps, no props</bal-step-item>
     <bal-step-item value="b" label="Zweiter">Panel 2</bal-step-item>
   </bal-steps>
 
   <bal-text size="small" space="top">color</bal-text>
-  <div *ngFor="let color of stepsColors" class="mb-small">
-    <bal-text size="small" color="grey">color="{{ color }}"</bal-text>
-    <bal-steps [color]="color" value="b" [clickable]="true">
-      <bal-step-item value="a" label="Erledigt" [done]="true"></bal-step-item>
-      <bal-step-item value="b" label="Aktiv"></bal-step-item>
-      <bal-step-item value="c" label="Offen"></bal-step-item>
-    </bal-steps>
-  </div>
+  @for (color of stepsColors; track color) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">color="{{ color }}"</bal-text>
+      <bal-steps [color]="color" value="b" [clickable]="true">
+        <bal-step-item value="a" label="Erledigt" [done]="true"></bal-step-item>
+        <bal-step-item value="b" label="Aktiv"></bal-step-item>
+        <bal-step-item value="c" label="Offen"></bal-step-item>
+      </bal-steps>
+    </div>
+  }
 
   <bal-text size="small" space="top">Zustände am bal-step-item und die Methoden</bal-text>
   <bal-steps
@@ -204,7 +218,7 @@
     [debounce]="0"
     value="b"
     (balChange)="onStepsChange($event)"
-  >
+    >
     <bal-step-item #showcaseStepItem value="a" label="done" [done]="true" (balNavigate)="onStepNavigate($event)">
       Panel A
     </bal-step-item>
@@ -228,27 +242,33 @@
   anchor="bal-pagination"
   title="bal-pagination"
   subtitle="size, interface, align, pageRange, sticky, disabled"
->
+  >
   <bal-pagination [totalPages]="5"></bal-pagination>
   <bal-text size="small" color="grey">Default pagination (nur totalPages)</bal-text>
 
   <bal-text size="small" space="top">size</bal-text>
-  <div *ngFor="let size of paginationSizes" class="mb-x-small">
-    <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
-    <bal-pagination [size]="size" [totalPages]="8" [value]="2" [pageRange]="3"></bal-pagination>
-  </div>
+  @for (size of paginationSizes; track size) {
+    <div class="mb-x-small">
+      <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+      <bal-pagination [size]="size" [totalPages]="8" [value]="2" [pageRange]="3"></bal-pagination>
+    </div>
+  }
 
   <bal-text size="small" space="top">interface</bal-text>
-  <div *ngFor="let variant of paginationInterfaces" class="mb-x-small">
-    <bal-text size="small" color="grey">interface="{{ variant || 'default' }}"</bal-text>
-    <bal-pagination [interface]="variant" [totalPages]="12" [value]="4"></bal-pagination>
-  </div>
+  @for (variant of paginationInterfaces; track variant) {
+    <div class="mb-x-small">
+      <bal-text size="small" color="grey">interface="{{ variant || 'default' }}"</bal-text>
+      <bal-pagination [interface]="variant" [totalPages]="12" [value]="4"></bal-pagination>
+    </div>
+  }
 
   <bal-text size="small" space="top">align</bal-text>
-  <div *ngFor="let align of paginationAlignments" class="mb-x-small">
-    <bal-text size="small" color="grey">align="{{ align || 'default' }}"</bal-text>
-    <bal-pagination [align]="align" [totalPages]="6" [value]="3"></bal-pagination>
-  </div>
+  @for (align of paginationAlignments; track align) {
+    <div class="mb-x-small">
+      <bal-text size="small" color="grey">align="{{ align || 'default' }}"</bal-text>
+      <bal-pagination [align]="align" [totalPages]="6" [value]="3"></bal-pagination>
+    </div>
+  }
 
   <bal-text size="small" space="top">disabled, sticky und die Methoden</bal-text>
   <bal-pagination [disabled]="true" [totalPages]="4" [value]="2"></bal-pagination>
@@ -272,7 +292,7 @@
   anchor="bal-accordion"
   title="bal-accordion"
   subtitle="card, version — bal-accordion-trigger kennt variant, color, size, button"
->
+  >
   <bal-accordion>
     <bal-accordion-summary>
       <bal-stack alignment="center" space="small">
@@ -286,30 +306,32 @@
   </bal-accordion>
 
   <bal-text size="small" space="top">bal-accordion-trigger variant</bal-text>
-  <bal-accordion *ngFor="let variant of accordionTriggerVariants" class="mb-x-small">
-    <bal-accordion-summary>
-      <bal-stack alignment="center" space="small">
-        <bal-icon [svg]="brandIcons.car" color="auto" size="large"></bal-icon>
-        <bal-content>
-          <bal-label>variant="{{ variant }}"</bal-label>
-          <bal-text size="small">Mit Switch und Trigger in der Summary</bal-text>
-        </bal-content>
-        <bal-checkbox interface="switch" [name]="'accordion-switch-' + variant"></bal-checkbox>
-        <bal-accordion-trigger
-          [variant]="variant"
-          color="info"
-          size="small"
-          openLabel="Öffnen"
-          closeLabel="Schliessen"
-          openIcon="plus"
-          closeIcon="minus"
-        ></bal-accordion-trigger>
-      </bal-stack>
-    </bal-accordion-summary>
-    <bal-accordion-details>
-      <bal-text size="small" class="py-small">Inhalt für {{ variant }}</bal-text>
-    </bal-accordion-details>
-  </bal-accordion>
+  @for (variant of accordionTriggerVariants; track variant) {
+    <bal-accordion class="mb-x-small">
+      <bal-accordion-summary>
+        <bal-stack alignment="center" space="small">
+          <bal-icon [svg]="brandIcons.car" color="auto" size="large"></bal-icon>
+          <bal-content>
+            <bal-label>variant="{{ variant }}"</bal-label>
+            <bal-text size="small">Mit Switch und Trigger in der Summary</bal-text>
+          </bal-content>
+          <bal-checkbox interface="switch" [name]="'accordion-switch-' + variant"></bal-checkbox>
+          <bal-accordion-trigger
+            [variant]="variant"
+            color="info"
+            size="small"
+            openLabel="Öffnen"
+            closeLabel="Schliessen"
+            openIcon="plus"
+            closeIcon="minus"
+          ></bal-accordion-trigger>
+        </bal-stack>
+      </bal-accordion-summary>
+      <bal-accordion-details>
+        <bal-text size="small" class="py-small">Inhalt für {{ variant }}</bal-text>
+      </bal-accordion-details>
+    </bal-accordion>
+  }
 
   <bal-text size="small" space="top">card-Variante im bal-card und die Methoden</bal-text>
   <bal-card color="white" [border]="true">
@@ -321,7 +343,7 @@
       [debounce]="0"
       (balChange)="onAccordionChange($event)"
       (balWillAnimate)="onAccordionWillAnimate($event)"
-    >
+      >
       <bal-accordion-details>
         <bal-text size="small" class="py-small">Inhalt der Karte</bal-text>
       </bal-accordion-details>
@@ -349,7 +371,7 @@
   anchor="bal-card"
   title="bal-card"
   subtitle="color, space — mit bal-card-title, bal-card-subtitle, bal-card-content, bal-card-actions, bal-card-button"
->
+  >
   <bal-card>
     <bal-card-title>Default card, no props</bal-card-title>
     <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
@@ -357,38 +379,44 @@
 
   <bal-text size="small" space="top">color</bal-text>
   <div class="grid is-multiline">
-    <div *ngFor="let color of cardColors" class="col is-one-quarter-desktop is-half-tablet is-full-mobile">
-      <bal-card [color]="color">
-        <bal-card-content>
-          <bal-text size="small">color="{{ color || 'default' }}"</bal-text>
-        </bal-card-content>
-      </bal-card>
-    </div>
+    @for (color of cardColors; track color) {
+      <div class="col is-one-quarter-desktop is-half-tablet is-full-mobile">
+        <bal-card [color]="color">
+          <bal-card-content>
+            <bal-text size="small">color="{{ color || 'default' }}"</bal-text>
+          </bal-card-content>
+        </bal-card>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">space</bal-text>
   <div class="grid is-multiline">
-    <div *ngFor="let space of cardSpaces" class="col is-one-quarter-desktop is-half-tablet is-full-mobile">
-      <bal-card color="white" [border]="true" [space]="space">
-        <bal-card-content>
-          <bal-text size="small">space="{{ space || 'default' }}"</bal-text>
-        </bal-card-content>
-      </bal-card>
-    </div>
+    @for (space of cardSpaces; track space) {
+      <div class="col is-one-quarter-desktop is-half-tablet is-full-mobile">
+        <bal-card color="white" [border]="true" [space]="space">
+          <bal-card-content>
+            <bal-text size="small">space="{{ space || 'default' }}"</bal-text>
+          </bal-card-content>
+        </bal-card>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">bal-card-actions position</bal-text>
   <div class="grid is-multiline">
-    <div *ngFor="let position of cardActionPositions" class="col is-one-third-desktop is-full-mobile">
-      <bal-card color="white" [border]="true">
-        <bal-card-title>position="{{ position || 'default' }}"</bal-card-title>
-        <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
-        <bal-card-actions [position]="position">
-          <bal-button color="info" size="small">Sekundär</bal-button>
-          <bal-button size="small">Primär</bal-button>
-        </bal-card-actions>
-      </bal-card>
-    </div>
+    @for (position of cardActionPositions; track position) {
+      <div class="col is-one-third-desktop is-full-mobile">
+        <bal-card color="white" [border]="true">
+          <bal-card-title>position="{{ position || 'default' }}"</bal-card-title>
+          <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
+          <bal-card-actions [position]="position">
+            <bal-button color="info" size="small">Sekundär</bal-button>
+            <bal-button size="small">Primär</bal-button>
+          </bal-card-actions>
+        </bal-card>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">

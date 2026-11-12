@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
+
 import { BalHeading, BalLabel, BalText } from '@baloise/ds-angular'
 
 import {
@@ -17,7 +17,8 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 
 @Component({
   selector: 'app-typography-section',
-  imports: [NgFor, ShowcaseSectionComponent, BalHeading, BalLabel, BalText],
+  imports: [ShowcaseSectionComponent, BalHeading, BalLabel, BalText],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './typography-section.component.html',
 })
 export class TypographySectionComponent {

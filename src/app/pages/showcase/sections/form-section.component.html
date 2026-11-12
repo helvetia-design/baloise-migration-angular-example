@@ -2,7 +2,7 @@
   anchor="bal-field"
   title="bal-field"
   subtitle="bal-field-label (weight, size, required), bal-field-control (iconLeft/iconRight, loading), bal-field-message (color), bal-field-hint"
->
+  >
   <bal-field (balFormControlDidLoad)="onFormControlDidLoad($event)">
     <bal-field-label>Default field</bal-field-label>
     <bal-field-control>
@@ -12,29 +12,35 @@
   </bal-field>
 
   <bal-text size="small" space="top">bal-field-label weight</bal-text>
-  <bal-field *ngFor="let weight of fieldLabelWeights">
-    <bal-field-label [weight]="weight">weight="{{ weight }}"</bal-field-label>
-    <bal-field-control>
-      <bal-input [name]="'weight-' + weight" placeholder="Eingabe"></bal-input>
-    </bal-field-control>
-  </bal-field>
+  @for (weight of fieldLabelWeights; track weight) {
+    <bal-field>
+      <bal-field-label [weight]="weight">weight="{{ weight }}"</bal-field-label>
+      <bal-field-control>
+        <bal-input [name]="'weight-' + weight" placeholder="Eingabe"></bal-input>
+      </bal-field-control>
+    </bal-field>
+  }
 
   <bal-text size="small" space="top">bal-field-label size</bal-text>
-  <bal-field *ngFor="let size of fieldLabelSizes">
-    <bal-field-label [size]="size">size="{{ size || 'default' }}"</bal-field-label>
-    <bal-field-control>
-      <bal-input [name]="'size-' + size" placeholder="Eingabe"></bal-input>
-    </bal-field-control>
-  </bal-field>
+  @for (size of fieldLabelSizes; track size) {
+    <bal-field>
+      <bal-field-label [size]="size">size="{{ size || 'default' }}"</bal-field-label>
+      <bal-field-control>
+        <bal-input [name]="'size-' + size" placeholder="Eingabe"></bal-input>
+      </bal-field-control>
+    </bal-field>
+  }
 
   <bal-text size="small" space="top">bal-field-message color</bal-text>
-  <bal-field *ngFor="let color of fieldMessageColors">
-    <bal-field-label>color="{{ color || 'default' }}"</bal-field-label>
-    <bal-field-control>
-      <bal-input [name]="'msg-' + color" placeholder="Eingabe"></bal-input>
-    </bal-field-control>
-    <bal-field-message [color]="color">Meldung in {{ color || 'default' }}</bal-field-message>
-  </bal-field>
+  @for (color of fieldMessageColors; track color) {
+    <bal-field>
+      <bal-field-label>color="{{ color || 'default' }}"</bal-field-label>
+      <bal-field-control>
+        <bal-input [name]="'msg-' + color" placeholder="Eingabe"></bal-input>
+      </bal-field-control>
+      <bal-field-message [color]="color">Meldung in {{ color || 'default' }}</bal-field-message>
+    </bal-field>
+  }
 
   <bal-text size="small" space="top">Zustände und bal-field-hint</bal-text>
   <bal-field [required]="true">
@@ -80,7 +86,7 @@
   anchor="bal-form-grid"
   title="bal-form-grid / bal-form-col"
   subtitle="size — alle Spaltenbreiten nebeneinander"
->
+  >
   <bal-form-grid>
     <bal-form-col>
       <bal-field>
@@ -91,12 +97,14 @@
   </bal-form-grid>
 
   <bal-form-grid>
-    <bal-form-col *ngFor="let size of formColSizes" [size]="size">
-      <bal-field>
-        <bal-field-label>size="{{ size }}"</bal-field-label>
-        <bal-field-control><bal-input [name]="'grid-' + size"></bal-input></bal-field-control>
-      </bal-field>
-    </bal-form-col>
+    @for (size of formColSizes; track size) {
+      <bal-form-col [size]="size">
+        <bal-field>
+          <bal-field-label>size="{{ size }}"</bal-field-label>
+          <bal-field-control><bal-input [name]="'grid-' + size"></bal-input></bal-field-control>
+        </bal-field>
+      </bal-form-col>
+    }
   </bal-form-grid>
 </app-showcase-section>
 
@@ -104,43 +112,53 @@
   anchor="bal-input"
   title="bal-input"
   subtitle="type, inputmode, mask, textAlign, autocorrect, suffix und die Zustände"
->
+  >
   <bal-input name="input-default" placeholder="Default input, no props"></bal-input>
 
   <bal-text size="small" space="top">type</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let type of inputTypes" style="width: 220px">
-      <bal-label size="small">type="{{ type }}"</bal-label>
-      <bal-input [name]="'type-' + type" [type]="type" [placeholder]="type"></bal-input>
-    </div>
+    @for (type of inputTypes; track type) {
+      <div style="width: 220px">
+        <bal-label size="small">type="{{ type }}"</bal-label>
+        <bal-input [name]="'type-' + type" [type]="type" [placeholder]="type"></bal-input>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">inputmode</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let mode of inputModes" style="width: 220px">
-      <bal-label size="small">inputmode="{{ mode }}"</bal-label>
-      <bal-input [name]="'mode-' + mode" [inputmode]="mode" [placeholder]="mode"></bal-input>
-    </div>
+    @for (mode of inputModes; track mode) {
+      <div style="width: 220px">
+        <bal-label size="small">inputmode="{{ mode }}"</bal-label>
+        <bal-input [name]="'mode-' + mode" [inputmode]="mode" [placeholder]="mode"></bal-input>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">mask</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let mask of inputMasks" style="width: 260px">
-      <bal-label size="small">mask="{{ mask }}"</bal-label>
-      <bal-input [name]="'mask-' + mask" [mask]="mask" [placeholder]="mask"></bal-input>
-    </div>
+    @for (mask of inputMasks; track mask) {
+      <div style="width: 260px">
+        <bal-label size="small">mask="{{ mask }}"</bal-label>
+        <bal-input [name]="'mask-' + mask" [mask]="mask" [placeholder]="mask"></bal-input>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">textAlign und autocorrect</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let align of inputTextAligns" style="width: 220px">
-      <bal-label size="small">textAlign="{{ align }}"</bal-label>
-      <bal-input [name]="'align-' + align" [textAlign]="align" value="123"></bal-input>
-    </div>
-    <div *ngFor="let correct of inputAutocorrects" style="width: 220px">
-      <bal-label size="small">autocorrect="{{ correct }}"</bal-label>
-      <bal-input [name]="'correct-' + correct" [autocorrect]="correct"></bal-input>
-    </div>
+    @for (align of inputTextAligns; track align) {
+      <div style="width: 220px">
+        <bal-label size="small">textAlign="{{ align }}"</bal-label>
+        <bal-input [name]="'align-' + align" [textAlign]="align" value="123"></bal-input>
+      </div>
+    }
+    @for (correct of inputAutocorrects; track correct) {
+      <div style="width: 220px">
+        <bal-label size="small">autocorrect="{{ correct }}"</bal-label>
+        <bal-input [name]="'correct-' + correct" [autocorrect]="correct"></bal-input>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">Zustände, suffix und gesteuerter Wert</bal-text>
@@ -199,7 +217,7 @@
   anchor="bal-number-input"
   title="bal-number-input"
   subtitle="decimal, suffix, onlyPositive, exactNumber und Zustände"
->
+  >
   <bal-number-input name="number-default" placeholder="Default number input"></bal-number-input>
 
   <div class="flex flex-wrap gap-small mt-small">
@@ -238,10 +256,12 @@
   <bal-textarea name="textarea-default" placeholder="Default textarea, no props"></bal-textarea>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <div *ngFor="let wrap of textareaWraps" style="width: 260px">
-      <bal-label size="small">wrap="{{ wrap }}"</bal-label>
-      <bal-textarea [name]="'wrap-' + wrap" [wrap]="wrap" [rows]="3"></bal-textarea>
-    </div>
+    @for (wrap of textareaWraps; track wrap) {
+      <div style="width: 260px">
+        <bal-label size="small">wrap="{{ wrap }}"</bal-label>
+        <bal-textarea [name]="'wrap-' + wrap" [wrap]="wrap" [rows]="3"></bal-textarea>
+      </div>
+    }
     <div style="width: 260px">
       <bal-label size="small">rows + cols + maxLength</bal-label>
       <bal-textarea
@@ -272,35 +292,39 @@
   anchor="bal-select"
   title="bal-select"
   subtitle="filter, typeahead, multiple, Zustände — bal-select-option braucht label UND Textinhalt"
->
+  >
   <bal-select name="select-default" placeholder="Default select">
     <bal-select-option value="bs" label="Basel-Stadt">Basel-Stadt</bal-select-option>
     <bal-select-option value="bl" label="Basel-Landschaft">Basel-Landschaft</bal-select-option>
   </bal-select>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <div *ngFor="let filter of selectFilters" style="width: 260px">
-      <bal-label size="small">filter="{{ filter }}" + typeahead</bal-label>
-      <bal-select [name]="'select-' + filter" [filter]="filter" [typeahead]="true" placeholder="Suchen">
-        <bal-select-option
-          *ngFor="let option of options"
-          [value]="option.value"
-          [label]="option.label"
-        >
-          {{ option.label }}
-        </bal-select-option>
-      </bal-select>
-    </div>
+    @for (filter of selectFilters; track filter) {
+      <div style="width: 260px">
+        <bal-label size="small">filter="{{ filter }}" + typeahead</bal-label>
+        <bal-select [name]="'select-' + filter" [filter]="filter" [typeahead]="true" placeholder="Suchen">
+          @for (option of options; track option) {
+            <bal-select-option
+              [value]="option.value"
+              [label]="option.label"
+              >
+              {{ option.label }}
+            </bal-select-option>
+          }
+        </bal-select>
+      </div>
+    }
     <div style="width: 260px">
       <bal-label size="small">multiple</bal-label>
       <bal-select name="select-multiple" [multiple]="true" placeholder="Mehrfachauswahl">
-        <bal-select-option
-          *ngFor="let option of options"
-          [value]="option.value"
-          [label]="option.label"
-        >
-          {{ option.label }}
-        </bal-select-option>
+        @for (option of options; track option) {
+          <bal-select-option
+            [value]="option.value"
+            [label]="option.label"
+            >
+            {{ option.label }}
+          </bal-select-option>
+        }
       </bal-select>
     </div>
     <div style="width: 260px">
@@ -317,14 +341,15 @@
         (balBlur)="onInput('bal-select balBlur', '')"
         (balCancel)="onInput('bal-select balCancel', '')"
         (balKeyPress)="onInput('bal-select balKeyPress', $event.detail.key)"
-      >
-        <bal-select-option
-          *ngFor="let option of options"
-          [value]="option.value"
-          [label]="option.label"
         >
-          {{ option.label }}
-        </bal-select-option>
+        @for (option of options; track option) {
+          <bal-select-option
+            [value]="option.value"
+            [label]="option.label"
+            >
+            {{ option.label }}
+          </bal-select-option>
+        }
       </bal-select>
     </div>
     <div style="width: 260px">
@@ -353,48 +378,62 @@
   anchor="bal-dropdown"
   title="bal-dropdown"
   subtitle="size, theme, filter, chips, multiple — mit bal-option und bal-option-list"
->
+  >
   <bal-dropdown name="dropdown-default" placeholder="Default dropdown">
     <bal-option value="bs" label="Basel-Stadt">Basel-Stadt</bal-option>
     <bal-option value="bl" label="Basel-Landschaft">Basel-Landschaft</bal-option>
   </bal-dropdown>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <div *ngFor="let size of dropdownSizes" style="width: 240px">
-      <bal-label size="small">size="{{ size || 'default' }}"</bal-label>
-      <bal-dropdown [name]="'dropdown-size-' + size" [size]="size" placeholder="Grösse">
-        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
-          {{ option.label }}
-        </bal-option>
-      </bal-dropdown>
-    </div>
-    <div *ngFor="let theme of dropdownThemes" style="width: 240px">
-      <bal-label size="small">theme="{{ theme || 'default' }}"</bal-label>
-      <bal-dropdown
-        [name]="'dropdown-theme-' + theme"
-        [theme]="theme"
-        inlineLabel="Thema"
-        [clearable]="true"
-      >
-        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
-          {{ option.label }}
-        </bal-option>
-      </bal-dropdown>
-    </div>
-    <div *ngFor="let filter of optionListFilters" style="width: 240px">
-      <bal-label size="small">filter="{{ filter }}"</bal-label>
-      <bal-dropdown [name]="'dropdown-filter-' + filter" [filter]="filter" placeholder="Filter">
-        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
-          {{ option.label }}
-        </bal-option>
-      </bal-dropdown>
-    </div>
+    @for (size of dropdownSizes; track size) {
+      <div style="width: 240px">
+        <bal-label size="small">size="{{ size || 'default' }}"</bal-label>
+        <bal-dropdown [name]="'dropdown-size-' + size" [size]="size" placeholder="Grösse">
+          @for (option of options; track option) {
+            <bal-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </bal-option>
+          }
+        </bal-dropdown>
+      </div>
+    }
+    @for (theme of dropdownThemes; track theme) {
+      <div style="width: 240px">
+        <bal-label size="small">theme="{{ theme || 'default' }}"</bal-label>
+        <bal-dropdown
+          [name]="'dropdown-theme-' + theme"
+          [theme]="theme"
+          inlineLabel="Thema"
+          [clearable]="true"
+          >
+          @for (option of options; track option) {
+            <bal-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </bal-option>
+          }
+        </bal-dropdown>
+      </div>
+    }
+    @for (filter of optionListFilters; track filter) {
+      <div style="width: 240px">
+        <bal-label size="small">filter="{{ filter }}"</bal-label>
+        <bal-dropdown [name]="'dropdown-filter-' + filter" [filter]="filter" placeholder="Filter">
+          @for (option of options; track option) {
+            <bal-option [value]="option.value" [label]="option.label">
+              {{ option.label }}
+            </bal-option>
+          }
+        </bal-dropdown>
+      </div>
+    }
     <div style="width: 240px">
       <bal-label size="small">multiple + chips</bal-label>
       <bal-dropdown name="dropdown-chips" [multiple]="true" [chips]="true" placeholder="Mehrfach">
-        <bal-option *ngFor="let option of options" [value]="option.value" [label]="option.label">
-          {{ option.label }}
-        </bal-option>
+        @for (option of options; track option) {
+          <bal-option [value]="option.value" [label]="option.label">
+            {{ option.label }}
+          </bal-option>
+        }
       </bal-dropdown>
     </div>
     <div style="width: 240px">
@@ -407,15 +446,16 @@
         (balChange)="onInput('bal-dropdown balChange', $event.detail)"
         (balFocus)="onInput('bal-dropdown balFocus', '')"
         (balBlur)="onInput('bal-dropdown balBlur', '')"
-      >
-        <bal-option
-          *ngFor="let option of options"
-          [value]="option.value"
-          [label]="option.label"
-          [multiline]="true"
         >
-          {{ option.label }}
-        </bal-option>
+        @for (option of options; track option) {
+          <bal-option
+            [value]="option.value"
+            [label]="option.label"
+            [multiline]="true"
+            >
+            {{ option.label }}
+          </bal-option>
+        }
       </bal-dropdown>
     </div>
     <div style="width: 240px">
@@ -439,61 +479,74 @@
   anchor="bal-checkbox"
   title="bal-checkbox / bal-checkbox-group"
   subtitle="interface (checkbox, switch, button, tile), color, columns, vertical — plus bal-check und bal-switch"
->
+  >
   <bal-checkbox name="checkbox-default">Default checkbox, no props</bal-checkbox>
 
   <bal-text size="small" space="top">interface — jeder Wert rendert einen anderen Baum</bal-text>
-  <div *ngFor="let variant of checkboxInterfaces" class="mb-small">
-    <bal-label size="small">interface="{{ variant }}"</bal-label>
-    <bal-checkbox-group [interface]="variant" [name]="'cb-group-' + variant">
-      <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="1" [checked]="true">
-        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
-          <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
-          <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
-          <bal-check></bal-check>
-        </bal-stack>
-        <span *ngIf="variant !== 'tile'">Option A</span>
-      </bal-checkbox>
-      <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="2">
-        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
-          <bal-icon [svg]="brandIcons.household" size="large" color="auto"></bal-icon>
-          <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
-          <bal-switch></bal-switch>
-        </bal-stack>
-        <span *ngIf="variant !== 'tile'">Option B</span>
-      </bal-checkbox>
-    </bal-checkbox-group>
-  </div>
+  @for (variant of checkboxInterfaces; track variant) {
+    <div class="mb-small">
+      <bal-label size="small">interface="{{ variant }}"</bal-label>
+      <bal-checkbox-group [interface]="variant" [name]="'cb-group-' + variant">
+        <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="1" [checked]="true">
+          @if (variant === 'tile') {
+            <bal-stack layout="vertical" align="center">
+              <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
+              <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
+              <bal-check></bal-check>
+            </bal-stack>
+          }
+          @if (variant !== 'tile') {
+            <span>Option A</span>
+          }
+        </bal-checkbox>
+        <bal-checkbox [interface]="variant" [name]="'cb-group-' + variant" value="2">
+          @if (variant === 'tile') {
+            <bal-stack layout="vertical" align="center">
+              <bal-icon [svg]="brandIcons.household" size="large" color="auto"></bal-icon>
+              <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
+              <bal-switch></bal-switch>
+            </bal-stack>
+          }
+          @if (variant !== 'tile') {
+            <span>Option B</span>
+          }
+        </bal-checkbox>
+      </bal-checkbox-group>
+    </div>
+  }
 
   <bal-text size="small" space="top">tile color</bal-text>
   <bal-checkbox-group interface="tile" name="cb-colors" [columns]="4" [columnsTablet]="2">
-    <bal-checkbox
-      *ngFor="let color of checkboxTileColors"
-      interface="tile"
-      name="cb-colors"
-      [value]="color || 'default'"
-      [color]="color"
-      [attr.col-size]="4"
-      [attr.col-size-tablet]="2"
-      [attr.col-size-mobile]="1"
-    >
-      <bal-stack layout="vertical" align="center">
-        <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
-        <bal-check></bal-check>
-      </bal-stack>
-    </bal-checkbox>
+    @for (color of checkboxTileColors; track color) {
+      <bal-checkbox
+        interface="tile"
+        name="cb-colors"
+        [value]="color || 'default'"
+        [color]="color"
+        [attr.col-size]="4"
+        [attr.col-size-tablet]="2"
+        [attr.col-size-mobile]="1"
+        >
+        <bal-stack layout="vertical" align="center">
+          <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
+          <bal-check></bal-check>
+        </bal-stack>
+      </bal-checkbox>
+    }
   </bal-checkbox-group>
 
   <bal-text size="small" space="top">columns</bal-text>
-  <div *ngFor="let columns of groupColumns" class="mb-small">
-    <bal-label size="small">columns="{{ columns }}"</bal-label>
-    <bal-checkbox-group interface="button" [columns]="columns" [name]="'cb-cols-' + columns">
-      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="1">Eins</bal-checkbox>
-      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="2">Zwei</bal-checkbox>
-      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="3">Drei</bal-checkbox>
-      <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="4">Vier</bal-checkbox>
-    </bal-checkbox-group>
-  </div>
+  @for (columns of groupColumns; track columns) {
+    <div class="mb-small">
+      <bal-label size="small">columns="{{ columns }}"</bal-label>
+      <bal-checkbox-group interface="button" [columns]="columns" [name]="'cb-cols-' + columns">
+        <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="1">Eins</bal-checkbox>
+        <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="2">Zwei</bal-checkbox>
+        <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="3">Drei</bal-checkbox>
+        <bal-checkbox interface="button" [name]="'cb-cols-' + columns" value="4">Vier</bal-checkbox>
+      </bal-checkbox-group>
+    </div>
+  }
 
   <bal-text size="small" space="top">vertical, Zustände und gesteuerter Wert</bal-text>
   <bal-checkbox-group
@@ -503,14 +556,14 @@
     (balChange)="onInput('bal-checkbox-group balChange', $event.detail)"
     (balFocus)="onInput('bal-checkbox-group balFocus', '')"
     (balBlur)="onInput('bal-checkbox-group balBlur', '')"
-  >
+    >
     <bal-checkbox
       name="cb-bound"
       value="1"
       (balChange)="onInput('bal-checkbox balChange', $event.detail)"
       (balFocus)="onInput('bal-checkbox balFocus', '')"
       (balBlur)="onInput('bal-checkbox balBlur', '')"
-    >
+      >
       gebunden
     </bal-checkbox>
     <bal-checkbox name="cb-bound" value="2" [disabled]="true">disabled</bal-checkbox>
@@ -537,60 +590,73 @@
   anchor="bal-radio"
   title="bal-radio / bal-radio-group"
   subtitle="interface (radio, button, tile), color, columns, vertical, allowEmptySelection — plus bal-radio-icon"
->
+  >
   <bal-radio name="radio-default" value="solo">Default radio, no props</bal-radio>
 
   <bal-text size="small" space="top">interface — jeder Wert rendert einen anderen Baum</bal-text>
-  <div *ngFor="let variant of radioInterfaces" class="mb-small">
-    <bal-label size="small">interface="{{ variant }}"</bal-label>
-    <bal-radio-group [interface]="variant" [name]="'radio-group-' + variant" value="1">
-      <bal-radio [interface]="variant" value="1">
-        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
-          <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
-          <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
-          <bal-radio-icon></bal-radio-icon>
-        </bal-stack>
-        <span *ngIf="variant !== 'tile'">Option A</span>
-      </bal-radio>
-      <bal-radio [interface]="variant" value="2">
-        <bal-stack *ngIf="variant === 'tile'" layout="vertical" align="center">
-          <bal-icon [svg]="brandIcons.building" size="large" color="auto"></bal-icon>
-          <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
-          <bal-radio-icon></bal-radio-icon>
-        </bal-stack>
-        <span *ngIf="variant !== 'tile'">Option B</span>
-      </bal-radio>
-    </bal-radio-group>
-  </div>
+  @for (variant of radioInterfaces; track variant) {
+    <div class="mb-small">
+      <bal-label size="small">interface="{{ variant }}"</bal-label>
+      <bal-radio-group [interface]="variant" [name]="'radio-group-' + variant" value="1">
+        <bal-radio [interface]="variant" value="1">
+          @if (variant === 'tile') {
+            <bal-stack layout="vertical" align="center">
+              <bal-icon [svg]="brandIcons.car" size="large" color="auto"></bal-icon>
+              <bal-content align="center"><bal-label>Kachel A</bal-label></bal-content>
+              <bal-radio-icon></bal-radio-icon>
+            </bal-stack>
+          }
+          @if (variant !== 'tile') {
+            <span>Option A</span>
+          }
+        </bal-radio>
+        <bal-radio [interface]="variant" value="2">
+          @if (variant === 'tile') {
+            <bal-stack layout="vertical" align="center">
+              <bal-icon [svg]="brandIcons.building" size="large" color="auto"></bal-icon>
+              <bal-content align="center"><bal-label>Kachel B</bal-label></bal-content>
+              <bal-radio-icon></bal-radio-icon>
+            </bal-stack>
+          }
+          @if (variant !== 'tile') {
+            <span>Option B</span>
+          }
+        </bal-radio>
+      </bal-radio-group>
+    </div>
+  }
 
   <bal-text size="small" space="top">tile color</bal-text>
   <bal-radio-group interface="tile" name="radio-colors" [columns]="4" [columnsTablet]="2" value="purple">
-    <bal-radio
-      *ngFor="let color of radioTileColors"
-      interface="tile"
-      [value]="color || 'default'"
-      [color]="color"
-      [attr.col-size]="4"
-      [attr.col-size-tablet]="2"
-      [attr.col-size-mobile]="1"
-    >
-      <bal-stack layout="vertical" align="center">
-        <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
-        <bal-radio-icon></bal-radio-icon>
-      </bal-stack>
-    </bal-radio>
+    @for (color of radioTileColors; track color) {
+      <bal-radio
+        interface="tile"
+        [value]="color || 'default'"
+        [color]="color"
+        [attr.col-size]="4"
+        [attr.col-size-tablet]="2"
+        [attr.col-size-mobile]="1"
+        >
+        <bal-stack layout="vertical" align="center">
+          <bal-content align="center"><bal-label>{{ color || 'default' }}</bal-label></bal-content>
+          <bal-radio-icon></bal-radio-icon>
+        </bal-stack>
+      </bal-radio>
+    }
   </bal-radio-group>
 
   <bal-text size="small" space="top">columns</bal-text>
-  <div *ngFor="let columns of groupColumns" class="mb-small">
-    <bal-label size="small">columns="{{ columns }}"</bal-label>
-    <bal-radio-group interface="button" [columns]="columns" [name]="'radio-cols-' + columns">
-      <bal-radio interface="button" value="1">Eins</bal-radio>
-      <bal-radio interface="button" value="2">Zwei</bal-radio>
-      <bal-radio interface="button" value="3">Drei</bal-radio>
-      <bal-radio interface="button" value="4">Vier</bal-radio>
-    </bal-radio-group>
-  </div>
+  @for (columns of groupColumns; track columns) {
+    <div class="mb-small">
+      <bal-label size="small">columns="{{ columns }}"</bal-label>
+      <bal-radio-group interface="button" [columns]="columns" [name]="'radio-cols-' + columns">
+        <bal-radio interface="button" value="1">Eins</bal-radio>
+        <bal-radio interface="button" value="2">Zwei</bal-radio>
+        <bal-radio interface="button" value="3">Drei</bal-radio>
+        <bal-radio interface="button" value="4">Vier</bal-radio>
+      </bal-radio-group>
+    </div>
+  }
 
   <bal-text size="small" space="top">vertical, Zustände und gesteuerter Wert</bal-text>
   <bal-radio-group
@@ -601,13 +667,13 @@
     (balChange)="onInput('bal-radio-group balChange', $event.detail)"
     (balFocus)="onInput('bal-radio-group balFocus', '')"
     (balBlur)="onInput('bal-radio-group balBlur', '')"
-  >
+    >
     <bal-radio
       value="1"
       (balChange)="onInput('bal-radio balChange', $event.detail)"
       (balFocus)="onInput('bal-radio balFocus', '')"
       (balBlur)="onInput('bal-radio balBlur', '')"
-    >
+      >
       gebunden
     </bal-radio>
     <bal-radio value="2" [disabled]="true">disabled</bal-radio>
@@ -629,7 +695,7 @@
   anchor="bal-segment"
   title="bal-segment / bal-segment-item"
   subtitle="vertical, expanded, scrollable, Zustände"
->
+  >
   <bal-segment>
     <bal-segment-item value="a" label="Default"></bal-segment-item>
     <bal-segment-item value="b" label="ohne Props"></bal-segment-item>
@@ -650,7 +716,7 @@
     name="segment-bound"
     (balChange)="onInput('bal-segment balChange', $event.detail)"
     (balBlur)="onInput('bal-segment balBlur', '')"
-  >
+    >
     <bal-segment-item value="a" label="A"></bal-segment-item>
     <bal-segment-item value="b" label="B"></bal-segment-item>
     <bal-segment-item value="c" label="C" [disabled]="true"></bal-segment-item>
@@ -670,7 +736,7 @@
   anchor="bal-date"
   title="bal-date"
   subtitle="triggerIcon, freeSolo, closeOnSelect, min/max, Zustände — plus bal-date-calendar"
->
+  >
   <bal-date name="date-default" placeholder="Default date"></bal-date>
 
   <div class="flex flex-wrap gap-small mt-small">
@@ -731,7 +797,7 @@
   anchor="bal-file-upload"
   title="bal-file-upload"
   subtitle="multiple, hasFileList, accept, maxFiles, maxFileSize, Zustände"
->
+  >
   <bal-file-upload name="upload-default"></bal-file-upload>
 
   <div class="mt-small">
@@ -776,7 +842,7 @@
   anchor="bal-input-slider"
   title="bal-input-slider / bal-input-stepper"
   subtitle="min, max, step, hasTicks, Zustände"
->
+  >
   <bal-input-slider name="slider-default"></bal-input-slider>
 
   <div class="mt-small" style="max-width: 420px">
@@ -827,7 +893,7 @@
   anchor="bal-form"
   title="bal-form"
   subtitle="native, novalidate, formClass — der Wrapper um ein ganzes Formular"
->
+  >
   <bal-form [native]="true" [novalidate]="true" formClass="mt-x-small">
     <bal-form-grid>
       <bal-form-col size="half">

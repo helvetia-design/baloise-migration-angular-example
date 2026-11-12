@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+
 import {
   BalAccordionBundle,
   BalBadge,
@@ -42,7 +42,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-navigation-section',
   imports: [
-    NgFor,
     ShowcaseSectionComponent,
     ...BalAccordionBundle,
     BalBadge,
@@ -60,8 +59,9 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     BalStack,
     ...BalStepsBundle,
     ...BalTabsBundle,
-    BalText,
-  ],
+    BalText
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './navigation-section.component.html',
 })
 export class NavigationSectionComponent {

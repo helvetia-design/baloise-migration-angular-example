@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { DecimalPipe, NgFor, NgIf } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router'
 import {
   BalBadge,
@@ -43,8 +43,6 @@ import { brandIcons } from '../../data/icons'
   selector: 'app-dashboard',
   imports: [
     DecimalPipe,
-    NgFor,
-    NgIf,
     RouterLink,
     BalBadge,
     BalButton,
@@ -65,8 +63,9 @@ import { brandIcons } from '../../data/icons'
     BalProgressBar,
     ...BalTagBundle,
     BalText,
-    BalTooltip,
-  ],
+    BalTooltip
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {

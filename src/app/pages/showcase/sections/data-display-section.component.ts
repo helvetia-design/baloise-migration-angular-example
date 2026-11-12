@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+
 import {
   BalBadge,
   BalButton,
@@ -50,7 +50,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-data-display-section',
   imports: [
-    NgFor,
     ShowcaseSectionComponent,
     BalBadge,
     BalButton,
@@ -67,8 +66,9 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     BalTable,
     ...BalTagBundle,
     BalText,
-    BalTooltip,
-  ],
+    BalTooltip
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './data-display-section.component.html',
 })
 export class DataDisplaySectionComponent {

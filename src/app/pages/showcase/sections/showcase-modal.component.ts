@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core'
 import { BalButton, BalModalBundle, BalModalService, BalText } from '@baloise/ds-angular'
 
 /** Content component for the modals presented through BalModalService on /showcase. */
 @Component({
   selector: 'app-showcase-modal',
   imports: [BalButton, ...BalModalBundle, BalText],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <bal-modal-header>Modal space="{{ space }}"</bal-modal-header>
     <bal-modal-body>

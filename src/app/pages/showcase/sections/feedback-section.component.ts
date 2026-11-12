@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+
 import {
   BalButton,
   BalButtonGroup,
@@ -35,7 +35,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-feedback-section',
   imports: [
-    NgFor,
     ShowcaseSectionComponent,
     BalButton,
     BalButtonGroup,
@@ -48,9 +47,10 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     BalSpinner,
     BalStack,
     BalText,
-    BalToast,
-  ],
+    BalToast
+],
   templateUrl: './feedback-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './feedback-section.component.scss',
 })
 export class FeedbackSectionComponent {

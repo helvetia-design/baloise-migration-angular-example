@@ -26,8 +26,8 @@
             <bal-field-label size="large">Was ist passiert?</bal-field-label>
             <bal-field-control>
               <!--
-                Second usage of interface="tile", composed differently than the
-                one on /application: here the tiles carry a colour per option.
+              Second usage of interface="tile", composed differently than the
+              one on /application: here the tiles carry a colour per option.
               -->
               <bal-radio-group
                 interface="tile"
@@ -36,30 +36,31 @@
                 name="claimType"
                 [(ngModel)]="claimType"
                 (balChange)="onClaimTypeChange($event)"
-              >
-                <!--
-                  interface/colSize are repeated on every item on purpose: a group
-                  only pushes them onto children that already exist when it loads,
-                  and *ngFor children arrive later. See docs/FINDINGS.md.
-                -->
-                <bal-radio
-                  *ngFor="let type of claimTypes; trackBy: trackClaimType"
-                  [value]="type.value"
-                  [color]="type.tileColor"
-                  interface="tile"
-                  [attr.col-size]="3"
-                  [attr.col-size-tablet]="1"
-                  [attr.col-size-mobile]="1"
                 >
-                  <bal-stack layout="vertical" align="center">
-                    <bal-icon [svg]="type.svg" size="large" color="auto"></bal-icon>
-                    <bal-content align="center">
-                      <bal-label size="large">{{ type.label }}</bal-label>
-                      <bal-text size="small">{{ type.description }}</bal-text>
-                    </bal-content>
-                    <bal-radio-icon></bal-radio-icon>
-                  </bal-stack>
-                </bal-radio>
+                <!--
+                interface/colSize are repeated on every item on purpose: a group
+                only pushes them onto children that already exist when it loads,
+                and *ngFor children arrive later. See docs/FINDINGS.md.
+                -->
+                @for (type of claimTypes; track trackClaimType($index, type)) {
+                  <bal-radio
+                    [value]="type.value"
+                    [color]="type.tileColor"
+                    interface="tile"
+                    [attr.col-size]="3"
+                    [attr.col-size-tablet]="1"
+                    [attr.col-size-mobile]="1"
+                    >
+                    <bal-stack layout="vertical" align="center">
+                      <bal-icon [svg]="type.svg" size="large" color="auto"></bal-icon>
+                      <bal-content align="center">
+                        <bal-label size="large">{{ type.label }}</bal-label>
+                        <bal-text size="small">{{ type.description }}</bal-text>
+                      </bal-content>
+                      <bal-radio-icon></bal-radio-icon>
+                    </bal-stack>
+                  </bal-radio>
+                }
               </bal-radio-group>
             </bal-field-control>
           </bal-field>
@@ -75,14 +76,15 @@
                 placeholder="Police wählen"
                 [(ngModel)]="contract"
                 (balChange)="onContractChange($event)"
-              >
-                <bal-select-option
-                  *ngFor="let entry of contracts; trackBy: trackContract"
-                  [value]="entry.value"
-                  [label]="entry.label"
                 >
-                  {{ entry.label }}
-                </bal-select-option>
+                @for (entry of contracts; track trackContract($index, entry)) {
+                  <bal-select-option
+                    [value]="entry.value"
+                    [label]="entry.label"
+                    >
+                    {{ entry.label }}
+                  </bal-select-option>
+                }
               </bal-select>
             </bal-field-control>
             <bal-field-message color="">
@@ -204,17 +206,20 @@
           </bal-field>
 
           <div>
-            <bal-tag-group *ngIf="rejectedFiles.length">
-            <bal-tag
-              *ngFor="let entry of rejectedFiles"
-              color="danger"
-              size="small"
-              [closable]="true"
-              (balCloseClick)="removeRejected(entry)"
-            >
-              {{ entry }}
-            </bal-tag>
-            </bal-tag-group>
+            @if (rejectedFiles.length) {
+              <bal-tag-group>
+                @for (entry of rejectedFiles; track entry) {
+                  <bal-tag
+                    color="danger"
+                    size="small"
+                    [closable]="true"
+                    (balCloseClick)="removeRejected(entry)"
+                    >
+                    {{ entry }}
+                  </bal-tag>
+                }
+              </bal-tag-group>
+            }
           </div>
         </bal-form-col>
 
@@ -231,24 +236,25 @@
                 name="checklist"
                 [(ngModel)]="checkedItems"
                 (balChange)="onChecklistChange($event)"
-              >
-                <bal-checkbox
-                  *ngFor="let item of checklist; trackBy: trackChecklistItem"
-                  [value]="item.value"
-                  name="checklist"
-                  interface="tile"
-                  [attr.col-size]="3"
-                  [attr.col-size-tablet]="1"
-                  [attr.col-size-mobile]="1"
                 >
-                  <bal-stack layout="vertical" align="center">
-                    <bal-content align="center">
-                      <bal-label size="large">{{ item.label }}</bal-label>
-                      <bal-text size="small">{{ item.hint }}</bal-text>
-                    </bal-content>
-                    <bal-check></bal-check>
-                  </bal-stack>
-                </bal-checkbox>
+                @for (item of checklist; track trackChecklistItem($index, item)) {
+                  <bal-checkbox
+                    [value]="item.value"
+                    name="checklist"
+                    interface="tile"
+                    [attr.col-size]="3"
+                    [attr.col-size-tablet]="1"
+                    [attr.col-size-mobile]="1"
+                    >
+                    <bal-stack layout="vertical" align="center">
+                      <bal-content align="center">
+                        <bal-label size="large">{{ item.label }}</bal-label>
+                        <bal-text size="small">{{ item.hint }}</bal-text>
+                      </bal-content>
+                      <bal-check></bal-check>
+                    </bal-stack>
+                  </bal-checkbox>
+                }
               </bal-checkbox-group>
             </bal-field-control>
             <bal-field-message [color]="checklistComplete ? 'success' : 'warning'">
@@ -273,22 +279,30 @@
     </bal-card-content>
   </bal-card>
 
-  <bal-notification *ngIf="submitted" color="success" class="mt-normal">
-    <bal-stack space="auto" alignment="center">
-      <span>Ihre Schadenmeldung ist eingegangen. Referenz 2026-0042.</span>
-      <bal-close size="small" (click)="submitted = false"></bal-close>
+  @if (submitted) {
+    <bal-notification color="success" class="mt-normal">
+      <bal-stack space="auto" alignment="center">
+        <span>Ihre Schadenmeldung ist eingegangen. Referenz 2026-0042.</span>
+        <bal-close size="small" (click)="submitted = false"></bal-close>
+      </bal-stack>
+    </bal-notification>
+  }
+
+  @if (submitting) {
+    <bal-stack space="small" class="mt-small">
+      <bal-spinner variation="circle" [small]="true"></bal-spinner>
+      <bal-text size="small">Meldung wird übermittelt …</bal-text>
     </bal-stack>
-  </bal-notification>
+  }
 
-  <bal-stack space="small" class="mt-small" *ngIf="submitting">
-    <bal-spinner variation="circle" [small]="true"></bal-spinner>
-    <bal-text size="small">Meldung wird übermittelt …</bal-text>
-  </bal-stack>
-
-  <bal-text *ngIf="lastEvent" size="small" color="info" space="top">{{ lastEvent }}</bal-text>
-  <bal-text *ngIf="modalResult" size="small" color="grey" space="none">
-    Dialog-Ergebnis: {{ modalResult }}
-  </bal-text>
+  @if (lastEvent) {
+    <bal-text size="small" color="info" space="top">{{ lastEvent }}</bal-text>
+  }
+  @if (modalResult) {
+    <bal-text size="small" color="grey" space="none">
+      Dialog-Ergebnis: {{ modalResult }}
+    </bal-text>
+  }
 
   <bal-divider space="large"></bal-divider>
 
@@ -327,7 +341,7 @@
   space="small"
   [modalWidth]="420"
   (balModalDidDismiss)="onHelpModalDismiss($event)"
->
+  >
   <bal-modal-header>Hilfe zur Schadenmeldung</bal-modal-header>
   <bal-modal-body>
     <bal-stack layout="vertical" space="small">

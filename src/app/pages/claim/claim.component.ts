@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { NgFor, NgIf } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+
 import { FormsModule } from '@angular/forms'
 import { RouterLink } from '@angular/router'
 import {
@@ -48,8 +48,6 @@ import { ClaimConfirmModalComponent } from '../../shared/claim-confirm-modal.com
 @Component({
   selector: 'app-claim',
   imports: [
-    NgFor,
-    NgIf,
     FormsModule,
     RouterLink,
     BalButton,
@@ -77,8 +75,9 @@ import { ClaimConfirmModalComponent } from '../../shared/claim-confirm-modal.com
     BalStack,
     ...BalTagBundle,
     BalText,
-    BalTextarea,
-  ],
+    BalTextarea
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './claim.component.html',
 })
 export class ClaimComponent {

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { NgFor, NgIf } from '@angular/common'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
+
 import { FormsModule } from '@angular/forms'
 import {
   BalButton,
@@ -57,8 +57,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-form-section',
   imports: [
-    NgFor,
-    NgIf,
     FormsModule,
     ShowcaseSectionComponent,
     BalButton,
@@ -85,8 +83,9 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     ...BalTagBundle,
     BalText,
     BalTextarea,
-    BalTimeInput,
-  ],
+    BalTimeInput
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './form-section.component.html',
 })
 export class FormSectionComponent {

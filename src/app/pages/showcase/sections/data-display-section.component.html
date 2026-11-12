@@ -3,17 +3,21 @@
   <bal-text size="small" color="grey">Default badge, no props</bal-text>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <div *ngFor="let color of badgeColors" class="flex align-items-center gap-x-small">
-      <bal-badge [color]="color">{{ color ? color.charAt(0).toUpperCase() : 'D' }}</bal-badge>
-      <bal-text size="small">{{ color || 'default' }}</bal-text>
-    </div>
+    @for (color of badgeColors; track color) {
+      <div class="flex align-items-center gap-x-small">
+        <bal-badge [color]="color">{{ color ? color.charAt(0).toUpperCase() : 'D' }}</bal-badge>
+        <bal-text size="small">{{ color || 'default' }}</bal-text>
+      </div>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <div *ngFor="let size of badgeSizes" class="flex align-items-center gap-x-small">
-      <bal-badge [size]="size" color="purple">S</bal-badge>
-      <bal-text size="small">size="{{ size || 'default' }}"</bal-text>
-    </div>
+    @for (size of badgeSizes; track size) {
+      <div class="flex align-items-center gap-x-small">
+        <bal-badge [size]="size" color="purple">S</bal-badge>
+        <bal-text size="small">size="{{ size || 'default' }}"</bal-text>
+      </div>
+    }
     <div class="flex align-items-center gap-x-small">
       <bal-badge color="success" icon="check" size="large">1</bal-badge>
       <bal-text size="small">icon="check"</bal-text>
@@ -52,7 +56,7 @@
   anchor="bal-tag"
   title="bal-tag"
   subtitle="color, size, position, closable, light, transparent, disabled, invalid"
->
+  >
   <bal-tag>Default tag, no props</bal-tag>
 
   <bal-text size="small" space="top">color — als Literal</bal-text>
@@ -64,23 +68,29 @@
 
   <bal-text size="small" space="top">color — aus einem Ausdruck</bal-text>
   <div class="flex flex-wrap gap-x-small">
-    <bal-tag *ngFor="let color of tagColors" [color]="color">{{ color || 'default' }}</bal-tag>
+    @for (color of tagColors; track color) {
+      <bal-tag [color]="color">{{ color || 'default' }}</bal-tag>
+    }
   </div>
 
   <bal-text size="small" space="top">size</bal-text>
   <div class="flex flex-wrap gap-x-small align-items-center">
-    <bal-tag *ngFor="let size of tagSizes" [size]="size" color="purple">{{ size || 'default' }}</bal-tag>
+    @for (size of tagSizes; track size) {
+      <bal-tag [size]="size" color="purple">{{ size || 'default' }}</bal-tag>
+    }
   </div>
 
   <bal-text size="small" space="top">position</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let placement of tagPlacements" style="width: 220px">
-      <bal-card color="white" [border]="true">
-        <bal-tag [position]="placement" color="red" size="large">{{ placement }}</bal-tag>
-        <bal-card-title>Karte</bal-card-title>
-        <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
-      </bal-card>
-    </div>
+    @for (placement of tagPlacements; track placement) {
+      <div style="width: 220px">
+        <bal-card color="white" [border]="true">
+          <bal-tag [position]="placement" color="red" size="large">{{ placement }}</bal-tag>
+          <bal-card-title>Karte</bal-card-title>
+          <bal-card-content><bal-text size="small">Inhalt</bal-text></bal-card-content>
+        </bal-card>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">Zustände und das balCloseClick-Ereignis</bal-text>
@@ -98,7 +108,7 @@
   anchor="bal-data"
   title="bal-data"
   subtitle="border, horizontal — mit bal-data-item, bal-data-label, bal-data-value"
->
+  >
   <bal-data>
     <bal-data-item>
       <bal-data-label>Default</bal-data-label>
@@ -134,7 +144,7 @@
         (balClick)="onDataValueClick()"
         (balFocus)="onDataValueFocus()"
         (balBlur)="onDataValueBlur()"
-      >
+        >
         klickbar
       </bal-data-value>
     </bal-data-item>
@@ -149,7 +159,7 @@
   anchor="bal-list"
   title="bal-list"
   subtitle="size, background, border, accordionOneLevel — background='dark' braucht eine dunkle Fläche vom Aufrufer"
->
+  >
   <bal-list>
     <bal-list-item>
       <bal-list-item-content>
@@ -159,39 +169,42 @@
   </bal-list>
 
   <bal-text size="small" space="top">size</bal-text>
-  <div *ngFor="let size of listSizes" class="mb-x-small">
-    <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
-    <bal-list [size]="size" [border]="true">
-      <bal-list-item>
-        <bal-list-item-content>
-          <bal-list-item-title>Titel</bal-list-item-title>
-          <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
-        </bal-list-item-content>
-      </bal-list-item>
-    </bal-list>
-  </div>
+  @for (size of listSizes; track size) {
+    <div class="mb-x-small">
+      <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+      <bal-list [size]="size" [border]="true">
+        <bal-list-item>
+          <bal-list-item-content>
+            <bal-list-item-title>Titel</bal-list-item-title>
+            <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
+          </bal-list-item-content>
+        </bal-list-item>
+      </bal-list>
+    </div>
+  }
 
   <bal-text size="small" space="top">
     background — <code>dark</code> färbt nur den Text, die dunkle Fläche muss die App liefern
   </bal-text>
-  <div
-    *ngFor="let background of listBackgrounds"
-    class="mb-x-small p-x-small radius-normal"
-    [class.bg-primary]="background === 'dark'"
-    [class.bg-green-2]="background === 'color'"
-  >
-    <bal-text size="small" [color]="background === 'dark' ? 'white' : 'grey'">
-      background="{{ background }}"
-    </bal-text>
-    <bal-list [background]="background" [border]="true">
-      <bal-list-item>
-        <bal-list-item-content>
-          <bal-list-item-title>Titel auf {{ background }}</bal-list-item-title>
-          <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
-        </bal-list-item-content>
-      </bal-list-item>
-    </bal-list>
-  </div>
+  @for (background of listBackgrounds; track background) {
+    <div
+      class="mb-x-small p-x-small radius-normal"
+      [class.bg-primary]="background === 'dark'"
+      [class.bg-green-2]="background === 'color'"
+      >
+      <bal-text size="small" [color]="background === 'dark' ? 'white' : 'grey'">
+        background="{{ background }}"
+      </bal-text>
+      <bal-list [background]="background" [border]="true">
+        <bal-list-item>
+          <bal-list-item-content>
+            <bal-list-item-title>Titel auf {{ background }}</bal-list-item-title>
+            <bal-list-item-subtitle>Untertitel</bal-list-item-subtitle>
+          </bal-list-item-content>
+        </bal-list-item>
+      </bal-list>
+    </div>
+  }
 
   <bal-text size="small" space="top">Icons, Links und Zustände</bal-text>
   <bal-list [border]="true" size="large">
@@ -229,7 +242,7 @@
       (balDidAnimate)="onListItemAnimate($event)"
       (balWillAnimate)="onListItemAnimate($event)"
       (balGroupStateChanged)="onListGroupStateChanged()"
-    >
+      >
       <bal-list-item-accordion-head icon="plus">
         <bal-list-item-content>
           <bal-list-item-title>icon="plus"</bal-list-item-title>
@@ -281,7 +294,7 @@
   anchor="bal-table"
   title="bal-table"
   subtitle="expanded — die Optik kommt von den Utility-Klassen auf der nativen Tabelle"
->
+  >
   <bal-table>
     <table class="table w-full">
       <thead>
@@ -323,7 +336,7 @@
   anchor="bal-carousel"
   title="bal-carousel"
   subtitle="interface, controls, itemsPerView, aspectRatio, space, htmlRole — plus bal-carousel-item color/htmlRole"
->
+  >
   <bal-carousel>
     <bal-carousel-item>
       <div class="bg-green-2 p-normal w-full">Default carousel, no props</div>
@@ -334,99 +347,111 @@
   </bal-carousel>
 
   <bal-text size="small" space="top">interface</bal-text>
-  <div *ngFor="let variant of carouselInterfaces" class="mb-small">
-    <bal-text size="small" color="grey">interface="{{ variant || 'default' }}"</bal-text>
-    <bal-carousel [interface]="variant" controls="small" itemsPerView="auto">
-      <bal-carousel-item label="Eins" color="green">
-        <div class="bg-green-2 p-small">Eins</div>
-      </bal-carousel-item>
-      <bal-carousel-item label="Zwei" color="purple">
-        <div class="bg-purple-2 p-small">Zwei</div>
-      </bal-carousel-item>
-      <bal-carousel-item label="Drei" color="yellow">
-        <div class="bg-yellow-2 p-small">Drei</div>
-      </bal-carousel-item>
-    </bal-carousel>
-  </div>
+  @for (variant of carouselInterfaces; track variant) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">interface="{{ variant || 'default' }}"</bal-text>
+      <bal-carousel [interface]="variant" controls="small" itemsPerView="auto">
+        <bal-carousel-item label="Eins" color="green">
+          <div class="bg-green-2 p-small">Eins</div>
+        </bal-carousel-item>
+        <bal-carousel-item label="Zwei" color="purple">
+          <div class="bg-purple-2 p-small">Zwei</div>
+        </bal-carousel-item>
+        <bal-carousel-item label="Drei" color="yellow">
+          <div class="bg-yellow-2 p-small">Drei</div>
+        </bal-carousel-item>
+      </bal-carousel>
+    </div>
+  }
 
   <bal-text size="small" space="top">controls</bal-text>
-  <div *ngFor="let control of carouselControls" class="mb-small">
-    <bal-text size="small" color="grey">controls="{{ control }}"</bal-text>
-    <bal-carousel [controls]="control" [itemsPerView]="2">
-      <bal-carousel-item label="A"><div class="bg-green-2 p-small">A</div></bal-carousel-item>
-      <bal-carousel-item label="B"><div class="bg-green-3 p-small">B</div></bal-carousel-item>
-      <bal-carousel-item label="C"><div class="bg-green-4 p-small">C</div></bal-carousel-item>
-      <bal-carousel-item label="D"><div class="bg-green-5 p-small">D</div></bal-carousel-item>
-    </bal-carousel>
-  </div>
+  @for (control of carouselControls; track control) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">controls="{{ control }}"</bal-text>
+      <bal-carousel [controls]="control" [itemsPerView]="2">
+        <bal-carousel-item label="A"><div class="bg-green-2 p-small">A</div></bal-carousel-item>
+        <bal-carousel-item label="B"><div class="bg-green-3 p-small">B</div></bal-carousel-item>
+        <bal-carousel-item label="C"><div class="bg-green-4 p-small">C</div></bal-carousel-item>
+        <bal-carousel-item label="D"><div class="bg-green-5 p-small">D</div></bal-carousel-item>
+      </bal-carousel>
+    </div>
+  }
 
   <bal-text size="small" space="top">itemsPerView</bal-text>
-  <div *ngFor="let perView of carouselItemsPerView" class="mb-small">
-    <bal-text size="small" color="grey">itemsPerView="{{ perView }}"</bal-text>
-    <bal-carousel [itemsPerView]="perView" controls="small">
-      <bal-carousel-item><div class="bg-green-2 p-small">1</div></bal-carousel-item>
-      <bal-carousel-item><div class="bg-green-3 p-small">2</div></bal-carousel-item>
-      <bal-carousel-item><div class="bg-green-4 p-small">3</div></bal-carousel-item>
-      <bal-carousel-item><div class="bg-green-5 p-small">4</div></bal-carousel-item>
-      <bal-carousel-item><div class="bg-green-6 p-small text-white">5</div></bal-carousel-item>
-    </bal-carousel>
-  </div>
+  @for (perView of carouselItemsPerView; track perView) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">itemsPerView="{{ perView }}"</bal-text>
+      <bal-carousel [itemsPerView]="perView" controls="small">
+        <bal-carousel-item><div class="bg-green-2 p-small">1</div></bal-carousel-item>
+        <bal-carousel-item><div class="bg-green-3 p-small">2</div></bal-carousel-item>
+        <bal-carousel-item><div class="bg-green-4 p-small">3</div></bal-carousel-item>
+        <bal-carousel-item><div class="bg-green-5 p-small">4</div></bal-carousel-item>
+        <bal-carousel-item><div class="bg-green-6 p-small text-white">5</div></bal-carousel-item>
+      </bal-carousel>
+    </div>
+  }
 
   <bal-text size="small" space="top">aspectRatio (mit interface="image")</bal-text>
-  <div *ngFor="let ratio of carouselAspectRatios" class="mb-small" style="max-width: 420px">
-    <bal-text size="small" color="grey">aspectRatio="{{ ratio }}"</bal-text>
-    <bal-carousel interface="image" [aspectRatio]="ratio" controls="dots">
-      <bal-carousel-item><div class="bg-purple-2 w-full h-full"></div></bal-carousel-item>
-      <bal-carousel-item><div class="bg-green-2 w-full h-full"></div></bal-carousel-item>
-    </bal-carousel>
-  </div>
+  @for (ratio of carouselAspectRatios; track ratio) {
+    <div class="mb-small" style="max-width: 420px">
+      <bal-text size="small" color="grey">aspectRatio="{{ ratio }}"</bal-text>
+      <bal-carousel interface="image" [aspectRatio]="ratio" controls="dots">
+        <bal-carousel-item><div class="bg-purple-2 w-full h-full"></div></bal-carousel-item>
+        <bal-carousel-item><div class="bg-green-2 w-full h-full"></div></bal-carousel-item>
+      </bal-carousel>
+    </div>
+  }
 
   <bal-text size="small" space="top">space, htmlRole und bal-carousel-item color</bal-text>
-  <div *ngFor="let space of carouselSpaces" class="mb-small">
-    <bal-text size="small" color="grey">space="{{ space }}"</bal-text>
-    <bal-carousel [space]="space" [itemsPerView]="3" controls="small" htmlRole="list">
-      <bal-carousel-item
-        *ngFor="let color of carouselItemColors"
-        [color]="color"
-        [label]="color"
-        htmlRole="listitem"
-      >
-        <div class="p-small border border-grey">{{ color }}</div>
-      </bal-carousel-item>
-    </bal-carousel>
-  </div>
+  @for (space of carouselSpaces; track space) {
+    <div class="mb-small">
+      <bal-text size="small" color="grey">space="{{ space }}"</bal-text>
+      <bal-carousel [space]="space" [itemsPerView]="3" controls="small" htmlRole="list">
+        @for (color of carouselItemColors; track color) {
+          <bal-carousel-item
+            [color]="color"
+            [label]="color"
+            htmlRole="listitem"
+            >
+            <div class="p-small border border-grey">{{ color }}</div>
+          </bal-carousel-item>
+        }
+      </bal-carousel>
+    </div>
+  }
 
   <bal-text size="small" space="top">
     htmlRole am Carousel und gesteuerter value (Ausdruck statt Literal)
   </bal-text>
-  <bal-carousel
-    #showcaseCarousel
-    *ngFor="let role of carouselHtmlRoles"
-    [htmlRole]="role"
-    [value]="carouselValue"
-    controls="tabs"
-    [steps]="1"
-    [scrollY]="true"
-    [controlsOverflow]="true"
-    [inverted]="false"
-    [border]="true"
-    [fullHeight]="false"
-    (balChange)="onCarouselChange($event)"
-  >
-    <bal-carousel-item
-      #showcaseCarouselItem
-      label="Erstes"
-      href="#"
-      elementType="button"
-      (balFocus)="onCarouselItemFocus()"
-      (balBlur)="onCarouselItemBlur()"
-    >
-      <div class="bg-green-2 p-small">htmlRole="{{ role || 'default' }}" — Slide 1</div>
-    </bal-carousel-item>
-    <bal-carousel-item label="Zweites">
-      <div class="bg-green-3 p-small">Slide 2</div>
-    </bal-carousel-item>
-  </bal-carousel>
+  @for (role of carouselHtmlRoles; track role) {
+    <bal-carousel
+      #showcaseCarousel
+      [htmlRole]="role"
+      [value]="carouselValue"
+      controls="tabs"
+      [steps]="1"
+      [scrollY]="true"
+      [controlsOverflow]="true"
+      [inverted]="false"
+      [border]="true"
+      [fullHeight]="false"
+      (balChange)="onCarouselChange($event)"
+      >
+      <bal-carousel-item
+        #showcaseCarouselItem
+        label="Erstes"
+        href="#"
+        elementType="button"
+        (balFocus)="onCarouselItemFocus()"
+        (balBlur)="onCarouselItemBlur()"
+        >
+        <div class="bg-green-2 p-small">htmlRole="{{ role || 'default' }}" — Slide 1</div>
+      </bal-carousel-item>
+      <bal-carousel-item label="Zweites">
+        <div class="bg-green-3 p-small">Slide 2</div>
+      </bal-carousel-item>
+    </bal-carousel>
+  }
 
   <bal-stack space="small" class="mt-x-small">
     <bal-button size="small" color="info" [outlined]="true" (balClick)="previousSlide()">previous()</bal-button>
@@ -440,7 +465,7 @@
   anchor="bal-hint"
   title="bal-hint"
   subtitle="small, closeLabel — mit bal-hint-title und bal-hint-text"
->
+  >
   <bal-stack alignment="center" space="small">
     <bal-text size="small">Default hint, no props</bal-text>
     <bal-hint>
@@ -464,22 +489,24 @@
   anchor="bal-tooltip"
   title="bal-tooltip"
   subtitle="placement, offset, contentWidth — reference zeigt auf die id des Auslösers"
->
+  >
   <div class="flex flex-wrap gap-normal">
-    <div *ngFor="let placement of tooltipPlacements" class="p-normal">
-      <bal-button [id]="'tooltip-trigger-' + placement" size="small" color="info" [outlined]="true">
-        placement="{{ placement }}"
-      </bal-button>
-      <bal-tooltip
-        [reference]="'tooltip-trigger-' + placement"
-        [placement]="placement"
-        [offset]="8"
-        [contentWidth]="200"
-        (balWillAnimate)="onTooltipAnimate($event)"
-      >
-        Tooltip {{ placement }}
-      </bal-tooltip>
-    </div>
+    @for (placement of tooltipPlacements; track placement) {
+      <div class="p-normal">
+        <bal-button [id]="'tooltip-trigger-' + placement" size="small" color="info" [outlined]="true">
+          placement="{{ placement }}"
+        </bal-button>
+        <bal-tooltip
+          [reference]="'tooltip-trigger-' + placement"
+          [placement]="placement"
+          [offset]="8"
+          [contentWidth]="200"
+          (balWillAnimate)="onTooltipAnimate($event)"
+          >
+          Tooltip {{ placement }}
+        </bal-tooltip>
+      </div>
+    }
   </div>
 
   <div class="p-normal">
@@ -499,42 +526,46 @@
   anchor="bal-popup"
   title="bal-popup"
   subtitle="variant, placement, arrow, backdrop, closable — der Auslöser koppelt über das DOM-Attribut bal-popup"
->
+  >
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let variant of popupVariants">
-      <bal-button [attr.bal-popup]="'popup-' + variant" size="small" color="info" [outlined]="true">
-        variant="{{ variant }}"
-      </bal-button>
-      <bal-popup
-        [id]="'popup-' + variant"
-        [variant]="variant"
-        [label]="'Popup ' + variant"
-        [closable]="true"
-        [backdrop]="true"
-        [backdropDismiss]="true"
-      >
-        <bal-text size="small">Inhalt der Variante {{ variant }}</bal-text>
-      </bal-popup>
-    </div>
+    @for (variant of popupVariants; track variant) {
+      <div>
+        <bal-button [attr.bal-popup]="'popup-' + variant" size="small" color="info" [outlined]="true">
+          variant="{{ variant }}"
+        </bal-button>
+        <bal-popup
+          [id]="'popup-' + variant"
+          [variant]="variant"
+          [label]="'Popup ' + variant"
+          [closable]="true"
+          [backdrop]="true"
+          [backdropDismiss]="true"
+          >
+          <bal-text size="small">Inhalt der Variante {{ variant }}</bal-text>
+        </bal-popup>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">placement</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div *ngFor="let placement of popupPlacements">
-      <bal-button [attr.bal-popup]="'popup-placement-' + placement" size="small">
-        {{ placement }}
-      </bal-button>
-      <bal-popup
-        [id]="'popup-placement-' + placement"
-        [placement]="placement"
-        [arrow]="true"
-        [offset]="8"
-        [contentWidth]="180"
-        label="Platzierung"
-      >
-        <bal-text size="small">{{ placement }}</bal-text>
-      </bal-popup>
-    </div>
+    @for (placement of popupPlacements; track placement) {
+      <div>
+        <bal-button [attr.bal-popup]="'popup-placement-' + placement" size="small">
+          {{ placement }}
+        </bal-button>
+        <bal-popup
+          [id]="'popup-placement-' + placement"
+          [placement]="placement"
+          [arrow]="true"
+          [offset]="8"
+          [contentWidth]="180"
+          label="Platzierung"
+          >
+          <bal-text size="small">{{ placement }}</bal-text>
+        </bal-popup>
+      </div>
+    }
   </div>
 
   <div class="mt-small">
@@ -550,7 +581,7 @@
   anchor="bal-popover"
   title="bal-popover"
   subtitle="position, arrow, backdrop, hover, tooltip, hint — bal-popover-content kennt color und radius"
->
+  >
   <bal-popover #showcasePopover [arrow]="true" (balChange)="onPopoverChange($event)">
     <bal-button bal-popover-trigger="true" size="small" color="info" [outlined]="true">
       Default popover
@@ -568,32 +599,38 @@
 
   <bal-text size="small" space="top">position</bal-text>
   <div class="flex flex-wrap gap-small">
-    <bal-popover *ngFor="let placement of popoverPlacements" [position]="placement" [arrow]="true">
-      <bal-button bal-popover-trigger="true" size="small">{{ placement }}</bal-button>
-      <bal-popover-content>
-        <bal-text size="small">position="{{ placement }}"</bal-text>
-      </bal-popover-content>
-    </bal-popover>
+    @for (placement of popoverPlacements; track placement) {
+      <bal-popover [position]="placement" [arrow]="true">
+        <bal-button bal-popover-trigger="true" size="small">{{ placement }}</bal-button>
+        <bal-popover-content>
+          <bal-text size="small">position="{{ placement }}"</bal-text>
+        </bal-popover-content>
+      </bal-popover>
+    }
   </div>
 
   <bal-text size="small" space="top">bal-popover-content color</bal-text>
   <div class="flex flex-wrap gap-small">
-    <bal-popover *ngFor="let color of popoverContentColors" [arrow]="true">
-      <bal-button bal-popover-trigger="true" size="small">color="{{ color }}"</bal-button>
-      <bal-popover-content [color]="color" [contentWidth]="220">
-        <bal-text size="small">Inhalt in {{ color }}</bal-text>
-      </bal-popover-content>
-    </bal-popover>
+    @for (color of popoverContentColors; track color) {
+      <bal-popover [arrow]="true">
+        <bal-button bal-popover-trigger="true" size="small">color="{{ color }}"</bal-button>
+        <bal-popover-content [color]="color" [contentWidth]="220">
+          <bal-text size="small">Inhalt in {{ color }}</bal-text>
+        </bal-popover-content>
+      </bal-popover>
+    }
   </div>
 
   <bal-text size="small" space="top">bal-popover-content radius</bal-text>
   <div class="flex flex-wrap gap-small">
-    <bal-popover *ngFor="let radius of popoverContentRadii">
-      <bal-button bal-popover-trigger="true" size="small">{{ radius }}</bal-button>
-      <bal-popover-content [radius]="radius" [noShadow]="false" [spaceless]="false" [contentMinWidth]="160">
-        <bal-text size="small">radius="{{ radius }}"</bal-text>
-      </bal-popover-content>
-    </bal-popover>
+    @for (radius of popoverContentRadii; track radius) {
+      <bal-popover>
+        <bal-button bal-popover-trigger="true" size="small">{{ radius }}</bal-button>
+        <bal-popover-content [radius]="radius" [noShadow]="false" [spaceless]="false" [contentMinWidth]="160">
+          <bal-text size="small">radius="{{ radius }}"</bal-text>
+        </bal-popover-content>
+      </bal-popover>
+    }
   </div>
 
   <bal-text size="small" space="top">hover, tooltip, hint, backdrop, mobileTop</bal-text>

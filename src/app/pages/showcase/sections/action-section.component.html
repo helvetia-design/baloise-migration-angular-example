@@ -2,20 +2,21 @@
   anchor="bal-button"
   title="bal-button"
   subtitle="color, size, elementType, target, plus the boolean modifiers"
->
+  >
   <bal-button>Default button, no props</bal-button>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <bal-button
-      *ngFor="let color of buttonColors"
-      [color]="color"
-      (balClick)="onButtonClick($event)"
-      (balFocus)="onButtonFocus()"
-      (balBlur)="onButtonBlur()"
-      (balDidRender)="onButtonDidRender()"
-    >
-      {{ color }}
-    </bal-button>
+    @for (color of buttonColors; track color) {
+      <bal-button
+        [color]="color"
+        (balClick)="onButtonClick($event)"
+        (balFocus)="onButtonFocus()"
+        (balBlur)="onButtonBlur()"
+        (balDidRender)="onButtonDidRender()"
+        >
+        {{ color }}
+      </bal-button>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
@@ -24,9 +25,11 @@
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <bal-button *ngFor="let elementType of buttonElementTypes" [elementType]="elementType" color="info">
-      elementType="{{ elementType }}"
-    </bal-button>
+    @for (elementType of buttonElementTypes; track elementType) {
+      <bal-button [elementType]="elementType" color="info">
+        elementType="{{ elementType }}"
+      </bal-button>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
@@ -61,27 +64,31 @@
   anchor="bal-button-group"
   title="bal-button-group"
   subtitle="position, direction, reverse"
->
+  >
   <bal-button-group>
     <bal-button color="info">Default group</bal-button>
     <bal-button>Zweiter</bal-button>
   </bal-button-group>
 
-  <div *ngFor="let position of buttonGroupPositions" class="mt-x-small border border-grey p-x-small">
-    <bal-text size="small" color="grey">position="{{ position || 'default' }}"</bal-text>
-    <bal-button-group [position]="position">
-      <bal-button color="info">A</bal-button>
-      <bal-button>B</bal-button>
-    </bal-button-group>
-  </div>
+  @for (position of buttonGroupPositions; track position) {
+    <div class="mt-x-small border border-grey p-x-small">
+      <bal-text size="small" color="grey">position="{{ position || 'default' }}"</bal-text>
+      <bal-button-group [position]="position">
+        <bal-button color="info">A</bal-button>
+        <bal-button>B</bal-button>
+      </bal-button-group>
+    </div>
+  }
 
-  <div *ngFor="let direction of buttonGroupDirections" class="mt-x-small border border-grey p-x-small">
-    <bal-text size="small" color="grey">direction="{{ direction }}"</bal-text>
-    <bal-button-group [direction]="direction">
-      <bal-button color="info">A</bal-button>
-      <bal-button>B</bal-button>
-    </bal-button-group>
-  </div>
+  @for (direction of buttonGroupDirections; track direction) {
+    <div class="mt-x-small border border-grey p-x-small">
+      <bal-text size="small" color="grey">direction="{{ direction }}"</bal-text>
+      <bal-button-group [direction]="direction">
+        <bal-button color="info">A</bal-button>
+        <bal-button>B</bal-button>
+      </bal-button-group>
+    </div>
+  }
 
   <div class="mt-x-small border border-grey p-x-small">
     <bal-text size="small" color="grey">reverse</bal-text>
@@ -99,10 +106,12 @@
   </bal-stack>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <div *ngFor="let size of closeSizes" class="border border-grey p-x-small">
-      <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
-      <bal-close [size]="size" (click)="onClose()"></bal-close>
-    </div>
+    @for (size of closeSizes; track size) {
+      <div class="border border-grey p-x-small">
+        <bal-text size="small" color="grey">size="{{ size || 'default' }}"</bal-text>
+        <bal-close [size]="size" (click)="onClose()"></bal-close>
+      </div>
+    }
     <div class="bg-primary p-x-small">
       <bal-close [inverted]="true" (click)="onClose()"></bal-close>
     </div>
@@ -115,20 +124,21 @@
   anchor="bal-icon"
   title="bal-icon"
   subtitle="color, size, tile, tileColor, svg, turn, inline — baked in and registered names"
->
+  >
   <bal-icon></bal-icon>
   <bal-text size="small" color="grey">Default icon, no props (renders nothing visible)</bal-text>
 
   <bal-text size="small" space="top">Namen aus dem eingebauten Standard-Set</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div
-      *ngFor="let name of defaultIconNames"
-      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
-      style="min-width: 170px"
-    >
-      <bal-icon [name]="name"></bal-icon>
-      <bal-text size="small">{{ name }}</bal-text>
-    </div>
+    @for (name of defaultIconNames; track name) {
+      <div
+        class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+        style="min-width: 170px"
+        >
+        <bal-icon [name]="name"></bal-icon>
+        <bal-text size="small">{{ name }}</bal-text>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">
@@ -136,50 +146,54 @@
     auflösbar sind
   </bal-text>
   <div class="flex flex-wrap gap-small">
-    <div
-      *ngFor="let name of registeredIconNames"
-      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
-      style="min-width: 190px"
-    >
-      <bal-icon [name]="name"></bal-icon>
-      <bal-text size="small">{{ name }}</bal-text>
-    </div>
+    @for (name of registeredIconNames; track name) {
+      <div
+        class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+        style="min-width: 190px"
+        >
+        <bal-icon [name]="name"></bal-icon>
+        <bal-text size="small">{{ name }}</bal-text>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">color</bal-text>
   <div class="flex flex-wrap gap-small">
-    <div
-      *ngFor="let color of iconColors"
-      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
-      style="min-width: 190px"
-    >
-      <bal-icon name="info-circle" [color]="color"></bal-icon>
-      <bal-text size="small">{{ color || 'default' }}</bal-text>
-    </div>
+    @for (color of iconColors; track color) {
+      <div
+        class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+        style="min-width: 190px"
+        >
+        <bal-icon name="info-circle" [color]="color"></bal-icon>
+        <bal-text size="small">{{ color || 'default' }}</bal-text>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">size</bal-text>
   <div class="flex flex-wrap gap-small align-items-center">
-    <div
-      *ngFor="let size of iconSizes"
-      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
-      style="min-width: 170px"
-    >
-      <bal-icon name="star-full" [size]="size"></bal-icon>
-      <bal-text size="small">{{ size || 'default' }}</bal-text>
-    </div>
+    @for (size of iconSizes; track size) {
+      <div
+        class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+        style="min-width: 170px"
+        >
+        <bal-icon name="star-full" [size]="size"></bal-icon>
+        <bal-text size="small">{{ size || 'default' }}</bal-text>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">tile + tileColor</bal-text>
   <div class="flex flex-wrap gap-small align-items-center">
-    <div
-      *ngFor="let tileColor of iconTileColors"
-      class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
-      style="min-width: 170px"
-    >
-      <bal-icon name="home" [tile]="true" [tileColor]="tileColor"></bal-icon>
-      <bal-text size="small">{{ tileColor || 'default' }}</bal-text>
-    </div>
+    @for (tileColor of iconTileColors; track tileColor) {
+      <div
+        class="flex align-items-center gap-x-small border border-grey p-x-small radius-normal"
+        style="min-width: 170px"
+        >
+        <bal-icon name="home" [tile]="true" [tileColor]="tileColor"></bal-icon>
+        <bal-text size="small">{{ tileColor || 'default' }}</bal-text>
+      </div>
+    }
   </div>
 
   <bal-text size="small" space="top">

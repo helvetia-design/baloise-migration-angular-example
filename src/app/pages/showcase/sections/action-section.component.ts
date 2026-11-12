@@ -1,5 +1,5 @@
-import { Component } from '@angular/core'
-import { NgFor } from '@angular/common'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
+
 import { BalButton, BalButtonGroup, BalClose, BalIcon, BalStack, BalText } from '@baloise/ds-angular'
 
 import { brandIcons } from '../../../data/icons'
@@ -20,15 +20,15 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
 @Component({
   selector: 'app-action-section',
   imports: [
-    NgFor,
     ShowcaseSectionComponent,
     BalButton,
     BalButtonGroup,
     BalClose,
     BalIcon,
     BalStack,
-    BalText,
-  ],
+    BalText
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './action-section.component.html',
 })
 export class ActionSectionComponent {

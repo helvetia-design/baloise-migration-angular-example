@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { DecimalPipe, NgFor, NgIf } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { RouterLink } from '@angular/router'
 import {
@@ -47,8 +47,6 @@ import {
   selector: 'app-profile',
   imports: [
     DecimalPipe,
-    NgFor,
-    NgIf,
     FormsModule,
     RouterLink,
     BalBadge,
@@ -72,8 +70,9 @@ import {
     BalTable,
     ...BalTabsBundle,
     ...BalTagBundle,
-    BalText,
-  ],
+    BalText
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent {

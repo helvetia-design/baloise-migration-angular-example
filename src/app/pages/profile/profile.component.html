@@ -11,8 +11,8 @@
   </bal-stack>
 
   <!--
-    Shape 2 on the tabs family: a loop generated selection strip whose items have
-    no content. The panel is rendered below from `activeTab`.
+  Shape 2 on the tabs family: a loop generated selection strip whose items have
+  no content. The panel is rendered below from `activeTab`.
   -->
   <bal-tabs
     #profileTabs
@@ -23,310 +23,315 @@
     [value]="activeTab"
     (balChange)="onTabsChange($event)"
     (balDidAnimate)="onTabsAnimate($event)"
-  >
-    <bal-tab-item
-      #firstTab
-      *ngFor="let tab of tabs; trackBy: trackTab"
-      [value]="tab.value"
-      [label]="tab.label"
-      [icon]="tab.icon"
-      [bubble]="tab.bubble"
-      (balNavigate)="onTabNavigate($event)"
-      (balKeyDown)="onTabKeyDown($event)"
-    ></bal-tab-item>
+    >
+    @for (tab of tabs; track trackTab($index, tab)) {
+      <bal-tab-item
+        #firstTab
+        [value]="tab.value"
+        [label]="tab.label"
+        [icon]="tab.icon"
+        [bubble]="tab.bubble"
+        (balNavigate)="onTabNavigate($event)"
+        (balKeyDown)="onTabKeyDown($event)"
+      ></bal-tab-item>
+    }
   </bal-tabs>
 
   <!-- ===================== Contracts panel ===================== -->
-  <div *ngIf="activeTab === 'contracts'" class="mt-normal">
-    <bal-card color="white" [border]="true">
-      <bal-card-title>
-        Policen
-        <bal-tag-group>
-          <bal-tag color="green" size="small">{{ filteredPolicies.length }} Treffer</bal-tag>
-        </bal-tag-group>
-      </bal-card-title>
-      <bal-card-content>
-        <bal-stack alignment="center" space="small" class="mb-normal">
-          <bal-field class="m-none">
-            <bal-field-control>
-              <bal-dropdown
-                #sortDropdown
-                name="sort"
-                inlineLabel="Sortierung"
-                size="small"
-                theme="purple"
-                [clearable]="true"
-                [(ngModel)]="sortBy"
-                (balChange)="onSortChange($event)"
+  @if (activeTab === 'contracts') {
+    <div class="mt-normal">
+      <bal-card color="white" [border]="true">
+        <bal-card-title>
+          Policen
+          <bal-tag-group>
+            <bal-tag color="green" size="small">{{ filteredPolicies.length }} Treffer</bal-tag>
+          </bal-tag-group>
+        </bal-card-title>
+        <bal-card-content>
+          <bal-stack alignment="center" space="small" class="mb-normal">
+            <bal-field class="m-none">
+              <bal-field-control>
+                <bal-dropdown
+                  #sortDropdown
+                  name="sort"
+                  inlineLabel="Sortierung"
+                  size="small"
+                  theme="purple"
+                  [clearable]="true"
+                  [(ngModel)]="sortBy"
+                  (balChange)="onSortChange($event)"
+                  >
+                  @for (option of sortOptions; track option) {
+                    <bal-option
+                      #firstSortOption
+                      [value]="option.value"
+                      [label]="option.label"
+                      (balOptionChange)="onSortOptionChange($event)"
+                      >
+                      {{ option.label }}
+                    </bal-option>
+                  }
+                </bal-dropdown>
+              </bal-field-control>
+            </bal-field>
+            <bal-segment
+              #densitySegment
+              [(ngModel)]="density"
+              name="density"
+              (balChange)="onDensityChange($event)"
               >
-                <bal-option
-                  #firstSortOption
-                  *ngFor="let option of sortOptions"
-                  [value]="option.value"
-                  [label]="option.label"
-                  (balOptionChange)="onSortOptionChange($event)"
-                >
-                  {{ option.label }}
-                </bal-option>
-              </bal-dropdown>
-            </bal-field-control>
-          </bal-field>
-
-          <bal-segment
-            #densitySegment
-            [(ngModel)]="density"
-            name="density"
-            (balChange)="onDensityChange($event)"
-          >
-            <bal-segment-item value="comfortable" label="Normal"></bal-segment-item>
-            <bal-segment-item value="compact" label="Kompakt"></bal-segment-item>
-          </bal-segment>
-
-          <bal-button-group>
-            <bal-button size="small" color="info" [outlined]="true" (balClick)="openSortDropdown()">
-              Sortierung öffnen
-            </bal-button>
-            <bal-button size="small" color="text" (balClick)="clearSortDropdown()">Zurücksetzen</bal-button>
-            <bal-button size="small" color="text" (balClick)="selectFirstSortOption()">
-              Erste Option wählen
-            </bal-button>
-          </bal-button-group>
-        </bal-stack>
-
-        <bal-tag-group class="mb-small">
-          <bal-tag
-            [color]="statusFilter === 'all' ? 'primary' : 'grey'"
-            size="small"
-            (click)="setStatusFilter('all')"
-          >
-            Alle
-          </bal-tag>
-          <bal-tag
-            [color]="statusFilter === 'aktiv' ? 'green' : 'grey'"
-            size="small"
-            (click)="setStatusFilter('aktiv')"
-          >
-            Aktiv
-          </bal-tag>
-          <bal-tag
-            [color]="statusFilter === 'sistiert' ? 'yellow' : 'grey'"
-            size="small"
-            (click)="setStatusFilter('sistiert')"
-          >
-            Sistiert
-          </bal-tag>
-          <bal-tag
-            [color]="statusFilter === 'gekündigt' ? 'red' : 'grey'"
-            size="small"
-            (click)="setStatusFilter('gekündigt')"
-          >
-            Gekündigt
-          </bal-tag>
-        </bal-tag-group>
-
-        <!--
+              <bal-segment-item value="comfortable" label="Normal"></bal-segment-item>
+              <bal-segment-item value="compact" label="Kompakt"></bal-segment-item>
+            </bal-segment>
+            <bal-button-group>
+              <bal-button size="small" color="info" [outlined]="true" (balClick)="openSortDropdown()">
+                Sortierung öffnen
+              </bal-button>
+              <bal-button size="small" color="text" (balClick)="clearSortDropdown()">Zurücksetzen</bal-button>
+              <bal-button size="small" color="text" (balClick)="selectFirstSortOption()">
+                Erste Option wählen
+              </bal-button>
+            </bal-button-group>
+          </bal-stack>
+          <bal-tag-group class="mb-small">
+            <bal-tag
+              [color]="statusFilter === 'all' ? 'primary' : 'grey'"
+              size="small"
+              (click)="setStatusFilter('all')"
+              >
+              Alle
+            </bal-tag>
+            <bal-tag
+              [color]="statusFilter === 'aktiv' ? 'green' : 'grey'"
+              size="small"
+              (click)="setStatusFilter('aktiv')"
+              >
+              Aktiv
+            </bal-tag>
+            <bal-tag
+              [color]="statusFilter === 'sistiert' ? 'yellow' : 'grey'"
+              size="small"
+              (click)="setStatusFilter('sistiert')"
+              >
+              Sistiert
+            </bal-tag>
+            <bal-tag
+              [color]="statusFilter === 'gekündigt' ? 'red' : 'grey'"
+              size="small"
+              (click)="setStatusFilter('gekündigt')"
+              >
+              Gekündigt
+            </bal-tag>
+          </bal-tag-group>
+          <!--
           bal-table is structural only. The visual styling comes from the utility
           classes on the native table inside it, exactly as the docs show.
-        -->
-        <bal-table [expanded]="true">
-          <table
-            class="table w-full is-striped is-hoverable"
-            [class.p-none]="density === 'compact'"
-          >
-            <thead>
-              <tr>
-                <th>Produkt</th>
-                <th>Police</th>
-                <th>Beginn</th>
-                <th>Prämie</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let policy of pagedPolicies; trackBy: trackPolicy">
-                <td>{{ policy.product }}</td>
-                <td>{{ policy.policyNumber }}</td>
-                <td>{{ policy.start }}</td>
-                <td>CHF {{ policy.premium | number: '1.0-0' }}</td>
-                <td><bal-tag [color]="policy.statusColor" size="small">{{ policy.status }}</bal-tag></td>
-                <td class="has-buttons">
-                  <bal-button
-                    color="info"
-                    size="small"
-                    icon="edit"
-                    [square]="true"
-                    [outlined]="true"
-                    a11yLabel="Bearbeiten"
-                  ></bal-button>
-                  <bal-button
-                    color="info"
-                    size="small"
-                    icon="trash"
-                    [square]="true"
-                    [outlined]="true"
-                    a11yLabel="Löschen"
-                  ></bal-button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </bal-table>
-
-        <bal-stack alignment="center" space="auto" class="mt-normal">
-          <bal-pagination
-            #policyPagination
-            align="start"
-            [value]="currentPage"
-            [totalPages]="totalPages"
-            [pageRange]="3"
-            (balChange)="onPageChange($event)"
-          ></bal-pagination>
-          <bal-button-group>
-            <bal-button size="small" color="text" (balClick)="previousPage()">Vorherige</bal-button>
-            <bal-button size="small" color="text" (balClick)="nextPage()">Nächste</bal-button>
-          </bal-button-group>
-        </bal-stack>
-      </bal-card-content>
-    </bal-card>
-
-    <bal-divider space="normal"></bal-divider>
-
-    <bal-heading level="h2" visualLevel="h5" space="bottom">Vertragsdetails</bal-heading>
-
-    <!--
+          -->
+          <bal-table [expanded]="true">
+            <table
+              class="table w-full is-striped is-hoverable"
+              [class.p-none]="density === 'compact'"
+              >
+              <thead>
+                <tr>
+                  <th>Produkt</th>
+                  <th>Police</th>
+                  <th>Beginn</th>
+                  <th>Prämie</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (policy of pagedPolicies; track trackPolicy($index, policy)) {
+                  <tr>
+                    <td>{{ policy.product }}</td>
+                    <td>{{ policy.policyNumber }}</td>
+                    <td>{{ policy.start }}</td>
+                    <td>CHF {{ policy.premium | number: '1.0-0' }}</td>
+                    <td><bal-tag [color]="policy.statusColor" size="small">{{ policy.status }}</bal-tag></td>
+                    <td class="has-buttons">
+                      <bal-button
+                        color="info"
+                        size="small"
+                        icon="edit"
+                        [square]="true"
+                        [outlined]="true"
+                        a11yLabel="Bearbeiten"
+                      ></bal-button>
+                      <bal-button
+                        color="info"
+                        size="small"
+                        icon="trash"
+                        [square]="true"
+                        [outlined]="true"
+                        a11yLabel="Löschen"
+                      ></bal-button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </bal-table>
+          <bal-stack alignment="center" space="auto" class="mt-normal">
+            <bal-pagination
+              #policyPagination
+              align="start"
+              [value]="currentPage"
+              [totalPages]="totalPages"
+              [pageRange]="3"
+              (balChange)="onPageChange($event)"
+            ></bal-pagination>
+            <bal-button-group>
+              <bal-button size="small" color="text" (balClick)="previousPage()">Vorherige</bal-button>
+              <bal-button size="small" color="text" (balClick)="nextPage()">Nächste</bal-button>
+            </bal-button-group>
+          </bal-stack>
+        </bal-card-content>
+      </bal-card>
+      <bal-divider space="normal"></bal-divider>
+      <bal-heading level="h2" visualLevel="h5" space="bottom">Vertragsdetails</bal-heading>
+      <!--
       Shape 1 on the tabs family: these items carry their own panel content as
       children, so the library toggles the panels itself.
-    -->
-    <bal-tabs [border]="true" value="coverage" iconPosition="vertical">
-      <bal-tab-item value="coverage" label="Deckung" icon="check">
-        <bal-data [border]="true" class="mt-small">
-          <bal-data-item>
-            <bal-data-label>Versicherungssumme</bal-data-label>
-            <bal-data-value>CHF 120’000</bal-data-value>
-          </bal-data-item>
-          <bal-data-item>
-            <bal-data-label>Selbstbehalt</bal-data-label>
-            <bal-data-value>CHF 500</bal-data-value>
-          </bal-data-item>
-        </bal-data>
-      </bal-tab-item>
-      <bal-tab-item value="documents" label="Dokumente" icon="document">
-        <bal-text class="mt-small">
-          Alle Vertragsunterlagen stehen im Dokumentenarchiv zur Verfügung.
-        </bal-text>
-      </bal-tab-item>
-      <bal-tab-item value="contact" label="Kontakt" icon="call">
-        <bal-text class="mt-small">Agentur Basel-Stadt, Aeschengraben 21, 4051 Basel.</bal-text>
-      </bal-tab-item>
-      <bal-tab-item value="history" label="Verlauf" icon="clock" [disabled]="true">
-        <bal-text class="mt-small">Der Verlauf ist für dieses Produkt nicht verfügbar.</bal-text>
-      </bal-tab-item>
-    </bal-tabs>
-  </div>
+      -->
+      <bal-tabs [border]="true" value="coverage" iconPosition="vertical">
+        <bal-tab-item value="coverage" label="Deckung" icon="check">
+          <bal-data [border]="true" class="mt-small">
+            <bal-data-item>
+              <bal-data-label>Versicherungssumme</bal-data-label>
+              <bal-data-value>CHF 120’000</bal-data-value>
+            </bal-data-item>
+            <bal-data-item>
+              <bal-data-label>Selbstbehalt</bal-data-label>
+              <bal-data-value>CHF 500</bal-data-value>
+            </bal-data-item>
+          </bal-data>
+        </bal-tab-item>
+        <bal-tab-item value="documents" label="Dokumente" icon="document">
+          <bal-text class="mt-small">
+            Alle Vertragsunterlagen stehen im Dokumentenarchiv zur Verfügung.
+          </bal-text>
+        </bal-tab-item>
+        <bal-tab-item value="contact" label="Kontakt" icon="call">
+          <bal-text class="mt-small">Agentur Basel-Stadt, Aeschengraben 21, 4051 Basel.</bal-text>
+        </bal-tab-item>
+        <bal-tab-item value="history" label="Verlauf" icon="clock" [disabled]="true">
+          <bal-text class="mt-small">Der Verlauf ist für dieses Produkt nicht verfügbar.</bal-text>
+        </bal-tab-item>
+      </bal-tabs>
+    </div>
+  }
 
   <!-- ===================== Payments panel ===================== -->
-  <div *ngIf="activeTab === 'payments'" class="mt-normal">
-    <bal-notification *ngIf="openPayments > 0" color="warning" class="mb-normal">
-      <bal-stack alignment="center" space="small">
-        <span>{{ openPayments }} offene Rechnung(en)</span>
-        <bal-badge color="danger" size="small">{{ openPayments }}</bal-badge>
-      </bal-stack>
-    </bal-notification>
-
-    <bal-card color="white" [border]="true">
-      <bal-card-title>Zahlungen</bal-card-title>
-      <bal-card-content>
-        <bal-table>
-          <table class="table w-full is-striped">
-            <thead>
-              <tr>
-                <th>Datum</th>
-                <th>Betreff</th>
-                <th>Betrag</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let payment of payments; trackBy: trackPayment">
-                <td>{{ payment.date }}</td>
-                <td>{{ payment.subject }}</td>
-                <td>CHF {{ payment.amount | number: '1.0-0' }}</td>
-                <td>
-                  <bal-tag [color]="payment.paid ? 'green' : 'red'" size="small">
-                    {{ payment.paid ? 'Bezahlt' : 'Offen' }}
-                  </bal-tag>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </bal-table>
-      </bal-card-content>
-    </bal-card>
-  </div>
+  @if (activeTab === 'payments') {
+    <div class="mt-normal">
+      @if (openPayments > 0) {
+        <bal-notification color="warning" class="mb-normal">
+          <bal-stack alignment="center" space="small">
+            <span>{{ openPayments }} offene Rechnung(en)</span>
+            <bal-badge color="danger" size="small">{{ openPayments }}</bal-badge>
+          </bal-stack>
+        </bal-notification>
+      }
+      <bal-card color="white" [border]="true">
+        <bal-card-title>Zahlungen</bal-card-title>
+        <bal-card-content>
+          <bal-table>
+            <table class="table w-full is-striped">
+              <thead>
+                <tr>
+                  <th>Datum</th>
+                  <th>Betreff</th>
+                  <th>Betrag</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (payment of payments; track trackPayment($index, payment)) {
+                  <tr>
+                    <td>{{ payment.date }}</td>
+                    <td>{{ payment.subject }}</td>
+                    <td>CHF {{ payment.amount | number: '1.0-0' }}</td>
+                    <td>
+                      <bal-tag [color]="payment.paid ? 'green' : 'red'" size="small">
+                        {{ payment.paid ? 'Bezahlt' : 'Offen' }}
+                      </bal-tag>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </bal-table>
+        </bal-card-content>
+      </bal-card>
+    </div>
+  }
 
   <!-- ===================== Settings panel ===================== -->
-  <div *ngIf="activeTab === 'settings'" class="mt-normal">
-    <bal-card color="white" [border]="true">
-      <bal-card-title>Benachrichtigungen</bal-card-title>
-      <bal-card-content>
-        <bal-field>
-          <bal-field-label>Worüber möchten Sie informiert werden?</bal-field-label>
-          <bal-field-control>
-            <!-- Loop generated checkbox group; interface stays the default. -->
-            <bal-checkbox-group
-              #topicGroup
-              name="topics"
-              [vertical]="true"
-              [(ngModel)]="selectedTopics"
-              (balChange)="onTopicsChange($event)"
-            >
-              <bal-checkbox
-                *ngFor="let topic of topics; trackBy: trackTopic"
-                [value]="topic.value"
+  @if (activeTab === 'settings') {
+    <div class="mt-normal">
+      <bal-card color="white" [border]="true">
+        <bal-card-title>Benachrichtigungen</bal-card-title>
+        <bal-card-content>
+          <bal-field>
+            <bal-field-label>Worüber möchten Sie informiert werden?</bal-field-label>
+            <bal-field-control>
+              <!-- Loop generated checkbox group; interface stays the default. -->
+              <bal-checkbox-group
+                #topicGroup
                 name="topics"
-              >
-                {{ topic.label }}
-              </bal-checkbox>
-            </bal-checkbox-group>
-          </bal-field-control>
-          <bal-field-message color="success">
-            {{ selectedTopics.length }} von {{ topics.length }} aktiv
-            <bal-button size="small" color="link" (balClick)="selectAllTopics()">Alle aktivieren</bal-button>
-          </bal-field-message>
-        </bal-field>
-
-        <bal-divider space="normal"></bal-divider>
-
-        <bal-field>
-          <bal-field-label>Korrespondenz</bal-field-label>
-          <bal-field-control>
-            <!-- Loop generated radio group; interface stays the default. -->
-            <bal-radio-group
-              #correspondenceGroup
-              name="correspondence"
-              [vertical]="true"
-              [(ngModel)]="correspondence"
-              (balChange)="onCorrespondenceChange($event)"
-            >
-              <bal-radio
-                *ngFor="let option of correspondenceOptions; trackBy: trackCorrespondence"
-                [value]="option.value"
-              >
-                {{ option.label }}
-              </bal-radio>
-            </bal-radio-group>
-          </bal-field-control>
-          <bal-field-message color="">
-            <bal-button size="small" color="link" (balClick)="resetCorrespondence()">Zurücksetzen</bal-button>
-          </bal-field-message>
-        </bal-field>
-      </bal-card-content>
-      <bal-card-actions position="right">
-        <bal-button color="primary" (balClick)="saveSettings()">Speichern</bal-button>
-      </bal-card-actions>
-    </bal-card>
-  </div>
+                [vertical]="true"
+                [(ngModel)]="selectedTopics"
+                (balChange)="onTopicsChange($event)"
+                >
+                @for (topic of topics; track trackTopic($index, topic)) {
+                  <bal-checkbox
+                    [value]="topic.value"
+                    name="topics"
+                    >
+                    {{ topic.label }}
+                  </bal-checkbox>
+                }
+              </bal-checkbox-group>
+            </bal-field-control>
+            <bal-field-message color="success">
+              {{ selectedTopics.length }} von {{ topics.length }} aktiv
+              <bal-button size="small" color="link" (balClick)="selectAllTopics()">Alle aktivieren</bal-button>
+            </bal-field-message>
+          </bal-field>
+          <bal-divider space="normal"></bal-divider>
+          <bal-field>
+            <bal-field-label>Korrespondenz</bal-field-label>
+            <bal-field-control>
+              <!-- Loop generated radio group; interface stays the default. -->
+              <bal-radio-group
+                #correspondenceGroup
+                name="correspondence"
+                [vertical]="true"
+                [(ngModel)]="correspondence"
+                (balChange)="onCorrespondenceChange($event)"
+                >
+                @for (option of correspondenceOptions; track trackCorrespondence($index, option)) {
+                  <bal-radio
+                    [value]="option.value"
+                    >
+                    {{ option.label }}
+                  </bal-radio>
+                }
+              </bal-radio-group>
+            </bal-field-control>
+            <bal-field-message color="">
+              <bal-button size="small" color="link" (balClick)="resetCorrespondence()">Zurücksetzen</bal-button>
+            </bal-field-message>
+          </bal-field>
+        </bal-card-content>
+        <bal-card-actions position="right">
+          <bal-button color="primary" (balClick)="saveSettings()">Speichern</bal-button>
+        </bal-card-actions>
+      </bal-card>
+    </div>
+  }
 
   <bal-stack space="small" class="mt-normal">
     <bal-button size="small" color="info" [outlined]="true" (balClick)="activateFirstTab()">
@@ -336,7 +341,9 @@
     <bal-button color="text" routerLink="/">Zurück zur Übersicht</bal-button>
   </bal-stack>
 
-  <bal-text *ngIf="lastEvent" size="small" color="info" space="top">{{ lastEvent }}</bal-text>
+  @if (lastEvent) {
+    <bal-text size="small" color="info" space="top">{{ lastEvent }}</bal-text>
+  }
 
   <bal-stack alignment="center" space="x-small" class="mt-small">
     <bal-icon name="portal-shield" size="small" color="primary"></bal-icon>

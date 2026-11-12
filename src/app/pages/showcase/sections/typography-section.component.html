@@ -2,27 +2,35 @@
   anchor="bal-heading"
   title="bal-heading"
   subtitle="level, visualLevel, color, space, subtitle, inverted"
->
+  >
   <bal-heading>Default heading, no props</bal-heading>
 
-  <div *ngFor="let level of headingLevels" class="mt-x-small">
-    <bal-heading [level]="level" space="none">level="{{ level }}"</bal-heading>
-  </div>
-
-  <div *ngFor="let visual of headingVisualLevels" class="mt-x-small">
-    <bal-heading level="h3" [visualLevel]="visual" space="none">visualLevel="{{ visual }}"</bal-heading>
-  </div>
-
-  <div class="flex flex-wrap gap-small mt-small">
-    <bal-heading *ngFor="let color of headingColors" level="h5" [color]="color" space="none">
-      color="{{ color || 'default' }}"
-    </bal-heading>
-  </div>
-
-  <div class="flex flex-wrap gap-small mt-small">
-    <div *ngFor="let space of headingSpaces" class="bg-grey-2 border border-grey">
-      <bal-heading level="h5" [space]="space">space="{{ space }}"</bal-heading>
+  @for (level of headingLevels; track level) {
+    <div class="mt-x-small">
+      <bal-heading [level]="level" space="none">level="{{ level }}"</bal-heading>
     </div>
+  }
+
+  @for (visual of headingVisualLevels; track visual) {
+    <div class="mt-x-small">
+      <bal-heading level="h3" [visualLevel]="visual" space="none">visualLevel="{{ visual }}"</bal-heading>
+    </div>
+  }
+
+  <div class="flex flex-wrap gap-small mt-small">
+    @for (color of headingColors; track color) {
+      <bal-heading level="h5" [color]="color" space="none">
+        color="{{ color || 'default' }}"
+      </bal-heading>
+    }
+  </div>
+
+  <div class="flex flex-wrap gap-small mt-small">
+    @for (space of headingSpaces; track space) {
+      <div class="bg-grey-2 border border-grey">
+        <bal-heading level="h5" [space]="space">space="{{ space }}"</bal-heading>
+      </div>
+    }
   </div>
 
   <div class="mt-small">
@@ -38,21 +46,27 @@
   anchor="bal-text"
   title="bal-text"
   subtitle="size, space, color, bold, inline, heading, inverted"
->
+  >
   <bal-text>Default text, no props</bal-text>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <bal-text *ngFor="let size of textSizes" [size]="size">size="{{ size || 'default' }}"</bal-text>
+    @for (size of textSizes; track size) {
+      <bal-text [size]="size">size="{{ size || 'default' }}"</bal-text>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <div *ngFor="let space of textSpaces" class="bg-grey-2 border border-grey">
-      <bal-text [space]="space">space="{{ space }}"</bal-text>
-    </div>
+    @for (space of textSpaces; track space) {
+      <div class="bg-grey-2 border border-grey">
+        <bal-text [space]="space">space="{{ space }}"</bal-text>
+      </div>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small">
-    <bal-text *ngFor="let color of textColors" [color]="color">color="{{ color || 'default' }}"</bal-text>
+    @for (color of textColors; track color) {
+      <bal-text [color]="color">color="{{ color || 'default' }}"</bal-text>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
@@ -70,15 +84,19 @@
   anchor="bal-label"
   title="bal-label"
   subtitle="weight, size, required, multiline, noWrap"
->
+  >
   <bal-label>Default label, no props</bal-label>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <bal-label *ngFor="let weight of labelWeights" [weight]="weight">weight="{{ weight }}"</bal-label>
+    @for (weight of labelWeights; track weight) {
+      <bal-label [weight]="weight">weight="{{ weight }}"</bal-label>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">
-    <bal-label *ngFor="let size of labelSizes" [size]="size">size="{{ size || 'default' }}"</bal-label>
+    @for (size of labelSizes; track size) {
+      <bal-label [size]="size">size="{{ size || 'default' }}"</bal-label>
+    }
   </div>
 
   <div class="flex flex-wrap gap-small mt-small align-items-center">

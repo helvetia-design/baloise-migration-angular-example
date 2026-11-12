@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
-import { DecimalPipe, NgFor, NgIf } from '@angular/common'
+import { Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core'
+import { DecimalPipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { RouterLink } from '@angular/router'
 import {
@@ -53,14 +53,8 @@ import {
   selector: 'app-application',
   imports: [
     DecimalPipe,
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     RouterLink,
-    // NOTE: BalFormBundle is deliberately not used here — it contains
-    // BalNgErrorComponent, the one directive in this package that is not
-    // standalone, which makes the whole bundle unusable without an NgModule.
-    // See docs/FINDINGS.md.
     ...BalAccordionBundle,
     BalButton,
     BalButtonGroup,
@@ -89,8 +83,9 @@ import {
     ...BalSelectBundle,
     BalStack,
     ...BalStepsBundle,
-    BalText,
-  ],
+    BalText
+],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './application.component.html',
 })
 export class ApplicationComponent {
