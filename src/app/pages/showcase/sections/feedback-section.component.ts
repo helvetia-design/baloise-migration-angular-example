@@ -67,9 +67,9 @@ export class FeedbackSectionComponent {
   progressValue = 45
   lastEvent = ''
 
-  @ViewChild('showcaseModal') showcaseModal?: ElementRef<HTMLBalModalElement>
-  @ViewChild('inlineToast') inlineToast?: ElementRef<HTMLBalToastElement>
-  @ViewChild('inlineSnackbar') inlineSnackbar?: ElementRef<HTMLBalSnackbarElement>
+  @ViewChild('showcaseModal', { read: ElementRef }) showcaseModal?: ElementRef<HTMLBalModalElement>
+  @ViewChild('inlineToast', { read: ElementRef }) inlineToast?: ElementRef<HTMLBalToastElement>
+  @ViewChild('inlineSnackbar', { read: ElementRef }) inlineSnackbar?: ElementRef<HTMLBalSnackbarElement>
 
   constructor(
     private readonly toastService: BalToastService,
@@ -133,8 +133,15 @@ export class FeedbackSectionComponent {
     void this.showcaseModal?.nativeElement.close()
   }
 
+  /**
+   * `present()` attaches its content through a framework delegate and therefore only works
+   * for modals created via `BalModalService`. A declarative modal has no delegate and the
+   * call throws. `dismiss()` already falls back to `close()` in that case, so we mirror it.
+   */
   async presentInlineModal() {
-    await this.showcaseModal?.nativeElement.present()
+    const modal = this.showcaseModal?.nativeElement
+    if (!modal) return
+    await (modal.component ? modal.present() : modal.open())
   }
 
   dismissInlineModal() {

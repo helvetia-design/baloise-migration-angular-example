@@ -102,13 +102,13 @@ export class ClaimComponent {
   lastEvent = ''
   modalResult = ''
 
-  @ViewChild('uploader') uploader?: ElementRef<HTMLBalFileUploadElement>
-  @ViewChild('descriptionField') descriptionField?: ElementRef<HTMLBalTextareaElement>
-  @ViewChild('claimDateField') claimDateField?: ElementRef<HTMLBalDateElement>
-  @ViewChild('contractSelect') contractSelect?: ElementRef<HTMLBalSelectElement>
-  @ViewChild('helpModal') helpModal?: ElementRef<HTMLBalModalElement>
-  @ViewChild('policyInput') policyInput?: ElementRef<HTMLBalInputElement>
-  @ViewChild('checklistGroup') checklistGroup?: ElementRef<HTMLBalCheckboxGroupElement>
+  @ViewChild('uploader', { read: ElementRef }) uploader?: ElementRef<HTMLBalFileUploadElement>
+  @ViewChild('descriptionField', { read: ElementRef }) descriptionField?: ElementRef<HTMLBalTextareaElement>
+  @ViewChild('claimDateField', { read: ElementRef }) claimDateField?: ElementRef<HTMLBalDateElement>
+  @ViewChild('contractSelect', { read: ElementRef }) contractSelect?: ElementRef<HTMLBalSelectElement>
+  @ViewChild('helpModal', { read: ElementRef }) helpModal?: ElementRef<HTMLBalModalElement>
+  @ViewChild('policyInput', { read: ElementRef }) policyInput?: ElementRef<HTMLBalInputElement>
+  @ViewChild('checklistGroup', { read: ElementRef }) checklistGroup?: ElementRef<HTMLBalCheckboxGroupElement>
 
   constructor(
     private readonly modalService: BalModalService,

@@ -102,13 +102,13 @@ export class DataDisplaySectionComponent {
   closedTags: string[] = []
   lastEvent = ''
 
-  @ViewChild('showcaseCarousel') showcaseCarousel?: ElementRef<HTMLBalCarouselElement>
-  @ViewChild('showcasePopover') showcasePopover?: ElementRef<HTMLBalPopoverElement>
-  @ViewChild('showcasePopup') showcasePopup?: ElementRef<HTMLBalPopupElement>
-  @ViewChild('showcaseTooltip') showcaseTooltip?: ElementRef<HTMLBalTooltipElement>
-  @ViewChild('showcaseHint') showcaseHint?: ElementRef<HTMLBalHintElement>
-  @ViewChild('showcaseListItem') showcaseListItem?: ElementRef<HTMLBalListItemElement>
-  @ViewChild('showcaseCarouselItem') showcaseCarouselItem?: ElementRef<HTMLBalCarouselItemElement>
+  @ViewChild('showcaseCarousel', { read: ElementRef }) showcaseCarousel?: ElementRef<HTMLBalCarouselElement>
+  @ViewChild('showcasePopover', { read: ElementRef }) showcasePopover?: ElementRef<HTMLBalPopoverElement>
+  @ViewChild('showcasePopup', { read: ElementRef }) showcasePopup?: ElementRef<HTMLBalPopupElement>
+  @ViewChild('showcaseTooltip', { read: ElementRef }) showcaseTooltip?: ElementRef<HTMLBalTooltipElement>
+  @ViewChild('showcaseHint', { read: ElementRef }) showcaseHint?: ElementRef<HTMLBalHintElement>
+  @ViewChild('showcaseListItem', { read: ElementRef }) showcaseListItem?: ElementRef<HTMLBalListItemElement>
+  @ViewChild('showcaseCarouselItem', { read: ElementRef }) showcaseCarouselItem?: ElementRef<HTMLBalCarouselItemElement>
 
   onTagClose(label: string) {
     this.closedTags = [...this.closedTags, label]

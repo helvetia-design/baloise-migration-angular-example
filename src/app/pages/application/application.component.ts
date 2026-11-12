@@ -115,23 +115,23 @@ export class ApplicationComponent {
 
   readonly form: FormGroup
 
-  @ViewChild('wizardSteps') wizardSteps?: ElementRef<HTMLBalStepsElement>
-  @ViewChild('firstStepItem') firstStepItem?: ElementRef<HTMLBalStepItemElement>
-  @ViewChild('wizardForm') wizardForm?: ElementRef<HTMLBalFormElement>
-  @ViewChild('emailInput') emailInput?: ElementRef<HTMLBalInputElement>
-  @ViewChild('livingSpace') livingSpace?: ElementRef<HTMLBalNumberInputElement>
-  @ViewChild('roomStepper') roomStepper?: ElementRef<HTMLBalInputStepperElement>
-  @ViewChild('sumSlider') sumSlider?: ElementRef<HTMLBalInputSliderElement>
-  @ViewChild('cantonSelect') cantonSelect?: ElementRef<HTMLBalSelectElement>
-  @ViewChild('buildingTypeGroup') buildingTypeGroup?: ElementRef<HTMLBalRadioGroupElement>
-  @ViewChild('coverageGroup') coverageGroup?: ElementRef<HTMLBalCheckboxGroupElement>
-  @ViewChild('newsletterCheckbox') newsletterCheckbox?: ElementRef<HTMLBalCheckboxElement>
-  @ViewChild('salutationRadio') salutationRadio?: ElementRef<HTMLBalRadioElement>
-  @ViewChild('birthDate') birthDate?: ElementRef<HTMLBalDateElement>
-  @ViewChild('summaryAccordion') summaryAccordion?: ElementRef<HTMLBalAccordionElement>
-  @ViewChild('sumHint') sumHint?: ElementRef<HTMLBalHintElement>
-  @ViewChild('deductibleSegment') deductibleSegment?: ElementRef<HTMLBalSegmentElement>
-  @ViewChild('firstDeductibleItem') firstDeductibleItem?: ElementRef<HTMLBalSegmentItemElement>
+  @ViewChild('wizardSteps', { read: ElementRef }) wizardSteps?: ElementRef<HTMLBalStepsElement>
+  @ViewChild('firstStepItem', { read: ElementRef }) firstStepItem?: ElementRef<HTMLBalStepItemElement>
+  @ViewChild('wizardForm', { read: ElementRef }) wizardForm?: ElementRef<HTMLBalFormElement>
+  @ViewChild('emailInput', { read: ElementRef }) emailInput?: ElementRef<HTMLBalInputElement>
+  @ViewChild('livingSpace', { read: ElementRef }) livingSpace?: ElementRef<HTMLBalNumberInputElement>
+  @ViewChild('roomStepper', { read: ElementRef }) roomStepper?: ElementRef<HTMLBalInputStepperElement>
+  @ViewChild('sumSlider', { read: ElementRef }) sumSlider?: ElementRef<HTMLBalInputSliderElement>
+  @ViewChild('cantonSelect', { read: ElementRef }) cantonSelect?: ElementRef<HTMLBalSelectElement>
+  @ViewChild('buildingTypeGroup', { read: ElementRef }) buildingTypeGroup?: ElementRef<HTMLBalRadioGroupElement>
+  @ViewChild('coverageGroup', { read: ElementRef }) coverageGroup?: ElementRef<HTMLBalCheckboxGroupElement>
+  @ViewChild('newsletterCheckbox', { read: ElementRef }) newsletterCheckbox?: ElementRef<HTMLBalCheckboxElement>
+  @ViewChild('salutationRadio', { read: ElementRef }) salutationRadio?: ElementRef<HTMLBalRadioElement>
+  @ViewChild('birthDate', { read: ElementRef }) birthDate?: ElementRef<HTMLBalDateElement>
+  @ViewChild('summaryAccordion', { read: ElementRef }) summaryAccordion?: ElementRef<HTMLBalAccordionElement>
+  @ViewChild('sumHint', { read: ElementRef }) sumHint?: ElementRef<HTMLBalHintElement>
+  @ViewChild('deductibleSegment', { read: ElementRef }) deductibleSegment?: ElementRef<HTMLBalSegmentElement>
+  @ViewChild('firstDeductibleItem', { read: ElementRef }) firstDeductibleItem?: ElementRef<HTMLBalSegmentItemElement>
 
   constructor(private readonly fb: FormBuilder) {
     this.form = this.fb.group({

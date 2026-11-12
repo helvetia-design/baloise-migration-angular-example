@@ -87,12 +87,12 @@ export class DashboardComponent {
   editedFact = ''
   tooltipShown = false
 
-  @ViewChild('teaserCarousel') teaserCarousel?: ElementRef<HTMLBalCarouselElement>
-  @ViewChild('firstTeaserItem') firstTeaserItem?: ElementRef<HTMLBalCarouselItemElement>
-  @ViewChild('contactPopup') contactPopup?: ElementRef<HTMLBalPopupElement>
-  @ViewChild('coverageTooltip') coverageTooltip?: ElementRef<HTMLBalTooltipElement>
-  @ViewChild('coverageHint') coverageHint?: ElementRef<HTMLBalHintElement>
-  @ViewChild('archiveItem') archiveItem?: ElementRef<HTMLBalListItemElement>
+  @ViewChild('teaserCarousel', { read: ElementRef }) teaserCarousel?: ElementRef<HTMLBalCarouselElement>
+  @ViewChild('firstTeaserItem', { read: ElementRef }) firstTeaserItem?: ElementRef<HTMLBalCarouselItemElement>
+  @ViewChild('contactPopup', { read: ElementRef }) contactPopup?: ElementRef<HTMLBalPopupElement>
+  @ViewChild('coverageTooltip', { read: ElementRef }) coverageTooltip?: ElementRef<HTMLBalTooltipElement>
+  @ViewChild('coverageHint', { read: ElementRef }) coverageHint?: ElementRef<HTMLBalHintElement>
+  @ViewChild('archiveItem', { read: ElementRef }) archiveItem?: ElementRef<HTMLBalListItemElement>
 
   constructor(private readonly snackbar: BalSnackbarService) {}
 

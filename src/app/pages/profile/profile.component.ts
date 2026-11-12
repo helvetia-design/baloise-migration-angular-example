@@ -100,14 +100,14 @@ export class ProfileComponent {
   correspondence = 'digital'
   lastEvent = ''
 
-  @ViewChild('profileTabs') profileTabs?: ElementRef<HTMLBalTabsElement>
-  @ViewChild('firstTab') firstTab?: ElementRef<HTMLBalTabItemElement>
-  @ViewChild('policyPagination') policyPagination?: ElementRef<HTMLBalPaginationElement>
-  @ViewChild('sortDropdown') sortDropdown?: ElementRef<HTMLBalDropdownElement>
-  @ViewChild('firstSortOption') firstSortOption?: ElementRef<HTMLBalOptionElement>
-  @ViewChild('topicGroup') topicGroup?: ElementRef<HTMLBalCheckboxGroupElement>
-  @ViewChild('correspondenceGroup') correspondenceGroup?: ElementRef<HTMLBalRadioGroupElement>
-  @ViewChild('densitySegment') densitySegment?: ElementRef<HTMLBalSegmentElement>
+  @ViewChild('profileTabs', { read: ElementRef }) profileTabs?: ElementRef<HTMLBalTabsElement>
+  @ViewChild('firstTab', { read: ElementRef }) firstTab?: ElementRef<HTMLBalTabItemElement>
+  @ViewChild('policyPagination', { read: ElementRef }) policyPagination?: ElementRef<HTMLBalPaginationElement>
+  @ViewChild('sortDropdown', { read: ElementRef }) sortDropdown?: ElementRef<HTMLBalDropdownElement>
+  @ViewChild('firstSortOption', { read: ElementRef }) firstSortOption?: ElementRef<HTMLBalOptionElement>
+  @ViewChild('topicGroup', { read: ElementRef }) topicGroup?: ElementRef<HTMLBalCheckboxGroupElement>
+  @ViewChild('correspondenceGroup', { read: ElementRef }) correspondenceGroup?: ElementRef<HTMLBalRadioGroupElement>
+  @ViewChild('densitySegment', { read: ElementRef }) densitySegment?: ElementRef<HTMLBalSegmentElement>
 
   constructor(private readonly snackbar: BalSnackbarService) {}
 

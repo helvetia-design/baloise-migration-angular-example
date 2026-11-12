@@ -4,7 +4,6 @@ import {
   BalAccordionBundle,
   BalBadge,
   BalButton,
-  BalButtonGroup,
   BalCardBundle,
   BalCheckbox,
   BalContent,
@@ -48,7 +47,6 @@ import { ShowcaseSectionComponent } from './showcase-section.component'
     ...BalAccordionBundle,
     BalBadge,
     BalButton,
-    BalButtonGroup,
     ...BalCardBundle,
     BalCheckbox,
     BalContent,
@@ -86,15 +84,15 @@ export class NavigationSectionComponent {
   paginationValue = 2
   lastEvent = ''
 
-  @ViewChild('showcaseAccordion') showcaseAccordion?: ElementRef<HTMLBalAccordionElement>
-  @ViewChild('showcaseNavbar') showcaseNavbar?: ElementRef<HTMLBalNavbarElement>
-  @ViewChild('showcaseNavbarBrand') showcaseNavbarBrand?: ElementRef<HTMLBalNavbarBrandElement>
-  @ViewChild('showcaseNavbarMenu') showcaseNavbarMenu?: ElementRef<HTMLBalNavbarMenuElement>
-  @ViewChild('showcaseSteps') showcaseSteps?: ElementRef<HTMLBalStepsElement>
-  @ViewChild('showcaseStepItem') showcaseStepItem?: ElementRef<HTMLBalStepItemElement>
-  @ViewChild('showcaseTabs') showcaseTabs?: ElementRef<HTMLBalTabsElement>
-  @ViewChild('showcaseTabItem') showcaseTabItem?: ElementRef<HTMLBalTabItemElement>
-  @ViewChild('showcasePagination') showcasePagination?: ElementRef<HTMLBalPaginationElement>
+  @ViewChild('showcaseAccordion', { read: ElementRef }) showcaseAccordion?: ElementRef<HTMLBalAccordionElement>
+  @ViewChild('showcaseNavbar', { read: ElementRef }) showcaseNavbar?: ElementRef<HTMLBalNavbarElement>
+  @ViewChild('showcaseNavbarBrand', { read: ElementRef }) showcaseNavbarBrand?: ElementRef<HTMLBalNavbarBrandElement>
+  @ViewChild('showcaseNavbarMenu', { read: ElementRef }) showcaseNavbarMenu?: ElementRef<HTMLBalNavbarMenuElement>
+  @ViewChild('showcaseSteps', { read: ElementRef }) showcaseSteps?: ElementRef<HTMLBalStepsElement>
+  @ViewChild('showcaseStepItem', { read: ElementRef }) showcaseStepItem?: ElementRef<HTMLBalStepItemElement>
+  @ViewChild('showcaseTabs', { read: ElementRef }) showcaseTabs?: ElementRef<HTMLBalTabsElement>
+  @ViewChild('showcaseTabItem', { read: ElementRef }) showcaseTabItem?: ElementRef<HTMLBalTabItemElement>
+  @ViewChild('showcasePagination', { read: ElementRef }) showcasePagination?: ElementRef<HTMLBalPaginationElement>
 
   onPaginationChange(event: BalEvents.BalPaginationCustomEvent<number>) {
     this.paginationValue = event.detail

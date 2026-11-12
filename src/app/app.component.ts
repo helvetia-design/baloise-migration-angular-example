@@ -71,9 +71,9 @@ export class AppComponent {
   activeLanguage: BalLanguage = 'de'
   appIsReady = false
 
-  @ViewChild('shell', { static: true }) shell?: ElementRef<HTMLBalAppElement>
-  @ViewChild('navbar', { static: true }) navbar?: ElementRef<HTMLBalNavbarElement>
-  @ViewChild('languagePopover') languagePopover?: ElementRef<HTMLBalPopoverElement>
+  @ViewChild('shell', { static: true, read: ElementRef }) shell?: ElementRef<HTMLBalAppElement>
+  @ViewChild('navbar', { static: true, read: ElementRef }) navbar?: ElementRef<HTMLBalNavbarElement>
+  @ViewChild('languagePopover', { read: ElementRef }) languagePopover?: ElementRef<HTMLBalPopoverElement>
   @ViewChild('skipTarget', { static: true }) skipTarget?: ElementRef<HTMLElement>
 
   constructor(private readonly router: Router) {
